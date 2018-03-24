@@ -3,6 +3,7 @@ var app = express(); // create our app w/ express
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override');
 var service = require('./services/service.js');
+var session = require('express-session');
 
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users                
 app.use(bodyParser.urlencoded({ 'extended': 'true' })); // parse application/x-www-form-urlencoded
