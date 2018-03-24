@@ -22,9 +22,8 @@ app.get('/api/gallery', function(req, res) {
     });
 })
 app.post('/api/submit', function(req, res) {
-
-    service.SendMail(req.body);
-    res.status(200).send("Your application has been submitted successfully!!");
+    var status = service.SendMail(req.body);
+    res.status(200).send("Your application sucessfully submitted! Please check mail for details");
 });
 app.post('/api/event/save', function(req, res) {
     service.SaveEvent(req.body);
@@ -134,9 +133,9 @@ app.get('/api/logout', function(req, res) {
     });
 });
 
-app.get('/api/blog/getAllBlogs', function(req, res) {
+app.get('/api/yogaBlog/getAllBlogs', function(req, res) {
     var events;
-    service.readAllBlogs().then((result) => {
+    service.ReadAllYogaBlogs().then((result) => {
         res.send(result);
     }).catch(function(error) {
         res.status(500).send(error);
@@ -144,12 +143,31 @@ app.get('/api/blog/getAllBlogs', function(req, res) {
 });
 app.get('/api/santhiblog/getAllBlogs', function(req, res) {
     var events;
-    service.getAllSanthBlogs().then((result) => {
+    service.getAllSanthiBlogs().then((result) => {
         res.send(result);
     }).catch(function(error) {
         res.status(500).send(error);
     });
 });
+
+app.get('/api/yoga/getYoga/:id', function(req, res) {
+    var id = req.params.id;
+    service.getYoga(id).then((result) => {
+        res.send(result);
+    }).catch(function(error) {
+        res.status(500).send(error);
+    });
+});
+
+app.get('/api/santhi/getSanthi/:id', function(req, res) {
+    var id = req.params.id;
+    service.getSanthi(id).then((result) => {
+        res.send(result);
+    }).catch(function(error) {
+        res.status(500).send(error);
+    });
+});
+
 
 app.get('/api/news/getnews/:id', function(req, res) {
     var id = req.params.id;
