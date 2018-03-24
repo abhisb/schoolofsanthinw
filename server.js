@@ -86,5 +86,5 @@ app.get('/settings',function(req,res){
     res.render('settings.html');
 })
 // listen (start app with node server.js) ======================================
-    app.listen(8080);
+    app.listen(process.env.PORT || 8080);
     console.log("App listening on port 8080");
