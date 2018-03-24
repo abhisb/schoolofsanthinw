@@ -17,10 +17,12 @@ app1.config(function($routeProvider, $locationProvider) {
             templateUrl: "views/classes.html"
         })
         .when("/knowyoga", {
-            templateUrl: "views/wait.html"
+            templateUrl: "views/yoga-blog.html",
+            controller: 'yogaBlogHomeController'
         })
         .when("/santhispeaks", {
-            templateUrl: "views/wait.html"
+            templateUrl: "views/shanthi-blog.html",
+            controller: 'shanthiBlogController'
         })
         .when("/inthemedia", {
             templateUrl: "views/wait.html"
@@ -74,6 +76,10 @@ app1.config(function($routeProvider, $locationProvider) {
         .when("/create/yoga", {
             templateUrl: "views/create-yoga-blog.html",
             controller:"yogaBlogController"
+        })
+        .when("/login", {
+            templateUrl: "views/login.html",
+            controller: "loginController"
         })
         .otherwise({
             templateUrl: "home.html",
@@ -233,6 +239,54 @@ app1.controller('eventsController', function($scope, $rootScope, eventsService, 
 
     }
 })
+
+app1.controller('shanthiBlogController', function($scope, $location, $http, eventsService, $timeout) {
+    $scope.shanthi = {};
+    $scope.shanthi.blogs = [];
+    $scope.shanthi.banner = "../bin/assets/banner.png";
+
+    $scope.getAllShanthiBlogs = function() {
+        $http.get('/api/santhiblog/getAllBlogs').then(function(res) {
+            $scope.shanthi.blogs = res.data;
+        });
+    }
+    $scope.getAllShanthiBlogs();
+    $scope.showSelectedShanthiBlog = function (shanthiblog) {
+        $scope.shanthiTitle = shanthiblog.title;
+        $scope.shanthiDescription = shanthiblog.description;
+    }
+    $scope.closeShanthiModal = function () {
+        $('#detailedShanthiModal').modal('hide');
+    }
+    $scope.prevent = function (event) {
+        event.preventDefault();
+    }
+});
+
+app1.controller('yogaBlogHomeController', function($scope, $location, $http, eventsService, $timeout) {
+    $scope.yoga = {};
+    $scope.yoga.blogs = [];
+    $scope.yoga.banner = "../bin/assets/banner.png";
+
+    $scope.getAllYogaBlogs = function() {
+        $http.get('api/blog/getAllBlogs').then(function(res) {
+            $scope.yoga.blogs = res.data;
+        });
+    }
+    $scope.getAllYogaBlogs();
+    $scope.showSelectedYogaBlog = function (yogablog) {
+        $scope.yogaTitle = yogablog.title;
+        $scope.yogaDescription = yogablog.description;
+    }
+    $scope.closeYogaModal = function () {
+        $('#detailedYogaModal').modal('hide');
+    }
+    $scope.prevent = function (event) {
+        event.preventDefault();
+    }
+});
+
+
 app1.controller('homeController', function($scope, $location, $http, eventsService,$timeout) {
     //$scope.toggleLink = true;
     $scope.toggle = function(){
@@ -291,6 +345,26 @@ app1.controller('homeController', function($scope, $location, $http, eventsServi
                 return i <= 3 ;
             });
         })
+
+
+    getAllNews();
+    $scope.newsItems = [];
+    function getAllNews() {
+        $http.get('/api/news/getAll').then(function(res) {
+            //$scope.newsDataSet = [];
+            console.log(res);
+            $scope.newsItems = res.data;
+        });
+    }
+
+    $scope.showSelectedNews = function (news) {
+        $scope.newsTitle = news.title;
+        $scope.newsDescription = news.description;
+    }    
+
+    $scope.closeNewsModal = function () {
+        $('#detailedNewsModal').modal('hide');
+    }
 
 });
 app1.controller('aboutController', ['$scope', function($scope) {
@@ -771,5 +845,25 @@ app2.controller('eventController', function($scope, $routeParams, $http, eventsS
     };
 
 });
+
+app1.controller('loginController', ['$scope', '$http', function($scope, $http) {
+    $scope.submitLogin = function() {
+        $scope.invalidUser = false;
+        if (!$scope.userEmail || !$scope.userPswd) {
+            return;
+        }
+        var data = {
+            email: $scope.userEmail,
+            pswd: $scope.userPswd
+        }
+        $http.post("/api/login", data).then(function(response) {
+            if (response) {
+                location.href = './settings';
+            }
+        }, function() {
+            $scope.invalidUser = true;
+        });
+    };
+}]);
 
 angular.module("sos", ["sosMain", "maps"]);
