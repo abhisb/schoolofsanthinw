@@ -572,7 +572,7 @@ app1.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
 });
 app1.controller('contactController', function ($scope, $http) {
     $scope.loadedInIndia = false;
-     $http.get("http://ip-api.com/json").then(function(response){
+     $http.get("/api/event/getIp").then(function(response){
         var locationDetails = response.data;
         if(locationDetails.country.toLowerCase() == "india" && locationDetails.countryCode.toLowerCase() == "in"){
             $scope.loadedInIndia = true;

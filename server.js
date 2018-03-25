@@ -4,7 +4,9 @@ var bodyParser = require('body-parser'); // pull information from HTML POST (exp
 var methodOverride = require('method-override');
 var service = require('./services/service.js');
 var session = require('express-session');
+var request = require('request');
 
+var rp = require('request-promise');
 app.use(session({ secret: 'schoolofshanthi' }));
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users                
 app.use(bodyParser.urlencoded({ 'extended': 'true' })); // parse application/x-www-form-urlencoded
@@ -21,6 +23,8 @@ app.get('/api/gallery', function(req, res) {
         res.status(500).send(error);
     });
 })
+
+
 app.post('/api/submit', function(req, res) {
     var status = service.SendMail(req.body);
     res.status(200).send("Your application sucessfully submitted! Please check mail for details");
@@ -46,6 +50,14 @@ app.post('/api/yogablog/save', function(req, res) {
 app.get('/api/event/getevent/:id', function(req, res) {
     var id = req.params.id;
     service.getEvent(id).then((result) => {
+        res.send(result);
+    }).catch(function(error) {
+        res.status(500).send(error);
+    });
+});
+
+app.get('/api/event/getIp', function(req, res) {
+    service.getIp().then((result) => {
         res.send(result);
     }).catch(function(error) {
         res.status(500).send(error);

@@ -5,6 +5,8 @@ var fs = require("fs");
 var randtoken = require('rand-token');
 var q = require('promise');
 var crypto = require('crypto');
+var requestIp = require('request-ip');
+var rp = require('request-promise');
 
 /* Client-Secret Downloaded from Google Development */
 var clientSecret = { "installed": { "client_id": "982763164156-pitvrjea6s1noggdpin2oc3mj59m58td.apps.googleusercontent.com", "project_id": "school-of-santhi-165807", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://accounts.google.com/o/oauth2/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_secret": "xohRYlibbdgV-tHIN6O66PRn", "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob", "http://localhost"] } };
@@ -176,6 +178,16 @@ Service.prototype.getYogaBlog = function (id) {
                 });
         });
 };
+
+Service.prototype.getIp = function (id) {
+    return rp("http://ip-api.com/json").then(body => {
+        // make the count be the resolved value of the promise
+        var responseJSON = JSON.parse(body);
+        console.log(body)
+        return body;
+    });
+};
+
 Service.prototype.getBlog = function (id) {
     return new Promise(
         function (resolve, reject) {
