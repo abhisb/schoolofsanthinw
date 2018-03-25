@@ -65,13 +65,33 @@
     <tr><td><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;<strong>Registration closes on</strong></td>
             <td>{{event.regClosesDay}} {{event.regClosesMonth}} {{event.regClosesYear}}</td> 
     </tr>
-    <tr><td><i class="fa fa-calendar-check-o" aria-hidden="true"></i> &nbsp;<strong>Program Schedule</strong></td>
-            <td><a data-toggle="modal" data-target="#schedule">Click to open schedule</a></td>
-    </tr>
     <tr><td><i class="fa fa-bed" aria-hidden="true"></i> &nbsp;<strong>Accomodation</strong></td>
             <td>{{event.accomodation}}</td>
     </tr>
-    
+    <tr>
+      <td><i class="fa fa-calendar-check-o" aria-hidden="true"></i> &nbsp;<strong>Program Schedule</strong></td>
+      <td style="cursor:pointer; padding-top: 14px;" data-toggle="collapse" data-target="#schedule"><span class="fa fa-caret-down pull-right"></span></td>
+   </tr>
+   <tr>
+      <td colspan="2" style="padding:0">
+         <div id="schedule" class="collapse">
+            <table width="100%" class="table">
+               <thead>
+                  <tr>
+                     <th width="20%">Starts by</th>
+                     <th width="20%">Ends by</th>
+                     <th width="60%">Schedule</th>
+                  </tr>
+               </thead>
+               <tr ng-repeat="item in event.schedule" ng-model="event.schedule">
+                  <td>{{item.starts}}</td>
+                  <td>{{item.ends}}</td>
+                  <td>{{item.schedule}}</td>
+               </tr>
+            </table>
+         </div>
+      </td>
+   </tr>
     </tbody></table>
     </section><section class="col-md-6">
           <section class="col-md-12">
@@ -96,8 +116,9 @@
           draggable="true"></marker>
       </ng-map></section>
     
-   <section class="col-md-12 col-sm-12 text-center mt-30"> <a class="btn btn-danger" href="#/contactus">Contact Us</a></section>
-       </section></div>
+   <section class="col-md-12 text-center mt-30"> <button class="btn btn-primary" ng-click="submitForm()">Sign Up</button></section>
+      
+      </div>
     </div>
   </div>
 </div>  </section>
@@ -118,34 +139,3 @@
         </section>
     
     </section>
-
- <div id="schedule" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Program Schedule</h4>
-      </div>
-      <div class="modal-body">
-          <table width="100%" class="table">
-              <thead>
-              <tr>
-    <th width="20%">Starts by</th>
-    <th width="20%">Ends by</th> 
-    <th width="60%">Schedule</th>
-  </tr>
-              </thead>
-          <tr ng-repeat="item in event.schedule" ng-model="event.schedule">
-              <td>{{item.starts}}</td>
-              <td>{{item.ends}}</td>
-              <td>{{item.schedule}}</td>
-              </tr></table>
-        </div>
-         <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-      </div>
-    </div>
-</div> 

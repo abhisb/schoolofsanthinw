@@ -1,8 +1,54 @@
-<section class="row">
-    <section class="col-md-9">
-        <section class="col-md-12">
-            <h1><strong>{{blog.title}}</strong></h1>
-        </section>
-        <section class="col-md-12" id="content"></section>
-    </section>
+<section class="container-fluid">
+	<img src="{{yoga.banner}}" class="banner" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
+  <section class="col-md-8">
+      <div class="card row homecard" ng-repeat="blog in yoga.blogs">
+          <div class="card-body">
+          <image src="{{blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
+          <div style="cursor:pointer" data-target="#detailedYogaModal">
+              <h2>{{blog.title}}</h2>
+              <p>{{blog.highlightText}} <a href="/#/yoga/{{blog.id}}">More...</a></p>
+          </div>
+          </div>
+        </div>
+  </section>
+  <section class="col-md-4 side-panel">
+    <aside class="searchbx">
+      <form class="search">
+        <input type="text" name="" class="form-control" placeholder="Search...">
+        <button type="submit" class="btn btn-default"></button>
+      </form>
+    </aside>
+      <aside class="popular-posts">
+      <h3>Popular posts</h3>
+      <p>No posts to display</p></aside>
+      <aside class="youtube">
+      <!-- <h3>Enlightment without action</h3> -->
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/uAqMsWaVSIY" allowfullscreen></iframe>
+        </div>
+      </aside>
+      <aside class="programs">
+        <h3>Programs</h3>
+        <p>No programs to displayknow</p>
+      </aside>
+  </section>
 </section>
+
+<div id="detailedYogaModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div><h3>{{yogaTitle}}<h3></div>
+                        </div>
+                        <div class="modal-body">
+                            <p ng-bind-html="yogaDescription | to_trusted"></p>
+                            <div style="display: inline-block; width: 100%;">
+                                <button type="button" class="btn btn-danger pull-right" ng-click="closeYogaModal()">Close</button>
+                            </div>
+                        </div>
+                        <!-- <div class="modal-footer">
+                        </div> -->
+                    </div>
+                </div>
+            </div>
