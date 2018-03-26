@@ -442,24 +442,6 @@ Service.prototype.checkLogin = function (req) {
 };
 
 
-Service.prototype.deleteBlogs = function (req) {
-    fs.unlink('./bin/blogs/' + req.id + '.json', function (err) {
-        console.log(err);
-    });
-    fs.unlink('./public/bin/blogs/' + req.id + '.json', function (err) {
-        console.log(err);
-    });
-};
-
-Service.prototype.deleteSanthiBlogs = function (req) {
-    fs.unlink('./bin/santhiblogs/' + req.id + '.json', function (err) {
-        console.log(err);
-    });
-    fs.unlink('./public/bin/santhiblogs/' + req.id + '.json', function (err) {
-        console.log(err);
-    });
-};
-
 Service.prototype.saveNews = function (event) {
     //var token = randtoken.generate(5);
     var token = crypto.randomBytes(8).toString('hex');
@@ -612,6 +594,94 @@ Service.prototype.getAllSanthiBlogs = function () {
                 resolve(blogs);
             }
         });
+};
+
+Service.prototype.updateKnowYogaBlog = function (event) {
+    var file = './bin/blogs/' + event.id + '.json';
+    if (event.image != "") {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
+            var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
+            event.imageSrc = '../bin/blogs/' + event.id + ".png";
+            var filePath = './public/bin/blogs/' + event.id + ".png";
+            fs.unlink('./public/bin/blogs/' + event.id + '.png', function (err) {
+                console.log(err);
+            });
+        } else {
+            var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
+            event.imageSrc = '../bin/blogs/' + event.id + ".jpg";
+            var filePath = './public/bin/blogs/' + event.id + ".jpg";
+            fs.unlink('./public/bin/blogs/' + event.id + '.jpg', function (err) {
+                console.log(err);
+            });
+        }
+        //event.image = "";
+        require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+            console.log(err);
+        });
+    }
+    jsonfile.writeFile(file, event, function (err) {
+        console.error(err)
+    })
+
+};
+
+Service.prototype.updateSanthiBlog = function (event) {
+    var file = './bin/santhiblogs/' + event.id + '.json';
+    if (event.image != "") {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
+            var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
+            event.imageSrc = '../bin/santhiblogs/' + event.id + ".png";
+            var filePath = './public/bin/santhiblogs/' + event.id + ".png";
+            fs.unlink('./public/bin/santhiblogs/' + event.id + '.png', function (err) {
+                console.log(err);
+            });
+        } else {
+            var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
+            event.imageSrc = '../bin/santhiblogs/' + event.id + ".jpg";
+            var filePath = './public/bin/santhiblogs/' + event.id + ".jpg";
+            fs.unlink('./public/bin/santhiblogs/' + event.id + '.jpg', function (err) {
+                console.log(err);
+            });
+        }
+        //event.image = "";
+        require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+            console.log(err);
+        });
+    }
+    jsonfile.writeFile(file, event, function (err) {
+        console.error(err)
+    })
+
+};
+
+/*Service.prototype.deleteKnowYogaBlog = function (req) {
+    fs.unlink('./bin/blogs/' + req.id + '.json', function (err) {
+        console.log(err);
+    });
+};
+
+Service.prototype.deleteSanthiBlog = function (req) {
+    fs.unlink('./bin/santhiblogs/' + req.id + '.json', function (err) {
+        console.log(err);
+    });
+};*/
+
+Service.prototype.deleteBlogs = function (req) {
+    fs.unlink('./bin/blogs/' + req.id + '.json', function (err) {
+        console.log(err);
+    });
+    fs.unlink('./public/bin/blogs/' + req.id + '.json', function (err) {
+        console.log(err);
+    });
+};
+
+Service.prototype.deleteSanthiBlogs = function (req) {
+    fs.unlink('./bin/santhiblogs/' + req.id + '.json', function (err) {
+        console.log(err);
+    });
+    fs.unlink('./public/bin/santhiblogs/' + req.id + '.json', function (err) {
+        console.log(err);
+    });
 };
 
 module.exports = new Service();

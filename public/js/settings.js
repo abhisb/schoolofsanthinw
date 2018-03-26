@@ -66,6 +66,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     getAllNews();
 
     function getAllNews() {
+        $scope.newsDataSet = [];
         $http.get('/api/news/getAll').then(function(res) {
             //$scope.newsDataSet = [];
             console.log(res);
