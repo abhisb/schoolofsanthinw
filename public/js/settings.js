@@ -50,6 +50,17 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         });
     }
 
+    $scope.deleteYogaBlog = function(id) {
+        var data = {
+            "id": id
+        }
+        $http.post('/api/blog/delete', data).then(function(res) {
+            if(res) {
+                $scope.getAllYogaBlogs();
+            }
+        });
+    }
+    
     $scope.saveNews = function() {
 
         if (!$scope.news.title || !$scope.news.description || !$scope.news.highlight) {

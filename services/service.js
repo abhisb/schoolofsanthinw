@@ -667,10 +667,10 @@ Service.prototype.deleteSanthiBlog = function (req) {
 };*/
 
 Service.prototype.deleteBlogs = function (req) {
-    fs.unlink('./bin/blogs/' + req.id + '.json', function (err) {
-        console.log(err);
+    fs.unlink('./bin/yoga/' + req.id + '.json', function (res) {
+        console.log(res);
     });
-    fs.unlink('./public/bin/blogs/' + req.id + '.json', function (err) {
+    fs.unlink('./public/yoga/blogs/' + req.id + '.json', function (err) {
         console.log(err);
     });
 };
