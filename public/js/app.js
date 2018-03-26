@@ -319,6 +319,7 @@ app1.controller('homeController', function ($scope, $location, $http, eventsServ
                 event.startDay = event.startDate.split('/')[0];
                 event.slicedName = event.name.slice(0, 39);
                 event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 150);
             });
             var events = response.data.sort(function (a, b) {
                 return new Date(a.startDate) - new Date(b.startDate);

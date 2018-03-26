@@ -17,6 +17,8 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     $scope.newsDataSet = [];
     $scope.yoga = {};
     $scope.yoga.blogs = [];
+    $scope.shanthi = {};
+    $scope.shanthi.blogs = []; 
     $scope.logout = function() {
         $http.get('/api/logout').then(function() {
             location.href = '../#/login';
@@ -24,11 +26,18 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     }
 
     $scope.getAllYogaBlogs = function() {
-        $http.get('/api/blog/getAllBlogs').then(function(res) {
+        $http.get('/api/yogaBlog/getAllBlogs').then(function(res) {
             $scope.yoga.blogs = res.data;
         });
     }
     $scope.getAllYogaBlogs();
+
+    $scope.getAllShanthiBlogs = function() {
+        $http.get('api/santhiblog/getAllBlogs').then(function(res) {
+            $scope.shanthi.blogs = res.data;
+        });
+    }
+    $scope.getAllShanthiBlogs();
     $scope.saveNews = function() {
 
         if (!$scope.news.title || !$scope.news.description || !$scope.news.highlight) {
@@ -91,6 +100,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
 
     $scope.blog = {};
     $scope.saveBlog = function(blog) {
+        //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "")
         if (!$('#blogDescription').summernote('code') || !blog.title || !blog.highlightText || !blog.image) {
             alert('Please fill the form details');
             return;
@@ -100,6 +110,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         $http.post("/api/blog/save", blog).then(function(response) {
             $scope.successAlert = response.data;
             $scope.blog = {};
+            $("#blogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
             $('#blogDescription').summernote('code', '');
             angular.element("input[type='file']").val(null);
 
@@ -110,10 +121,11 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         });
     };
 
-    $scope.enableDescription = function() {
+    $scope.enableDescription = function(event) {
         $('#blogDescription').summernote({
             height: 150, //set editable area's height
         });
+        $("#blogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
         $('#blogDescription').summernote('code', '');
     }
 
@@ -124,6 +136,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             return;
         }
         santhiBlog.date = (new Date()).getTime();
+        $("#santhiBlogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
         santhiBlog.description = $('#santhiBlogDescription').summernote('code');
         $http.post("/api/santhiblog/save", santhiBlog).then(function(response) {
             $scope.successAlert = response.data;
@@ -141,6 +154,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         $('#santhiBlogDescription').summernote({
             height: 150, //set editable area's height
         });
+        $("#santhiBlogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
         $('#santhiBlogDescription').summernote('code', '');
     }
 
@@ -238,12 +252,14 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', fu
         }];
         $scope.event = response.data;
         $('.selectpicker').selectpicker('val', $scope.event.type);
+        $("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
         $('#summernote').summernote('insertNode', $($scope.event.description)[0]);
     });
     $scope.save = function(eve) {
         eve.startDate = $('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.endDate = $('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.regClosesOn = $('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        $("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
         eve.description = $('#summernote').summernote('code');
 
         $http.post("/api/edit/event", eve).then(function(response) {
