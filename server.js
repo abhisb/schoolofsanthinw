@@ -214,11 +214,11 @@ app.post('/api/santhiblog/save', function(req, res) {
 
 app.post('/api/blog/delete', function(req, res) {
     service.deleteBlogs(req.body);
-    res.status(200).send("The event has been deleted successfully!!");
+    res.status(200).send("The blog has been deleted successfully!!");
 });
 app.post('/api/santhiblog/delete', function(req, res) {
     service.deleteSanthiBlogs(req.body);
-    res.status(200).send("The event has been deleted successfully!!");
+    res.status(200).send("The Santhi blog has been deleted successfully!!");
 });
 
 app.post('/api/blog/save', function(req, res) {
@@ -229,6 +229,16 @@ app.post('/api/blog/save', function(req, res) {
 app.post('/api/save/news', function(req, res) {
     service.saveNews(req.body);
     res.status(200).send("News has been saved successfully!!");
+});
+
+app.post('/api/update/knowyoga', function(req, res) {
+    service.updateKnowYogaBlog(req.body);
+    res.status(200).send("Blog has been updated successfully!!");
+});
+
+app.post('/api/update/santhiblog', function(req, res) {
+    service.updateSanthiBlog(req.body);
+    res.status(200).send("Blog has been updated successfully!!");
 });
 
 // listen (start app with node server.js) ======================================
