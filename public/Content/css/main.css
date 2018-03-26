@@ -296,7 +296,19 @@ section#bs-example-navbar-collapse-1 {
     padding-top: 2px;
     cursor: pointer;
 }
-
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-image: url(../img/mapLoader.gif);
+    width: 100px!important;
+    height: 100px!important;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#mapContainer {
+    height: 200px;
+}
 .input-group {
     border: 0;
 }

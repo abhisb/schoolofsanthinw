@@ -333,13 +333,14 @@ app1.controller('homeController', function ($scope, $location, $http, eventsServ
         })
 
 
-    getAllNews();
+    
     $scope.newsItems = [];
     function getAllNews() {
         $http.get('/api/news/getAll').then(function (res) {
             //$scope.newsDataSet = [];
             console.log(res);
             $scope.newsItems = res.data;
+            getAllNews();
         });
     }
 
@@ -571,17 +572,35 @@ app1.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
     };
 });
 app1.controller('contactController', function ($scope, $http) {
-    $scope.loadedInIndia = false;
-     $http.get("/api/event/getIp").then(function(response){
-        var locationDetails = response.data;
-        if(locationDetails.country.toLowerCase() == "india" && locationDetails.countryCode.toLowerCase() == "in"){
-            $scope.loadedInIndia = true;
-        }
-        else {
-            $scope.loadedInIndia = false;
-        }    
-        $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDC3m9iYece09zWTYbxV9J8tiGWA7d0CCk";    
-    })        
+    $scope.loadedInIndia = false;  
+
+    if (navigator.geolocation) {
+        var location_timeout = setTimeout("$scope.locationFailed = true;", 10000);
+        navigator.geolocation.getCurrentPosition(function(position) {
+            $http({
+              method: 'GET',
+              url: 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDC3m9iYece09zWTYbxV9J8tiGWA7d0CCk&latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&sensor=false'
+            }).then(function successCallback(response) {
+                if(response.data) {
+                    $scope.locationFailed = false;
+                    for(var i=0; i<response.data.results.length; i++){
+                        for(var j=0; j<response.data.results[i].address_components.length; j++){
+                            if(response.data.results[i].address_components[j].long_name.toLowerCase() == "india" && response.data.results[i].address_components[j].short_name.toLowerCase() == "in"){
+                                $scope.loadedInIndia = true;
+                                return;  
+                            }
+                        }
+                    }
+                }
+              }, function errorCallback(response) {
+                 console.log(response)
+              });                      
+        });
+    }
+    else{
+        $scope.locationFailed = true;
+    }
+
 });
 app1.controller('yogaBlogController', function ($scope, $http, $location) {
     $scope.blog = {};
