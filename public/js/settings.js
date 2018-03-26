@@ -39,6 +39,23 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     }
     $scope.getAllShanthiBlogs();
 
+    $scope.editYogaBlog = function(id){
+        $http.get('/api/yoga/getYoga/'+id).then(function(res) {
+            $scope.blog = {};
+            // $("#blogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
+            // $('#blogDescription').summernote('code', '');
+            // angular.element("input[type='file']").val(null);
+
+            // $timeout(function() {
+            //     $scope.getAllYogaBlogs();
+            //     $scope.$apply();
+            // });
+            $scope.blog = res.data;
+        });  
+
+
+    }
+
     $scope.deleteSanthiBlogs = function(id) {
         var data = {
             "id": id
@@ -60,7 +77,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             }
         });
     }
-    
+
     $scope.saveNews = function() {
 
         if (!$scope.news.title || !$scope.news.description || !$scope.news.highlight) {
