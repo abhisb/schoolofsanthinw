@@ -38,6 +38,18 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         });
     }
     $scope.getAllShanthiBlogs();
+
+    $scope.deleteSanthiBlogs = function(id) {
+        var data = {
+            "id": id
+        }
+        $http.post('/api/santhiblog/delete', data).then(function(res) {
+            if(res) {
+                $scope.getAllShanthiBlogs();
+            }
+        });
+    }
+
     $scope.saveNews = function() {
 
         if (!$scope.news.title || !$scope.news.description || !$scope.news.highlight) {
@@ -126,7 +138,6 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         $('#blogDescription').summernote({
             height: 150, //set editable area's height
         });
-        $("#blogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
         $('#blogDescription').summernote('code', '');
     }
 
@@ -155,7 +166,6 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         $('#santhiBlogDescription').summernote({
             height: 150, //set editable area's height
         });
-        $("#santhiBlogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
         $('#santhiBlogDescription').summernote('code', '');
     }
 
