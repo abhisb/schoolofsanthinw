@@ -333,14 +333,15 @@ app1.controller('homeController', function ($scope, $location, $http, eventsServ
         })
 
 
-    
+    getAllNews();
     $scope.newsItems = [];
-    function getAllNews() {
+    function getAllNews(flag) {
         $http.get('/api/news/getAll').then(function (res) {
             //$scope.newsDataSet = [];
             console.log(res);
             $scope.newsItems = res.data;
-            getAllNews();
+            if(flag)
+                getAllNews(true);
         });
     }
 
