@@ -43,6 +43,7 @@ app.post('/api/yogablog/save', function(req, res) {
     service.saveYogaBlog(req.body);
     res.status(200).send("The blog has been saved successfully!!");
 });
+
 /*app.post('/api/blog/save', function(req, res) {
     service.saveBlog(req.body);
     res.status(200).send("The blog has been saved successfully!!");

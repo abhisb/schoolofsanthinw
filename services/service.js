@@ -292,15 +292,16 @@ Service.prototype.saveYogaBlog = function (blog) {
         var filePath = './public/bin/yoga/' + token + ".jpg";
     }
     blog.thumbnail = "";
-    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+    require("fs").writeFile(filePath, base64Data, 'base64', function(err) {
         console.log(err);
     });
-    jsonfile.writeFile(file, blog, function (err) {
+    jsonfile.writeFile(file, blog, function(err) {
         console.error(err)
     })
 };
 Service.prototype.saveBlog = function (blog) {
-    var token = randtoken.generate(5);
+    //var token = randtoken.generate(5);
+    var token = crypto.randomBytes(8).toString('hex');
     var file = './bin/blog/' + token + '.json';
     blog.id = token;
     if (new RegExp(/^data:image\/png;base64,/).test(blog.thumbnail)) {
@@ -375,9 +376,11 @@ Service.prototype.ReadAllKnowYogaBlogs = function () {
 };
 
 Service.prototype.saveYogaBlog = function (blog) {
-    var token = randtoken.generate(5);
+    //var token = randtoken.generate(5);
+    var token = crypto.randomBytes(8).toString('hex');
     var file = './bin/yoga/' + token + '.json';
     blog.id = token;
+    blog.thumbnail = blog.image;
     if (new RegExp(/^data:image\/png;base64,/).test(blog.thumbnail)) {
         var base64Data = blog.thumbnail.replace(/^data:image\/png;base64,/, "");
         blog.thumbnailSrc = '../bin/yoga/' + token + ".png";

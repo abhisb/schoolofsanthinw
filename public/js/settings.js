@@ -11,7 +11,17 @@ sosSettings.config(function($routeProvider, $locationProvider) {
             controller: "settingsController"
         });
 });
-
+sosSettings.directive('onErrorSrc', function() {
+    return {
+        link: function(scope, element, attrs) {
+          element.bind('error', function() {
+            if (attrs.src != attrs.onErrorSrc) {
+              attrs.$set('src', attrs.onErrorSrc);
+            }
+          });
+        }
+    }
+});
 sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
     $scope.news = {};
     $scope.newsDataSet = [];
@@ -147,8 +157,8 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             return;
         }
         blog.date = (new Date()).getTime();
-        blog.description = $('#blogDescription').summernote('code');
-        $http.post("/api/blog/save", blog).then(function(response) {
+        blog.description = $('#blogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
+        $http.post("/api/yogablog/save", blog).then(function(response) {
             $scope.successAlert = response.data;
             $scope.blog = {};
             $("#blogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
@@ -161,7 +171,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             });
         });
     };
-
+    
     $scope.enableDescription = function(event) {
         $('#blogDescription').summernote({
             height: 150, //set editable area's height
