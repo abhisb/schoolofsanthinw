@@ -1,36 +1,65 @@
 <section class="container-fluid">
 	<img src="{{yoga.banner}}" class="banner" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
-  <section class="col-md-8">
+  <section class="col-md-9">
       <div class="card row homecard" ng-repeat="blog in yoga.blogs">
           <div class="card-body">
           <image src="{{blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
           <div style="cursor:pointer" data-target="#detailedYogaModal">
               <h2>{{blog.title}}</h2>
-              <p>{{blog.highlightText}} <a href="/#/yoga/{{blog.id}}">More...</a></p>
+              <p>{{blog.highlightText}} <a class="readmore" href="/#/yoga/{{blog.id}}">Read More...</a></p>
           </div>
           </div>
         </div>
   </section>
-  <section class="col-md-4 side-panel">
+  <section class="col-md-3 side-panel">
     <aside class="searchbx">
       <form class="search">
         <input type="text" name="" class="form-control" placeholder="Search...">
-        <button type="submit" class="btn btn-default"></button>
+        <button type="submit" class="btn btn-default">
+          <img src="../Content/img/magnifier.png" alt="" />
+        </button>
       </form>
     </aside>
-      <aside class="popular-posts">
-      <h3>Popular posts</h3>
-      <p>No posts to display</p></aside>
+    <aside class="listing">
+          <h2 class="heading">Popular Post</h2>
+          <ul>
+            <li>
+              <a href="">Workshop and Spiritual Retreats</a>
+            </li>
+            <li>
+              <a href="">Satsang</a>
+            </li>
+            <li>
+              <a href="">Teacher Training Course</a>
+            </li>
+            <li>
+              <a href="">Satsang</a>
+            </li>
+          </ul>
+        </aside>
+      <!-- <aside class="popular-posts">
+      <h3 class="heading">Popular posts</h3>
+      <p>No posts to display</p></aside> -->
       <aside class="youtube">
       <!-- <h3>Enlightment without action</h3> -->
           <div class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/uAqMsWaVSIY" allowfullscreen></iframe>
         </div>
       </aside>
-      <aside class="programs">
+      <aside class="socialmedia">
+            <a href=""><img src="../Content/img/fb.png" alt="facebook"></a>
+            <a href=""><img src="../Content/img/linkedin.png" alt="linkedin"></a>
+            <a href=""><img src="../Content/img/twitter.jpg" alt="twitter"></a>
+            <a href=""><img src="../Content/img/youtube.jpg" alt="youtube"></a>
+        </aside>
+        <aside class="popular-posts">
+            <h3 class="heading">Programs</h3>
+            <p>No posts to display</p>
+        </aside>
+      <!-- <aside class="programs">
         <h3>Programs</h3>
         <p>No programs to displayknow</p>
-      </aside>
+      </aside> -->
   </section>
 </section>
 
