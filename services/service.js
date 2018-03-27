@@ -674,7 +674,10 @@ Service.prototype.deleteKnowYogaBlogs = function (req) {
     fs.unlink('./bin/yoga/' + req.id + '.json', function (res) {
         console.log(res);
     });
-    fs.unlink('./public/bin/yoga/' + req.id + '.json', function (err) {
+    fs.unlink('./public/bin/yoga/' + req.id + '.jpg', function (err) {
+        console.log(err);
+    });
+    fs.unlink('./public/bin/yoga/' + req.id + '.png', function (err) {
         console.log(err);
     });
 };
@@ -683,7 +686,10 @@ Service.prototype.deleteSanthiBlogs = function (req) {
     fs.unlink('./bin/santhiblogs/' + req.id + '.json', function (err) {
         console.log(err);
     });
-    fs.unlink('./public/bin/santhiblogs/' + req.id + '.json', function (err) {
+    fs.unlink('./public/bin/santhiblogs/' + req.id + '.jpg', function (err) {
+        console.log(err);
+    });
+    fs.unlink('./public/bin/santhiblogs/' + req.id + '.png', function (err) {
         console.log(err);
     });
 };

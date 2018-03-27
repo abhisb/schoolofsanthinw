@@ -210,12 +210,12 @@ app.post('/api/news/delete', function(req, res) {
 
 app.post('/api/santhiblog/save', function(req, res) {
     service.saveSanthiBlog(req.body);
-    res.status(200).send("The blog has been saved successfully!!");
+    res.status(200).send({status:200, "message": "The blog has been saved successfully!!!"});
 });
 
 app.post('/api/blog/delete', function(req, res) {
     service.deleteKnowYogaBlogs(req.body);
-    res.status(200).send("The blog has been deleted successfully!!");
+    res.status(200).send({status:200, "message": "The blog has been deleted successfully!!"});
 });
 app.post('/api/santhiblog/delete', function(req, res) {
     service.deleteSanthiBlogs(req.body);
@@ -224,7 +224,7 @@ app.post('/api/santhiblog/delete', function(req, res) {
 
 app.post('/api/blog/save', function(req, res) {
     service.saveKnowYogaBlog(req.body);
-    res.status(200).send("The blog has been saved successfully!!");
+    res.status(200).send({status:200, "message": "The blog has been saved successfully!!!"});
 });
 
 app.post('/api/save/news', function(req, res) {
@@ -234,7 +234,7 @@ app.post('/api/save/news', function(req, res) {
 
 app.post('/api/update/knowyoga', function(req, res) {
     service.updateKnowYogaBlog(req.body);
-    res.status(200).send("Blog has been updated successfully!!");
+    res.status(200).send({status:200, "message": "Blog has been updated successfully!!"});
 });
 
 app.post('/api/update/santhiblog', function(req, res) {

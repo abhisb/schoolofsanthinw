@@ -39,7 +39,8 @@
                     </section>
                 </section>
                 <section class="form-group" style="text-align: center;">
-                    <button type="submit" class="btn btn-info" ng-click="saveBlog(blog)">Save Blog</button>
+                    <button ng-if="!isEditYogaBlog" type="submit" class="btn btn-info" ng-click="saveBlog(blog)">Save Blog</button>
+                    <button ng-if="isEditYogaBlog" type="submit" class="btn btn-info" ng-click="updateBlog(blog)">Update Blog</button>
                 </section>
 
             </section>
