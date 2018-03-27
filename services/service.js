@@ -350,7 +350,7 @@ Service.prototype.ReadAllNews = function () {
 };
 
 
-Service.prototype.ReadAllYogaBlogs = function () {
+Service.prototype.ReadAllKnowYogaBlogs = function () {
     var blogs = [];
     return new Promise(
         function (resolve, reject) {
@@ -400,7 +400,7 @@ Service.prototype.getBlog = function (id) {
     return new Promise(
         function (resolve, reject) {
             var fileName = id + '.json';
-            jsonfile.readFile('./bin/blogs/' + fileName,
+            jsonfile.readFile('./bin/yoga/' + fileName,
                 (error, data) => {
                     if (error) {
                         reject(error);
@@ -501,18 +501,18 @@ Service.prototype.deleteNews = function (req) {
     });
 };
 
-Service.prototype.saveBlog = function (event) {
+Service.prototype.saveKnowYogaBlog = function (event) {
     var token = crypto.randomBytes(8).toString('hex');
-    var file = './bin/blogs/' + token + '.json';
+    var file = './bin/yoga/' + token + '.json';
     event.id = token;
     if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
         var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
-        event.image = '../bin/blogs/' + token + ".png";
-        var filePath = './public/bin/blogs/' + token + ".png";
+        event.image = '../bin/yoga/' + token + ".png";
+        var filePath = './public/bin/yoga/' + token + ".png";
     } else {
         var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
-        event.image = '../bin/blogs/' + token + ".jpg";
-        var filePath = './public/bin/blogs/' + token + ".jpg";
+        event.image = '../bin/yoga/' + token + ".jpg";
+        var filePath = './public/bin/yoga/' + token + ".jpg";
     }
     require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
         console.log(err);
@@ -545,16 +545,16 @@ Service.prototype.saveSanthiBlog = function (event) {
 
 };
 
-Service.prototype.readAllBlogs = function () {
+/*Service.prototype.readAllknowYogaBlogs = function () {
     var blogs = [];
     return new Promise(
         function (resolve, reject) {
             try {
-                var data = fs.readdirSync('./bin/blogs');
+                var data = fs.readdirSync('./bin/yoga');
 
                 var length = data.length;
                 data.forEach(function (fileName, i) {
-                    var event = readFilePromisified('./bin/blogs/' + fileName).then((blog, error) => {
+                    var event = readFilePromisified('./bin/yoga/' + fileName).then((blog, error) => {
                         if (error) {
                             reject(error);
                         } else {
@@ -570,7 +570,7 @@ Service.prototype.readAllBlogs = function () {
 
         });
 
-};
+};*/
 
 Service.prototype.getAllSanthiBlogs = function () {
     var blogs = [];
@@ -598,20 +598,20 @@ Service.prototype.getAllSanthiBlogs = function () {
 };
 
 Service.prototype.updateKnowYogaBlog = function (event) {
-    var file = './bin/blogs/' + event.id + '.json';
+    var file = './bin/yoga/' + event.id + '.json';
     if (event.image != "") {
         if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
             var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
-            event.imageSrc = '../bin/blogs/' + event.id + ".png";
-            var filePath = './public/bin/blogs/' + event.id + ".png";
-            fs.unlink('./public/bin/blogs/' + event.id + '.png', function (err) {
+            event.imageSrc = '../bin/yoga/' + event.id + ".png";
+            var filePath = './public/bin/yoga/' + event.id + ".png";
+            fs.unlink('./public/bin/yoga/' + event.id + '.png', function (err) {
                 console.log(err);
             });
         } else {
             var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
-            event.imageSrc = '../bin/blogs/' + event.id + ".jpg";
-            var filePath = './public/bin/blogs/' + event.id + ".jpg";
-            fs.unlink('./public/bin/blogs/' + event.id + '.jpg', function (err) {
+            event.imageSrc = '../bin/yoga/' + event.id + ".jpg";
+            var filePath = './public/bin/yoga/' + event.id + ".jpg";
+            fs.unlink('./public/bin/yoga/' + event.id + '.jpg', function (err) {
                 console.log(err);
             });
         }
@@ -667,11 +667,11 @@ Service.prototype.deleteSanthiBlog = function (req) {
     });
 };*/
 
-Service.prototype.deleteBlogs = function (req) {
+Service.prototype.deleteKnowYogaBlogs = function (req) {
     fs.unlink('./bin/yoga/' + req.id + '.json', function (res) {
         console.log(res);
     });
-    fs.unlink('./public/yoga/blogs/' + req.id + '.json', function (err) {
+    fs.unlink('./public/bin/yoga/' + req.id + '.json', function (err) {
         console.log(err);
     });
 };

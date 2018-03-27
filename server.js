@@ -87,14 +87,14 @@ app.delete('/api/delete/event', function(req, res) {
     res.status(200).send("The event has been deleted successfully!!");
 });
 
-app.get('/api/yoga/getAllBlogs', function(req, res) {
+/*app.get('/api/yoga/getAllBlogs', function(req, res) {
     var events;
     service.ReadAllYogaBlogs().then((result) => {
         res.send(result);
     }).catch(function(error) {
         res.status(500).send(error);
     });
-});
+});*/
 
 /***************************************************/
 
@@ -147,7 +147,7 @@ app.get('/api/logout', function(req, res) {
 
 app.get('/api/yogaBlog/getAllBlogs', function(req, res) {
     var events;
-    service.ReadAllYogaBlogs().then((result) => {
+    service.ReadAllKnowYogaBlogs().then((result) => {
         res.send(result);
     }).catch(function(error) {
         res.status(500).send(error);
@@ -213,7 +213,7 @@ app.post('/api/santhiblog/save', function(req, res) {
 });
 
 app.post('/api/blog/delete', function(req, res) {
-    service.deleteBlogs(req.body);
+    service.deleteKnowYogaBlogs(req.body);
     res.status(200).send("The blog has been deleted successfully!!");
 });
 app.post('/api/santhiblog/delete', function(req, res) {
@@ -222,7 +222,7 @@ app.post('/api/santhiblog/delete', function(req, res) {
 });
 
 app.post('/api/blog/save', function(req, res) {
-    service.saveBlog(req.body);
+    service.saveKnowYogaBlog(req.body);
     res.status(200).send("The blog has been saved successfully!!");
 });
 
