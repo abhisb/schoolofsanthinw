@@ -90,7 +90,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
 
     $scope.saveNews = function() {
 
-        if (!$scope.news.title || !$scope.news.description || !$scope.news.highlight) {
+        if (!$scope.news.title || !$scope.news.description) {
             return;
         }
 
@@ -101,13 +101,13 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         var data = {
             title: $scope.news.title,
             description: $scope.news.description,
-            highlight: $scope.news.highlight
+            //highlight: $scope.news.highlight
         }
         $http.post('/api/save/news', data).then(function(result) {
             console.log(result);
             $scope.news.title = '';
             $scope.news.description = '';
-            $scope.news.highlight = '';
+            //$scope.news.highlight = '';
             getAllNews();
         }, function(error) {
             console.log(error);
@@ -144,7 +144,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             getAllNews();
             $scope.news.title = '';
             $scope.news.description = '';
-            $scope.news.highlight = '';
+            //$scope.news.highlight = '';
         });
         console.log(id)
     }
