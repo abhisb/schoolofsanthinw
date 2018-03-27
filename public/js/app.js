@@ -26,7 +26,7 @@ app1.config(function ($routeProvider, $locationProvider) {
         })
         .when("/yoga/:yogaId", {
             templateUrl: "views/yoga-blog-detail.html",
-            controller: 'yogaBlogDetailCtrl'
+            controller: 'homeController'
         })
         .when("/santhi/:santhiId", {
             templateUrl: "views/santhi-blog-detail.html",
@@ -273,7 +273,7 @@ app1.controller('yogaBlogHomeController', function ($scope, $location, $http, ev
 });
 
 
-app1.controller('homeController', function ($scope, $location, $http, eventsService, $timeout) {
+app1.controller('homeController', function ($scope, $location, $routeParams, $http, eventsService, $timeout) {
     //$scope.toggleLink = true;
     $scope.toggle = function () {
         $('.tab-disappear').toggle('slow', function () {
@@ -333,6 +333,9 @@ app1.controller('homeController', function ($scope, $location, $http, eventsServ
             });
         })
 
+    $http.get('/api/yoga/getYoga/' + $routeParams.yogaId).then(function(res) {
+        $scope.details = res.data;
+    });
 
     getAllNews();
     $scope.newsItems = [];
