@@ -6,6 +6,10 @@ sosSettings.config(function($routeProvider, $locationProvider) {
             templateUrl: "/views/create-event.html",
             controller: "eventController"
         })
+        .when("/settings_new", {
+            templateUrl: "../views/settings.html",
+            controller: "eventController"
+        })
         .otherwise({
             templateUrl: "/views/settings.html",
             controller: "settingsController"
