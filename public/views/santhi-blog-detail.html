@@ -18,7 +18,7 @@
 	      	</h1>
 	      	<ul>
 	      		<li>
-                     <p ng-bind-html="details.description | to_trusted"></p>
+                     <p ng-bind-html="details.description || details.content | to_trusted"></p>
 	      		</li>
 	      	</ul>
 	      </div>
