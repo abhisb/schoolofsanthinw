@@ -43,7 +43,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     $scope.getAllYogaBlogs();
 
     $scope.getAllShanthiBlogs = function() {
-        $http.get('api/santhiblog/getAllBlogs').then(function(res) {
+        $http.get('/api/santhiblog/getAllBlogs').then(function(res) {
             $scope.shanthi.blogs = res.data;
         });
     }
@@ -188,6 +188,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         santhiBlog.date = (new Date()).getTime();
         $("#santhiBlogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
         santhiBlog.description = $('#santhiBlogDescription').summernote('code');
+        santhiBlog.thumbnailSrc = santhiblog.image;
         $http.post("/api/santhiblog/save", santhiBlog).then(function(response) {
             $scope.successAlert = response.data;
             $scope.santhiBlog = {};

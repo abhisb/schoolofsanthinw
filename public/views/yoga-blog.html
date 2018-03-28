@@ -3,7 +3,7 @@
   <section class="col-md-9">
       <div class="card row homecard" ng-repeat="blog in yoga.blogs">
           <div class="card-body">
-          <image ng-src="{{blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
+          <image ng-src="{{blog.thumbnailSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
           <div style="cursor:pointer" data-target="#detailedYogaModal">
               <h2>{{blog.title}}</h2>
               <p>{{blog.highlightText}} <a class="readmore" href="/#/yoga/{{blog.id}}">Read More...</a></p>
@@ -54,7 +54,27 @@
         </aside>
         <aside class="popular-posts">
             <h3 class="heading">Programs</h3>
-            <p>No posts to display</p>
+            <p ng-if="!events.length">No posts to display</p>
+             <div ng-if="events.length" class="list-group">
+                    <a ng-repeat="event in events" href="/#/event/{{event.id}}" class="list-group-item no-padding text-left">
+                        <section class="list-group-item-text">
+                            <div class="input-group">
+                                <span class="input-group-addon no-padding event-date" id="sizing-addon1">
+                                    <section class="date-section">
+                                        <span class="font-2">{{event.startDay}}</span>
+                                        <br>
+                                        <span class="font-month">{{event.startMonth}} '{{event.startYear}}</span>
+                                    </section>
+                                </span>
+                                <section class="col-md-12 ml-8">
+                                    <span class="event-title">{{event.slicedName}} ..</span>
+                                    <br>
+                                    <span class="event-text">{{event.slicedDesc}} ...</span>
+                                </section>
+                            </div>
+                        </section>
+                    </a>
+                </div>
         </aside>
       <!-- <aside class="programs">
         <h3>Programs</h3>

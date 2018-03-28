@@ -10,7 +10,7 @@
 <section class="container-fluid">
 	<section class="row form-horizontal" >
 	   <section class="col-md-9">
-	      <img class="img" ng-src="{{details.thumbnailSrc}}" alt="" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'/>
+	      <img class="img" ng-src="{{details.thumbnailSrc || details.image}}" alt="" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'/>
 	      <div class="cntarea">
 	      	<h1 class="headmain">
 	      		{{details.title}}

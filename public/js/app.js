@@ -26,7 +26,7 @@ app1.config(function ($routeProvider, $locationProvider) {
         })
         .when("/yoga/:yogaId", {
             templateUrl: "views/yoga-blog-detail.html",
-            controller: 'homeController'
+            controller: 'yogaBlogDetailCtrl'
         })
         .when("/santhi/:santhiId", {
             templateUrl: "views/santhi-blog-detail.html",
@@ -889,6 +889,36 @@ app1.controller('loginController', ['$scope', '$http', function ($scope, $http) 
 //From Esterrado team
 app1.controller('yogaBlogDetailCtrl', function($scope,  $routeParams, $location, $http, eventsService, $timeout) {
     console.log($routeParams.yogaId)
+    $scope.goToEvent = function (eventObj) {
+        var loc = '/event/' + eventObj.id;
+        $location.path(loc);
+        window.location.reload();
+    };
+    var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var events = $http.get("/api/event/getAll")
+        .then(function (response, err) {
+            if (err)
+                return;
+            angular.forEach(response.data, function (event) {
+                event.startYear = event.startDate.split('/')[2].slice(2);
+                event.startMonth = event.startDate.split('/')[1];
+                event.startDay = event.startDate.split('/')[0];
+                event.slicedName = event.name.slice(0, 39);
+                event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95)+"...";
+            });
+            var events = response.data.sort(function (a, b) {
+                return new Date(a.startDate) - new Date(b.startDate);
+            });
+            eventsService.setEvents(events);
+            $scope.events = _.filter(events, function (obj, i) {
+                return new Date(obj.startDate) >= new Date();
+            });
+            $scope.events = _.filter($scope.events, function (obj, i) {
+                return i <= 3;
+            });
+        })
+
     $http.get('/api/yoga/getYoga/' + $routeParams.yogaId).then(function(res) {
         $scope.details = res.data;
     });
@@ -896,6 +926,36 @@ app1.controller('yogaBlogDetailCtrl', function($scope,  $routeParams, $location,
 
 app1.controller('santhiBlogDetailCtrl', function($scope,  $routeParams, $location, $http, eventsService, $timeout) {
     console.log($routeParams.santhiId)
+    $scope.goToEvent = function (eventObj) {
+        var loc = '/event/' + eventObj.id;
+        $location.path(loc);
+        window.location.reload();
+    };
+    var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var events = $http.get("/api/event/getAll")
+        .then(function (response, err) {
+            if (err)
+                return;
+            angular.forEach(response.data, function (event) {
+                event.startYear = event.startDate.split('/')[2].slice(2);
+                event.startMonth = event.startDate.split('/')[1];
+                event.startDay = event.startDate.split('/')[0];
+                event.slicedName = event.name.slice(0, 39);
+                event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95)+"...";
+            });
+            var events = response.data.sort(function (a, b) {
+                return new Date(a.startDate) - new Date(b.startDate);
+            });
+            eventsService.setEvents(events);
+            $scope.events = _.filter(events, function (obj, i) {
+                return new Date(obj.startDate) >= new Date();
+            });
+            $scope.events = _.filter($scope.events, function (obj, i) {
+                return i <= 3;
+            });
+        })
+
     $http.get('/api/santhi/getSanthi/' + $routeParams.santhiId).then(function(res) {
          $scope.details = res.data;
     });
