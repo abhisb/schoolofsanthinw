@@ -4,7 +4,7 @@
         <div class="card row homecard" ng-repeat="blog in shanthi.blogs">
             <div class="card-body">
                 
-                    <image src="{{blog.image}}" alt="Shanthi" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
+                    <image src="{{blog.thumbnailSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
                
                 <div class="cardbodytxt" data-target="#detailedShanthiModal">
                     <h2>{{blog.title}}</h2>
@@ -56,8 +56,28 @@
             <a href=""><img src="../Content/img/youtube.jpg" alt="youtube" /></a>
         </aside>
         <aside>
-            <h3 class="heading">Programs</h3>
-            <p>No programs to displayed</p>
+           <h3 class="heading">Programs</h3>
+            <p ng-if="!events.length">No posts to display</p>
+             <div ng-if="events.length" class="list-group">
+                    <a ng-repeat="event in events" href="/#/event/{{event.id}}" class="list-group-item no-padding text-left">
+                        <section class="list-group-item-text">
+                            <div class="input-group">
+                                <span class="input-group-addon no-padding event-date" id="sizing-addon1">
+                                    <section class="date-section">
+                                        <span class="font-2">{{event.startDay}}</span>
+                                        <br>
+                                        <span class="font-month">{{event.startMonth}} '{{event.startYear}}</span>
+                                    </section>
+                                </span>
+                                <section class="col-md-12 ml-8">
+                                    <span class="event-title">{{event.slicedName}} ..</span>
+                                    <br>
+                                    <span class="event-text">{{event.slicedDesc}} ...</span>
+                                </section>
+                            </div>
+                        </section>
+                    </a>
+                </div>
         </aside>
         
     </section>
