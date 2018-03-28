@@ -296,7 +296,7 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', fu
         if (err)
             return;
         $scope.types = [{
-            name: "TTC"
+            name: "TTC" 
         }, {
             name: "Satsang"
         }, {
@@ -313,7 +313,7 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', fu
         eve.startDate = $('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.endDate = $('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.regClosesOn = $('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
-        $("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
+        //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
         eve.description = $('#summernote').summernote('code');
 
         $http.post("/api/edit/event", eve).then(function(response) {
