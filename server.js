@@ -103,7 +103,7 @@ app.delete('/api/delete/event', function(req, res) {
 app.get('/settings', function(req, res) {
     var activeSession = req.session;
     if (activeSession.isActive) {
-        res.render('settings_new.html');
+        res.render('../public/settings/settings.html');
     } else {
         res.render('unauthorized.html');
     }
