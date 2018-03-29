@@ -853,7 +853,7 @@ app1.controller('loginController', ['$scope', '$http', function ($scope, $http) 
         }
         $http.post("/api/login", data).then(function (response) {
             if (response) {
-                location.href = './settings';
+                location.href = '/settings_new';
             }
         }, function () {
             $scope.invalidUser = true;

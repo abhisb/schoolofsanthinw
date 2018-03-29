@@ -7,12 +7,18 @@
     <hr />
 
     <ul class="nav nav-tabs nav-justified ml-10">
-    <li role="presentation" ui-route="/tab1" ng-class="{active: $uiRoute}"><a href="#/tab1">Events</a></li>
-    <li role="presentation" ui-route="/tab1" ng-class="{active: $uiRoute}"><a href="#/tab2">NEWS</a></li>
-    <li role="presentation" ui-route="/tab1" ng-class="{active: $uiRoute}"><a href="#/tab3">Know Yoga</a></li>
-    <li role="presentation" ui-route="/tab1" ng-class="{active: $uiRoute}"><a href="#/tab4">Shanthi Speaks</a></li>
-  </ul>
-
-  <div ng-view=""></div>
+      <li role="presentation" class="active"><a  data-target="#events" ui-sref="/events">Events</a></li>
+      <li role="presentation" data-toggle="tab"><a data-target="#news" ui-sref="/news">NEWS</a></li>
+      <li role="presentation" data-toggle="tab"><a data-target="#yoga" ui-sref="/events">Know Yoga</a></li>
+      <li role="presentation" data-toggle="tab"><a data-target="#santhi" ui-sref="/events">Shanthi Speaks</a></li>
+    </ul>
+            </section>
+      
+     <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="events"><section class="col-md-12" ui-view="events"></section></div>
+        <div role="tabpanel" class="tab-pane" id="news"><section class="col-md-12" ui-view="news"></section></div>
+        <div role="tabpanel" class="tab-pane" id="yoga"><section class="col-md-12" ui-view="yoga"></section></div>
+        <div role="tabpanel" class="tab-pane" id="santhi"><section class="col-md-12" ui-view="santhi"></section></div>
+      </div>
   </section>
     

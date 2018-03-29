@@ -1,24 +1,32 @@
-sosSettings.config(function($routeProvider, $locationProvider) {
-    $locationProvider.hashPrefix('');
-    $routeProvider
-        .when("/edit/event/:id", {
-            templateUrl: "/views/create-event.html",
-            controller: "eventController"
-        })
-        .when('/events', {
-            template: '<div>Tab1</div>'
-        })
-        .when('/news', {
-            template: '<div>Tab2</div>'
-        })
-        .when('/knowyoga', {
-            template: '<div>Tab1</div>'
-        })
-        .when('/santhispeaks', {
-            template: '<div>Tab2</div>'
-        })
-        .otherwise({
-            templateUrl: "/views/settings.html",
-            controller: "settingsController"
-        });
-});
+sosSettings.config (['$urlRouterProvider', '$stateProvider',  function ($urlRouterProvider, $stateProvider) {
+    $urlRouterProvider.otherwise ('/settings');
+
+    $stateProvider.
+        state ('settings', {
+        url: '/settings',
+        templateUrl: 'settings.html',
+      }).
+        state ('about', {
+        url: '/about',
+        templateUrl: 'about.html',
+        controller: 'aboutCtrl'
+      }).
+        state ('contact', {
+        url: '/contact',
+        templateUrl: 'contact.html',
+        controller: 'contactoneCtrl'
+      })
+        // Sub page
+        .state('contact.one',{
+        url: '/contact.contactone',
+        templateUrl: 'one.html',
+        controller: 'contactoneCtrl'
+      })
+        // Sub page
+        .state('contact.two',{
+        url: '/contact.contacttwo',
+        templateUrl: 'two.html',
+        controller: 'contacttwoCtrl'
+      });
+
+  }]);
