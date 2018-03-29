@@ -95,7 +95,7 @@ Service.prototype.EditEvent = function (event) {
                 console.log(err);
             });
         }
-        event.image = "";
+        //event.image = "";
         require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
             console.log(err);
         });

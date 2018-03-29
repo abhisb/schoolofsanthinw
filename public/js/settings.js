@@ -33,6 +33,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     $scope.yoga.blogs = [];
     $scope.shanthi = {};
     $scope.shanthi.blogs = []; 
+    $scope.editYoga = false;
     $scope.logout = function() {
         $http.get('/api/logout').then(function() {
             location.href = '../#/login';
@@ -54,6 +55,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     $scope.getAllShanthiBlogs();
 
     $scope.editYogaBlog = function(id){
+        $scope.editYoga = true;
         $http.get('/api/yoga/getYoga/'+id).then(function(res) {
             $scope.blog = {};
             // $("#blogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
@@ -68,6 +70,15 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         });  
 
 
+    }
+
+    $scope.updateYogaBlog = function (blog) {
+        $scope.editYoga = false;
+        $http.post('/api/update/knowyoga', blog).then(function(res) {
+            $scope.blog = {};
+            $scope.yoga.blogs = [];
+            $scope.getAllYogaBlogs();
+        });  
     }
 
     $scope.deleteSanthiBlogs = function(id) {
