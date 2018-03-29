@@ -1339,7 +1339,7 @@ aside.youtube {
 .homecard{
     position: relative;
 }
-.homecard .readmore {
+.homecard .readmore, readmore {
     position: absolute;
     bottom: 15px;
     right: 15px;

@@ -41,16 +41,26 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         })
     }
 
-    $scope.getAllYogaBlogs = function() {
+    $scope.getAllYogaBlogs = function(flag) {
         $http.get('/api/yogaBlog/getAllBlogs').then(function(res) {
-            $scope.yoga.blogs = res.data;          
+            $scope.yoga.blogs = res.data; 
+            if(flag){
+                $timeout(function(){
+                    $scope.$apply();
+                },300)
+            }         
         });
     }
     $scope.getAllYogaBlogs();
 
-    $scope.getAllShanthiBlogs = function() {
+    $scope.getAllShanthiBlogs = function(flag) {
         $http.get('/api/santhiblog/getAllBlogs').then(function(res) {
             $scope.shanthi.blogs = res.data;
+            if(flag){
+                $timeout(function(){
+                    $scope.$apply();
+                },300)
+            }  
         });
     }
     $scope.getAllShanthiBlogs();
@@ -74,7 +84,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             $scope.yoga.blogs = [];
             $scope.editYoga = false;
             $('#blogDescription').summernote('code', '');
-            $scope.getAllYogaBlogs();
+            $scope.getAllYogaBlogs(true);
             $scope.successAlert = res.data;
         });  
     }
@@ -99,7 +109,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             $scope.santhiBlog.blogs = [];
             $scope.isEditSanthi = false;
             $('#santhiBlogDescription').summernote('code', '');
-            $scope.getAllShanthiBlogs();
+            $scope.getAllShanthiBlogs(true);
             $scope.successAlert = res.data;
         });  
     }
@@ -110,7 +120,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         }
         $http.post('/api/santhiblog/delete', data).then(function(res) {
             if(res) {
-                $scope.getAllShanthiBlogs();
+                $scope.getAllShanthiBlogs(true);
             }
         });
     }
@@ -121,7 +131,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         }
         $http.post('/api/blog/delete', data).then(function(res) {
             if(res) {
-                $scope.getAllYogaBlogs();
+                $scope.getAllYogaBlogs(true);
             }
         });
     }
@@ -189,7 +199,6 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
 
     $scope.blog = {};
     $scope.saveBlog = function(blog) {
-        //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "")
         if (!$('#blogDescription').summernote('code') || !blog.title || !blog.highlightText || !blog.image) {
             alert('Please fill the form details');
             return;
@@ -199,14 +208,13 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         blog.slicedDesc = blog.description.slice(0,270) + "...";
         $http.post("/api/yogablog/save", blog).then(function(response) {
             $scope.successAlert = response.data;
-            $scope.blog = {};
-            $("#blogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
+            $scope.blog = {};            
+            $('#blogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
             $('#blogDescription').summernote('code', '');
             angular.element("input[type='file']").val(null);
 
             $timeout(function() {
-                $scope.getAllYogaBlogs();
-                $scope.$apply();
+                $scope.getAllYogaBlogs(true);
             });
         });
     };
@@ -224,20 +232,17 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
             alert('Please fill the form details');
             return;
         }
-        santhiBlog.date = (new Date()).getTime();
-        $("#santhiBlogDescription").code().replace(/<\/?[^>]+(>|$)/g, "");
+        santhiBlog.date = (new Date()).getTime();        
+        $('#santhiBlogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
         santhiBlog.description = $('#santhiBlogDescription').summernote('code');
         santhiBlog.slicedDesc = santhiBlog.description.slice(0,270) + "...";
-        santhiBlog.thumbnailSrc = santhiblog.image;
+        santhiBlog.thumbnailSrc = santhiBlog.image;
         $http.post("/api/santhiblog/save", santhiBlog).then(function(response) {
             $scope.successAlert = response.data;
             $scope.santhiBlog = {};
             $('#santhiBlogDescription').summernote('code', '');
             angular.element("input[type='file']").val(null);
-
-            $timeout(function() {
-                $scope.$apply();
-            });
+            $scope.getAllShanthiBlogs(true);
         });
     };
 
@@ -341,15 +346,14 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', fu
             name: "Retreats"
         }];
         $scope.event = response.data;
-        $('.selectpicker').selectpicker('val', $scope.event.type);
-        $("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
+        $('.selectpicker').selectpicker('val', $scope.event.type);        
+        $('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
         $('#summernote').summernote('insertNode', $($scope.event.description)[0]);
     });
     $scope.save = function(eve) {
         eve.startDate = $('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.endDate = $('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.regClosesOn = $('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
-        //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
         eve.description = $('#summernote').summernote('code');
 
         $http.post("/api/edit/event", eve).then(function(response) {

@@ -60,7 +60,7 @@
       <tr ng-repeat="blog in shanthi.blogs">
         <td style="float: left;"><img style="width: 200px; float: left; height: 100px;" src="{{blog.image || blog.thumbnailSrc}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/soslogo.png'"/></td>
         <td>{{blog.title}}</td>
-        <td>{{blog.highlightText || blog.slicedDesc}}<a class="readmore" href="/#/santhi/{{blog.id}}">Read more...</a></td>
+        <td>{{ blog.slicedDesc || blog.highlightText }}<a class="readmore" href="/#/santhi/{{blog.id}}">Read more...</a></td>
         <td class="jsgrid">
             <input class="jsgrid-button jsgrid-edit-button edit-news" ng-click="editSanthiBlog(blog.id)" type="button" title="Edit">
             <input class="jsgrid-button jsgrid-delete-button delete-news" ng-click="deleteSanthiBlogs(blog.id)" type="button" title="Delete">
