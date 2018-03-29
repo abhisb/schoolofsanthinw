@@ -318,9 +318,7 @@ app1.controller('homeController', function ($scope, $location, $routeParams, $ht
         $http.get('/api/news/getAll').then(function (res) {
             //$scope.newsDataSet = [];
             console.log(res);
-            $scope.newsItems = res.data;
-            if(flag)
-                getAllNews(true);
+            $scope.newsItems = res.data;    
         });
     }
 

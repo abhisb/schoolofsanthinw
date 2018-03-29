@@ -149,6 +149,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
         var data = {
             title: $scope.news.title,
             description: $scope.news.description,
+            slicedDesc: $scope.news.description.slice(0,100) + "..."
             //highlight: $scope.news.highlight
         }
         $http.post('/api/save/news', data).then(function(result) {

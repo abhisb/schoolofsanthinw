@@ -1115,15 +1115,21 @@ aside.youtube {
     text-overflow: ellipsis;
     cursor: pointer;
 }
-
 .news-description {
+    padding: 0px 0px;
+    cursor: pointer;
+    max-height: 57px;
+    width: 92%;    
+    word-wrap: break-word;
+}
+/* .news-description {
     padding: 0px 0px;
     cursor: pointer;
     max-height: 35px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
+} */
 
 .news-section {
     padding-left: 0px;

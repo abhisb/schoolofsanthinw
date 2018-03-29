@@ -163,7 +163,7 @@
                     <div class="news-content">
                         <div class="news-body" ng-repeat="newsItem in newsItems">
                             <div class="news-title" data-toggle="modal" data-target="#detailedNewsModal" ng-click="showSelectedNews(newsItem)">{{newsItem.title}}</div>
-                            <div class="news-description" data-toggle="modal" data-target="#detailedNewsModal" ng-click="showSelectedNews(newsItem)">{{newsItem.description}}</div>
+                            <div class="news-description" data-toggle="modal" data-target="#detailedNewsModal" ng-click="showSelectedNews(newsItem)">{{newsItem.slicedDesc}}</div>
                         </div>
                     </div>
                 </div>
