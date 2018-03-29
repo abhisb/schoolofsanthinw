@@ -8,8 +8,8 @@
                
                 <div class="cardbodytxt" data-target="#detailedShanthiModal">
                     <h2>{{blog.title}}</h2>
-                    <p>{{blog.highlightText}}
-                        <a class="readmore" href="/#/santhi/{{blog.id}}">Read More...</a>
+                    <p>{{blog.highlightText || blog.slicedDesc}}
+                        <a class="readmore" href="/#/santhi/{{blog.id}}">Read more...</a>
                     </p>
                 </div>
             </div>

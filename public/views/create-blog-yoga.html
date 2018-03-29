@@ -38,11 +38,9 @@
                         <input type="file" class="form-control" file-model="blog.image" />
                     </section>
                 </section>
-                <section class="form-group" style="text-align: center;" ng-if="!editYoga">
-                    <button type="submit" class="btn btn-info" ng-click="saveBlog(blog)">Save Blog</button>
-                </section>
-                 <section class="form-group" style="text-align: center;" ng-if="editYoga">
-                    <button type="submit" class="btn btn-info" ng-click="updateYogaBlog(blog)">Update Blog</button>
+                <section class="form-group" style="text-align: center;">
+                    <button type="submit" class="btn btn-info"  ng-if="!editYoga" ng-click="saveBlog(blog)">Save Blog</button>
+                    <button type="submit" class="btn btn-info"  ng-if="editYoga" ng-click="updateYogaBlog(blog)">Update Blog</button>
                 </section>
 
             </section>
@@ -61,7 +59,7 @@
       <tr ng-repeat="blog in yoga.blogs">
         <td style="float: left;"><img style="width: 200px; float: left; height: 100px;" ng-src="{{blog.image || blog.thumbnailSrc}}" alt="Yoga" on-error-src ="../Content/img/soslogo.png"/></td>
         <td>{{blog.title}}</td>
-        <td>{{blog.highlightText}}<a href="/#/yoga/{{blog.id}}">More...</a></td>
+        <td>{{blog.highlightText || blog.slicedDesc}}<a class="readmore" href="/#/yoga/{{blog.id}}">Read more...</a></td>
         <td class="jsgrid">
             <input class="jsgrid-button jsgrid-edit-button edit-news" ng-click="editYogaBlog(blog.id)" type="button" title="Edit">
             <input class="jsgrid-button jsgrid-delete-button delete-news" ng-click="deleteYogaBlog(blog.id)" type="button" title="Delete">
