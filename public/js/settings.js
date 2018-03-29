@@ -351,11 +351,11 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', fu
         $('#summernote').summernote('insertNode', $($scope.event.description)[0]);
     });
     $scope.save = function(eve) {
-        eve.startDate = $('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
-        eve.endDate = $('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
-        eve.regClosesOn = $('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        // eve.startDate = $('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        // eve.endDate = $('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        // eve.regClosesOn = $('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
         eve.description = $('#summernote').summernote('code');
-
         $http.post("/api/edit/event", eve).then(function(response) {
             $scope.successAlert = response.data;
         });
