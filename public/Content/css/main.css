@@ -215,7 +215,7 @@ input.ng-invalid.ng-touched {
 }
 
 .heading {
-    /*font-family: Times Neue Roman;*/
+    font-family: Times Neue Roman;
     color: #423c3c;
 }
 
@@ -915,7 +915,9 @@ aside.youtube {
 .modal-header h3, .side-panel h3 {
     margin:0!important;
 }
-
+.side-panel h3.heading{
+    margin: 0 0 20px !important;
+}
 .modal-title h4 {
     font-weight: bold!important;
 }
@@ -1157,9 +1159,9 @@ aside.youtube {
     height: 100%;
     max-width: 100%;
 }
-.caption h3{
+.caption h3 {
     margin: 20px 0 15px;
-    font-size: 20px;
+    font-size: 22px;
 }
 .caption .mb-25{
     height: 155px;
@@ -1171,7 +1173,7 @@ aside.youtube {
     margin: 0;
 }
 .thumbwidget{
-    min-height: 445px;
+    min-height: 450px;
     overflow: hidden;
     position: relative;
 }
@@ -1315,7 +1317,7 @@ aside.youtube {
     float: left;
     width: 100%;
 }
-.heading{
+.side-panel .heading{
     font-size: 26px;
     text-align: left;
     text-transform: uppercase;

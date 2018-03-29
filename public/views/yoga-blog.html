@@ -4,7 +4,7 @@
       <div class="card row homecard" ng-repeat="blog in yoga.blogs">
           <div class="card-body">
           <image ng-src="{{blog.thumbnailSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
-          <div style="cursor:pointer" data-target="#detailedYogaModal">
+          <div class="cardbodytxt" data-target="#detailedYogaModal">
               <h2>{{blog.title}}</h2>
               <p>{{blog.highlightText || blog.slicedDesc}} <a class="readmore" href="/#/yoga/{{blog.id}}">Read more...</a></p>
           </div>
