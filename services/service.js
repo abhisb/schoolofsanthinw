@@ -272,11 +272,12 @@ Service.prototype.getSanthi = function(id) {
                     if (error) {
                         reject(error);
                     } else {
+                        console.log(data)
                         resolve(data);
                     }
                 });
         });
-};
+    };
 
 Service.prototype.saveYogaBlog = function (blog) {
     var token = randtoken.generate(5);
@@ -631,7 +632,7 @@ Service.prototype.updateKnowYogaBlog = function (event) {
 
 Service.prototype.updateSanthiBlog = function (event) {
     var file = './bin/santhiblogs/' + event.id + '.json';
-    if (event.image != "") {
+    if (event.image && event.image != "") {
         if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
             var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
             event.imageSrc = '../bin/santhiblogs/' + event.id + ".png";

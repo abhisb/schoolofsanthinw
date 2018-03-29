@@ -38,11 +38,9 @@
                         <input type="file" class="form-control" file-model="blog.image" />
                     </section>
                 </section>
-                <section class="form-group" style="text-align: center;" ng-if="!editYoga">
-                    <button type="submit" class="btn btn-info" ng-click="saveBlog(blog)">Save Blog</button>
-                </section>
-                 <section class="form-group" style="text-align: center;" ng-if="editYoga">
-                    <button type="submit" class="btn btn-info" ng-click="updateYogaBlog(blog)">Update Blog</button>
+                <section class="form-group" style="text-align: center;">
+                    <button type="submit" class="btn btn-info"  ng-if="!editYoga" ng-click="saveBlog(blog)">Save Blog</button>
+                    <button type="submit" class="btn btn-info"  ng-if="editYoga" ng-click="updateYogaBlog(blog)">Update Blog</button>
                 </section>
 
             </section>
