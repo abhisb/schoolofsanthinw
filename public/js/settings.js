@@ -347,9 +347,10 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', fu
             name: "Retreats"
         }];
         $scope.event = response.data;
-        $('.selectpicker').selectpicker('val', $scope.event.type);        
-        $('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
-        $('#summernote').summernote('insertNode', $($scope.event.description)[0]);
+        $('.selectpicker').selectpicker('val', $scope.event.type);
+        $('#summernote').summernote('code', $scope.event.description); 
+        //$('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
+        //$('#summernote').summernote('insertNode', $($scope.event.description)[0]);
     });
     $scope.save = function(eve) {
         // eve.startDate = $('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
