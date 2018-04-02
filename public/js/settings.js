@@ -260,7 +260,7 @@ sosSettings.directive('fileModel', ['$parse', function($parse) {
         }
     };
 }]);
-sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', '$filter', function($scope, $http, $routeParams, $filter) {
     $(document).ready(function() {
         $('.selectpicker').selectpicker();
         //$scope.event.type = $scope.event.type;
@@ -324,14 +324,15 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', fu
             name: "Retreats"
         }];
         $scope.event = response.data;
-        $('.selectpicker').selectpicker('val', $scope.event.type);        
-        $('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
-        $('#summernote').summernote('insertNode', $($scope.event.description)[0]);
+        $('.selectpicker').selectpicker('val', $scope.event.type);
+        $('#summernote').summernote('code', $scope.event.description); 
+        //$('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
+        //$('#summernote').summernote('insertNode', $($scope.event.description)[0]);
     });
     $scope.save = function(eve) {
-        // eve.startDate = $('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
-        // eve.endDate = $('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
-        // eve.regClosesOn = $('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        eve.startDate = $filter('date')((new Date($('#datetimepicker1 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        eve.endDate = $filter('date')((new Date($('#datetimepicker2 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
+        eve.regClosesOn = $filter('date')((new Date($('#datetimepicker3 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
         //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
         eve.description = $('#summernote').summernote('code');
         $http.post("/api/edit/event", eve).then(function(response) {
