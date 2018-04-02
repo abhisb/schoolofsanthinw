@@ -506,6 +506,9 @@ Service.prototype.deleteNews = function (req) {
 };
 
 Service.prototype.saveKnowYogaBlog = function (event) {
+    var dateTime = (new Date()).getTime();
+    event.dateTime = dateTime;
+
     var token = crypto.randomBytes(8).toString('hex');
     var file = './bin/yoga/' + token + '.json';
     event.id = token;
@@ -528,6 +531,9 @@ Service.prototype.saveKnowYogaBlog = function (event) {
 };
 
 Service.prototype.saveSanthiBlog = function (event) {
+    var dateTime = (new Date()).getTime();
+    event.dateTime = dateTime;
+
     var token = crypto.randomBytes(8).toString('hex');
     var file = './bin/santhiblogs/' + token + '.json';
     event.id = token;
@@ -602,6 +608,10 @@ Service.prototype.getAllSanthiBlogs = function () {
 };
 
 Service.prototype.updateKnowYogaBlog = function (event) {
+
+    var dateTime = (new Date()).getTime();
+    event.dateTime = dateTime;
+
     var file = './bin/yoga/' + event.id + '.json';
     if (event.image != "") {
         if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
@@ -631,6 +641,10 @@ Service.prototype.updateKnowYogaBlog = function (event) {
 };
 
 Service.prototype.updateSanthiBlog = function (event) {
+
+    var dateTime = (new Date()).getTime();
+    event.dateTime = dateTime;
+    
     var file = './bin/santhiblogs/' + event.id + '.json';
     if (event.image && event.image != "") {
         if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
