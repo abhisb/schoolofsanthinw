@@ -959,8 +959,9 @@ aside.youtube {
 
 .card-body h2 {
     margin-top: 0;
-    font-size: 22px;
-    color: #3466a7;
+    font-size: 24px;
+    color: black;
+    font-family: Bebas Neue;
 }
 
 .card-body img {
@@ -1096,7 +1097,7 @@ aside.youtube {
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     font-size: 24px;
-    padding-top: 5px;
+    padding-top: 4px;
 }
 
 .news-body {
@@ -1107,13 +1108,15 @@ aside.youtube {
 }
 
 .news-title {
-    padding: 15px 0px 5px;
-    color: #2fa0e7;
+    padding: 5px 0px 5px;
+    color: #396b90;
     white-space: nowrap;
     min-width: 262px;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
 }
 .news-description {
     padding: 0px 0px;
@@ -1166,7 +1169,7 @@ aside.youtube {
     max-width: 100%;
 }
 .caption h3 {
-    margin: 20px 0 15px;
+    margin: 5px 0 15px;
     font-size: 22px;
 }
 .caption .mb-25{
@@ -1179,7 +1182,7 @@ aside.youtube {
     margin: 0;
 }
 .thumbwidget{
-    min-height: 450px;
+    height: 430px!important;
     overflow: hidden;
     position: relative;
 }
@@ -1204,10 +1207,7 @@ aside.youtube {
     width: 100%;
 }
 .searchbx {
-    margin-bottom: 30px;
-}
-
-.mediasocial{
+    /* margin-bottom: 30px; */
 }
 
 .search .form-control {
@@ -1216,7 +1216,7 @@ aside.youtube {
 .news-content{
     height: 199px;
     overflow-x: hidden;
-    /* overflow-y: hidden; */
+    padding-left: 8px;
 }
 .btnlogout{
     position: fixed;
@@ -1309,6 +1309,7 @@ aside.youtube {
     background: #fff;
     border: 1px solid #ccc;
     padding: 5px 10px;
+    border-radius: 8px;
 }
 .listing ul li a,
 .listing ul li a:hover{
@@ -1324,9 +1325,11 @@ aside.youtube {
     width: 100%;
 }
 .side-panel .heading{
-    font-size: 26px;
+    font-size: 22px;
     text-align: left;
     text-transform: uppercase;
+    margin-bottom: 5px;
+    margin-top: 15px;
 }
 .headmain {
     color: #53a3c1;
@@ -1352,3 +1355,9 @@ aside.youtube {
     bottom: 15px;
     right: 15px;
 }
+
+div#yogaGrid .jsgrid-table .jsgrid-filter-row .jsgrid-cell:first-child input,
+div#santhiGrid .jsgrid-table .jsgrid-filter-row .jsgrid-cell:first-child input {
+    display:none;
+}
+

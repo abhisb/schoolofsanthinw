@@ -68,7 +68,7 @@ app1.config(function ($routeProvider, $locationProvider) {
         .when("/create/new-event", {
             templateUrl: "views/create-event.html",
             controller: "eventController"
-        })
+        })        
         .when("/events", {
             templateUrl: "views/events.html"
         })
@@ -538,6 +538,7 @@ app1.controller('ttcController', function ($scope, $routeParams, eventsService, 
             $(e.currentTarget).addClass('fa-angle-double-down').removeClass('fa-angle-double-up');
         }
     };
+    
 });
 app1.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
     var $ctrl = this;
@@ -619,6 +620,7 @@ app1.controller('yogaController', function ($scope, $http, $routeParams) {
         angular.element(document.querySelector('#content')).append($scope.blog.content);
     });
 });
+
 app2.controller('eventController', function ($scope, $routeParams, $http, eventsService, $uibModal) {
     $scope.goToUrl = function (venue) {
         var win = window.open(venue, '_blank');
@@ -643,6 +645,7 @@ app2.controller('eventController', function ($scope, $routeParams, $http, events
         $("#datetimepicker1").on("dp.change", function (e) {
             $('#datetimepicker3').data("DateTimePicker").maxDate(e.date);
         });
+        $('#schedule').collapse('show');
 
     });
     if ($routeParams.eventId) {
@@ -773,6 +776,15 @@ app2.controller('eventController', function ($scope, $routeParams, $http, events
                 $(e.currentTarget).addClass('fa-angle-double-down').removeClass('fa-angle-double-up');
             }
         };
+
+        $scope.toggleCaretScedule = function (e) {
+            if ($(e.currentTarget.children[0]).hasClass('fa-caret-down')) {
+                $(e.currentTarget.children[0]).removeClass('fa-caret-down').addClass('fa-caret-up');
+            } else {
+                $(e.currentTarget.children[0]).addClass('fa-caret-down').removeClass('fa-caret-up');
+            }
+        };
+        
         $scope.map = {
             center: {
                 latitude: 8.708693,
