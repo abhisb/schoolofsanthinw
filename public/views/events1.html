@@ -1,5 +1,5 @@
-<section class="col-md-12" id="EventsForm" ng-controller="eventsGridController">
-    <section class="col-md-12">
+<section class="col-md-12" id="EventsForm" ng-controller="eventsGridController">        
+    <section class="col-md-12">            
      <div id="jsGrid"></div>
     </section>
  
@@ -74,7 +74,15 @@ jsGrid.fields.date = MyDateField;
             { name: "name", type: "text",title:"Name", width: 150, validate: "required" },
             { name: "type", type: "text",title:"Type", width: 50 },
             { name: "startDate", type: "date",title:"Start Date", width: 50 },
-            { type: "control" }
+            { 
+                type: "control",
+                headerTemplate: function() {
+                    var grid = this._grid;    
+                    var $button = $("<a>").attr("role", "button").attr("href", "/#/create/new-event").attr("title","Add new Event")
+                        .addClass([this.buttonClass, this.modeButtonClass, this.insertModeButtonClass, "btn btn-info"].join(" "));
+                    return $button;
+                }
+            }
         ]
     });
  });

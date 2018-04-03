@@ -1,62 +1,85 @@
-<section class="row">
-    <form class="form-horizontal text-center">
-        <h3 class="text-center">CREATE A NEWS</h3>
-        <hr />
-        <section class="col-md-12">
-            <div class="alert alert-success col-md-12" ng-hide="!successAlert">
-                <strong>{{successAlert}} </strong> <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+<section class="col-md-12" id="newsForm" ng-controller="newsAddController">         
+         <div id="newsGrid"></div>
+        <div id="dialog" title="Image Full Size View">
+                <img id="imagePreview" />
             </div>
-        </section>
-        <section class="col-md-12">
-            <section class="form-group">
-                <label class="control-label col-md-4">Title :</label>
-                <section class="col-md-5">
-                    <input class="form-control" ng-model="news.title" />
-                </section>
-            </section>
-            <!-- <section class="form-group">
-                <label class="control-label col-md-4">Higlight content :</label>
-                <section class="col-md-5">
-                    <input class="form-control" ng-model="news.highlight" />
-                </section>
-            </section> -->
-            <section class="form-group">
-                <label class="control-label col-md-4">Description :</label>
-                <section class="col-md-5">
-                    <textarea class="form-control" rows="5" ng-model="news.description"></textarea>
-                </section>
-         
-            </section>
-            <section>
-                <div class="col-md-12" style="text-align: center;">
-                    <button type="submit" class="btn btn-info" ng-click="saveNews()">Save News</button>
-                </div>
-            </section>
-        </section>
-    </form>
-</section>
-
-<section>
-  
-  <table class="table table-striped">
-    <thead class="thead-dark">
-      <tr>  
-        <th scope="col">Title</td>
-        <th scope="col">Highlight</td>
-        <th scope="col">Description</td>
-        <th scope="col">Action</td>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="newsData in newsDataSet">
-        <td>{{newsData.title}}</td>
-        <td>{{newsData.highlight}}</td>
-        <td>{{newsData.description}}</td>
-        <td class="jsgrid">
-            <input class="jsgrid-button jsgrid-edit-button edit-news" ng-click="editNews(newsData.id)" type="button" title="Edit">
-            <input class="jsgrid-button jsgrid-delete-button delete-news" ng-click="deleteNews(newsData.id)" type="button" title="Delete">
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+    </section>
+    
+    <script>
+        var MyDateField = function(config) {
+        jsGrid.Field.call(this, config);
+    };
+     
+    MyDateField.prototype = new jsGrid.Field({
+     
+        css: "date-field",            // redefine general property 'css'
+        align: "center",              // redefine general property 'align'
+     
+        myCustomProperty: "foo",      // custom property
+     
+        sorter: function(date1, date2) {
+            return new Date(date1) - new Date(date2);
+        },
+     
+        itemTemplate: function(value) {
+            return new Date(value).toDateString();
+        },
+    });
+     
+    jsGrid.fields.date = MyDateField;
+     $.ajax({
+                type: "GET",
+                url: '/api/news/getAll'
+            }).then(function(data){
+                console.log(data)
+                
+        $("#newsGrid").jsGrid({
+            width: "100%",
+            sorting: true,
+            paging: true,
+            filtering :true,
+            autoload: false,
+            pageSize: 5,
+            editing:true,
+            data: data,
+             deleteConfirm: function(item) {
+                return "The news titled \"" + item.title + "\" will be removed. Are you sure?";
+            },
+            onItemEditing: function(args) {
+               $('#newsForm').scope().editNewsForm(args.item.id);
+        },
+            controller:{
+                loadData: function(filter) {
+                return $.grep(data, function(news) {
+                    return (!filter.title || news.title.toLowerCase().indexOf(filter.title.toLowerCase()) > -1)
+                        && (!filter.slicedDesc || news.slicedDesc.toLowerCase().indexOf(filter.slicedDesc.toLowerCase()) > -1)
+                        && (!filter.description || news.description.toLowerCase().indexOf(filter.description.toLowerCase()) > -1) ;
+                });
+            },
+            deleteItem: function(item) {
+                    // debugger;
+            return $.ajax({
+                type: "DELETE",
+                url: "/api/news/delete",
+                data:{ "id":item.id}
+            });
+        }},
+            fields: [
+            { name: "title", type: "text",title:"Title", width: 50 },
+            { name: "slicedDesc", type: "text",title:"Highlight", width: 70 },
+            { name: "description", type: "text",title:"Description", width: 150 },
+                { 
+                    type: "control",
+                    headerTemplate: function() {
+                    var grid = this._grid;    
+                    var $button = $("<a>").attr("role", "button").attr("href", "/settings/#/create/news/add").attr("title","Add new Event")
+                        .addClass([this.buttonClass, this.modeButtonClass, this.insertModeButtonClass, "btn btn-info"].join(" "));
+                    return $button;
+                }
+                }
+            ]
+        });
+     });
+     
+    </script>
+     
