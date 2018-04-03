@@ -1,5 +1,6 @@
 var sosSettings = angular.module("sosSettings", ["ngRoute", 'ngAnimate', 'ngSanitize']);
-sosSettings.config(function($routeProvider, $locationProvider) {
+sosSettings.config(['$qProvider','$routeProvider', '$locationProvider', function ($qProvider,$routeProvider, $locationProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
     $locationProvider.hashPrefix('');
     $routeProvider
         .when("/edit/event/:id", {
@@ -26,7 +27,7 @@ sosSettings.config(function($routeProvider, $locationProvider) {
             templateUrl: "/views/settings.html",
             controller: "settingsController"
         });
-});
+}]);
 sosSettings.directive('onErrorSrc', function() {
     return {
         link: function(scope, element, attrs) {
@@ -40,6 +41,14 @@ sosSettings.directive('onErrorSrc', function() {
 });
 
 sosSettings.controller('yogaBlogAddController', ['$scope', '$http', '$timeout', '$routeParams', function($scope, $http, $timeout, $routeParams) {
+    $scope.enableDescription = function(event) {
+        $('#blogDescription').summernote({
+            height: 150, //set editable area's height
+        });
+        $('#blogDescription').summernote('code', '');
+    }
+    $scope.enableDescription();
+
     if($routeParams.id &&  $routeParams.id.toLowerCase() == 'add'){
         $scope.blog = {};
     $scope.saveBlog = function(blog) {
@@ -51,24 +60,11 @@ sosSettings.controller('yogaBlogAddController', ['$scope', '$http', '$timeout', 
         blog.description = $('#blogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
         blog.slicedDesc = blog.description.slice(0,270) + "...";
         $http.post("/api/yogablog/save", blog).then(function(response) {
-            $scope.successAlert = response.data;
-            $scope.blog = {};            
-            $('#blogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
-            $('#blogDescription').summernote('code', '');
-            angular.element("input[type='file']").val(null);
             window.location.href = '/settings';
         });
     };
-    
-    $scope.enableDescription = function(event) {
-        $('#blogDescription').summernote({
-            height: 150, //set editable area's height
-        });
-        $('#blogDescription').summernote('code', '');
     }
-    $scope.enableDescription();
-    }
-    else{
+    else if($routeParams.id &&  $routeParams.id.toLowerCase() != 'add'){
         $scope.editYogaBlog = function(id){
             $scope.editYoga = true;
             $http.get('/api/yoga/getYoga/'+id).then(function(res) {
@@ -76,32 +72,28 @@ sosSettings.controller('yogaBlogAddController', ['$scope', '$http', '$timeout', 
                 $scope.blog = res.data;
                 $('#blogDescription').summernote('code', res.data.description);
             }); 
-        }        
-        $scope.editYogaForm  = function(id) {
-            var loc = '/settings/#/create/yogablog/' + id;
-            window.location.href = loc;
-        };
-
+        }  
         $scope.updateYogaBlog = function (blog) {        
             blog.description = $('#blogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");        
             blog.slicedDesc = blog.description.slice(0,270) + "...";
-            $http.post('/api/update/knowyoga', blog).then(function(res) {
-                $scope.blog = {};
-                $scope.yoga.blogs = [];
-                $scope.editYoga = false;
-                $('#blogDescription').summernote('code', '');
-                $scope.successAlert = res.data;
+            $http.post('/api/update/knowyoga', blog).then(function(res) {                
                 window.location.href = '/settings';
+            },function(){
+                console.log(error)
             });  
         }
 
         $scope.editYogaBlog($routeParams.id);
     }   
-    
+    $scope.editYogaForm  = function(id) {
+        var loc = '/settings/#/create/yogablog/' + id;
+        window.location.href = loc;
+    };
 }]);
 
 
 sosSettings.controller('santhiBlogAddController', ['$scope', '$http', '$timeout', '$routeParams', function($scope, $http, $timeout, $routeParams) {
+   
     if($routeParams.id &&  $routeParams.id.toLowerCase() == 'add'){
         $scope.santhiBlog = {};
         $scope.savesanthiBlog = function(santhiBlog) {
@@ -115,10 +107,9 @@ sosSettings.controller('santhiBlogAddController', ['$scope', '$http', '$timeout'
             santhiBlog.slicedDesc = santhiBlog.description.slice(0,270) + "...";
             santhiBlog.thumbnailSrc = santhiBlog.image;
             $http.post("/api/santhiblog/save", santhiBlog).then(function(response) {
-                $scope.successAlert = response.data;
-                $scope.santhiBlog = {};
-                $('#santhiBlogDescription').summernote('code', '');
-                angular.element("input[type='file']").val(null);
+                window.location.href = '/settings';
+            },function(error){
+                console.log(error)
             });
         };
     
@@ -128,14 +119,17 @@ sosSettings.controller('santhiBlogAddController', ['$scope', '$http', '$timeout'
             });
             $('#santhiBlogDescription').summernote('code', '');
         }
+        $scope.enableSanthiBlogDescription();
     }
-    else{
+    else if($routeParams.id &&  $routeParams.id.toLowerCase() != 'add'){
         $scope.editSanthiBlog = function(id){
             $scope.isEditSanthi = true;
             $http.get('/api/santhi/getSanthi/'+id).then(function(res) {
                 $scope.santhiBlog = {};
                 $scope.santhiBlog = res.data;
                 $('#santhiBlogDescription').summernote('code', res.data.description);
+            },function(error){
+                console.log(error)
             });  
         }
     
@@ -143,20 +137,17 @@ sosSettings.controller('santhiBlogAddController', ['$scope', '$http', '$timeout'
             blog.description = $('#santhiBlogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");        
             blog.slicedDesc = blog.description.slice(0,270) + "...";
             $http.post('/api/update/santhiblog', blog).then(function(res) {
-                $scope.santhiBlog = {};
-                $scope.santhiBlog.blogs = [];
-                $scope.isEditSanthi = false;
-                $('#santhiBlogDescription').summernote('code', '');
-                $scope.successAlert = res.data;
-                window.location.href = "/settings";
+                window.location.href = '/settings';
+            },function(error){
+                console.log(error)
             });  
-        }       
-        $scope.editSanthiForm  = function(id) {
-            var loc = '/settings/#/create/santhiblog/' + id;
-            window.location.href = loc;
-        };
+        }    
         $scope.editSanthiBlog($routeParams.id);
     }
+    $scope.editSanthiForm  = function(id) {
+        var loc = '/settings/#/create/santhiblog/' + id;
+        window.location.href = loc;
+    };
     
 }]);
 
@@ -164,7 +155,7 @@ sosSettings.controller('newsAddController', ['$scope', '$http', '$timeout', '$ro
     if($routeParams.id &&  $routeParams.id.toLowerCase() == 'add'){
         $scope.isEdit = false;       
     }
-    else{
+    else if($routeParams.id &&  $routeParams.id.toLowerCase() != 'add'){
         $scope.isEdit = true;
         $scope.editNews = function(id) {
             $http.get('/api/news/getnews/' + id).then(function(res) {
@@ -175,10 +166,7 @@ sosSettings.controller('newsAddController', ['$scope', '$http', '$timeout', '$ro
             });
             console.log(id)
         }
-        $scope.editNewsForm  = function(id) {
-            var loc = '/settings/#/create/news/' + id;
-            window.location.href = loc;
-        };
+        
         $scope.editNews($routeParams.id);
     }
     $scope.saveNews = function() {
@@ -197,15 +185,27 @@ sosSettings.controller('newsAddController', ['$scope', '$http', '$timeout', '$ro
             //highlight: $scope.news.highlight
         }
         $http.post('/api/save/news', data).then(function(result) {
-            console.log(result);
+            window.location.href = '/settings';
+            },function(error){
+                console.log(error)
+            })
+    } 
+    $scope.editNewsForm  = function(id) {
+        var loc = '/settings/#/create/news/' + id;
+        window.location.href = loc;
+    };
+    $scope.deleteNews = function(id) {
+        var data = {
+            "id": id
+        }
+        $http.post('/api/news/delete', data).then(function(res) {
+            getAllNews();
             $scope.news.title = '';
             $scope.news.description = '';
             //$scope.news.highlight = '';
-            window.location.href = "/settings";
-        }, function(error) {
-            console.log(error);
-        })
-    }    
+        });
+        console.log(id)
+    }   
 }]);
 
 sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
