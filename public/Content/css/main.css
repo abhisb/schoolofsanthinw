@@ -3,7 +3,9 @@ html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0) position: relative;
     min-height: 100%;
 }
-
+body{
+    overflow-x: hidden;
+}
 @font-face {
     font-family: 'Samarkan';
     src: url('fonts/saman.eot');
@@ -229,9 +231,9 @@ input.ng-invalid.ng-touched {
     padding-left: 0;
 }
 
-.container {
+/*.container {
     padding-left: 10px;
-}
+}*/
 
 .logo {
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
@@ -242,6 +244,9 @@ input.ng-invalid.ng-touched {
     margin-top: 4px;
     font-size: 16px!important;
     color: #5d89b7;
+}
+.padright-0{
+    padding-right: 0;
 }
 
 .container-fluid {
@@ -476,8 +481,10 @@ section.list-group-item-text:hover {
 }
 
 .event-title {
-    font-weight: bolder;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: inline-block;
 }
 
 .all-events-link {
@@ -917,6 +924,7 @@ aside.youtube {
 }
 .side-panel h3.heading{
     margin: 0 0 20px !important;
+    font-family: "PT Sans", 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 .modal-title h4 {
     font-weight: bold!important;
@@ -1173,7 +1181,7 @@ aside.youtube {
     font-size: 22px;
 }
 .caption .mb-25{
-    height: 155px;
+    height: auto;
     overflow: hidden;
     margin-bottom: 0 !important;
 }
@@ -1182,15 +1190,18 @@ aside.youtube {
     margin: 0;
 }
 .thumbwidget{
-    height: 430px!important;
+    max-height: 430px;
     overflow: hidden;
     position: relative;
+    min-height: 430px;
 }
 
 .caption .readmore {
     position: absolute;
     bottom: 20px;
     left: 10px;
+    text-transform: lowercase;
+    padding: 3px 10px;
 }
 
 .search button {
@@ -1207,7 +1218,7 @@ aside.youtube {
     width: 100%;
 }
 .searchbx {
-    /* margin-bottom: 30px; */
+     margin-bottom: 30px; 
 }
 
 .search .form-control {
@@ -1309,7 +1320,9 @@ aside.youtube {
     background: #fff;
     border: 1px solid #ccc;
     padding: 5px 10px;
-    border-radius: 8px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 .listing ul li a,
 .listing ul li a:hover{
@@ -1360,4 +1373,72 @@ div#yogaGrid .jsgrid-table .jsgrid-filter-row .jsgrid-cell:first-child input,
 div#santhiGrid .jsgrid-table .jsgrid-filter-row .jsgrid-cell:first-child input {
     display:none;
 }
-
+/*books page*/
+.widgetBook{
+    text-align: center;
+    min-height: 370px;
+    position: relative;
+}
+.bannerBg{
+    margin-bottom: 40px;
+}
+.bannerBg img{
+    width: 100%;
+}
+.widgetBook .imgbx{
+    width: 160px;
+    height: 180px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.widgetBook .imgbx img{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+.widgetBook h3{
+    font-size: 22px;
+}
+.widgetBook h3 a{
+    display: block;
+}
+.widgetBook label{
+    font-size: 12px;
+}
+.widgetBook label small{
+    margin-right: 5px;
+    float: left;
+    font-size: 12px;
+    color: #ccc;
+    line-height: 14px;
+}
+.btn_prchs{
+    background: #dceafb;
+    padding: 7px 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 89%;
+    right: 0;
+    margin: 0 auto;
+    color: #222;
+    text-align: center;
+    font-weight: 600;
+}
+/*books page*/
+/*.jsgrid-row{
+    height: 40px;
+    overflow-y: scroll;
+}*/
+.list-group-item-text .input-group{
+    padding-bottom: 10px;
+}
+.side-panel .heading {
+    font-size: 22px;
+    text-align: left;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-family: "PT Sans", 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
