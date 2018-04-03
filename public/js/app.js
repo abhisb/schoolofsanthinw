@@ -20,6 +20,10 @@ app1.config(function ($routeProvider, $locationProvider) {
             templateUrl: "views/yoga-blog.html",
             controller: 'yogaBlogHomeController'
         })
+        .when("/book", {
+            templateUrl: "views/book.html",
+            controller: 'bookController'
+        })
         .when("/santhispeaks", {
             templateUrl: "views/shanthi-blog.html",
             controller: 'shanthiBlogController'
