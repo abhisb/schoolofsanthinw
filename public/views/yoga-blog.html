@@ -6,7 +6,7 @@
           <image ng-src="{{blog.thumbnailSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
           <div class="cardbodytxt" data-target="#detailedYogaModal">
               <h2>{{blog.title}}</h2>
-              <p>{{ blog.slicedDesc || blog.highlightText }} <a class="readmore" href="/#/yoga/{{blog.id}}">Read more...</a></p>
+              <p ng-bind-html="blog.slicedDesc || blog.highlightText"></p><a class="readmore" href="/#/yoga/{{blog.id}}">Read more...</a>
           </div>
           </div>
         </div>

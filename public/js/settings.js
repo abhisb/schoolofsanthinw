@@ -57,7 +57,7 @@ sosSettings.controller('yogaBlogAddController', ['$scope', '$http', '$timeout', 
             return;
         }
         blog.date = (new Date()).getTime();
-        blog.description = $('#blogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
+        blog.description = $('#blogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");
         blog.slicedDesc = blog.description.slice(0,270) + "...";
         $http.post("/api/yogablog/save", blog).then(function(response) {
             window.location.href = '/settings';
@@ -74,7 +74,7 @@ sosSettings.controller('yogaBlogAddController', ['$scope', '$http', '$timeout', 
             }); 
         }  
         $scope.updateYogaBlog = function (blog) {        
-            blog.description = $('#blogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");        
+            blog.description = $('#blogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");        
             blog.slicedDesc = blog.description.slice(0,270) + "...";
             $http.post('/api/update/knowyoga', blog).then(function(res) {                
                 window.location.href = '/settings';
@@ -134,7 +134,7 @@ sosSettings.controller('santhiBlogAddController', ['$scope', '$http', '$timeout'
         }
     
         $scope.updateSanthiBlog = function (blog) {        
-            blog.description = $('#santhiBlogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");        
+            blog.description = $('#santhiBlogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");        
             blog.slicedDesc = blog.description.slice(0,270) + "...";
             $http.post('/api/update/santhiblog', blog).then(function(res) {
                 window.location.href = '/settings';
