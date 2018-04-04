@@ -1,7 +1,7 @@
 <section class="container-fluid">
 	<img src="{{yoga.banner}}" class="banner" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
   <section class="col-md-9">
-      <div class="card row homecard" ng-repeat="blog in yoga.blogs">
+      <div class="card row homecard" ng-repeat="blog in yoga.blogs | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
           <div class="card-body">
           <image ng-src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
           <div class="cardbodytxt" data-target="#detailedYogaModal">
@@ -10,6 +10,29 @@
           </div>
           </div>
         </div>
+
+        <div class="pagination-div" ng-if="yoga.blogs.length > 5"> 
+                <ul class="pagination"> 
+                 <li ng-class="DisablePrevPage()">             
+                    <a href ng-click="firstPage()"><<</a>             
+                 </li>           
+                 <li ng-class="DisablePrevPage()">             
+                 <a href ng-click="prevPage()"><</a>             
+                 </li>             
+                 <li ng-repeat="n in range()"              
+                 ng-class="{active: n == currentPage}"             
+                 ng-click="setPage(n)">             
+                 <a href ng-if="(n+1) > 0">{{n+1}}</a>             
+                 </li>             
+                 <li ng-class="DisableNextPage()">             
+                 <a href ng-click="nextPage()">></a>             
+                 </li> 
+                 <li ng-class="DisableNextPage()">             
+                        <a href ng-click="lastPage()">>></a>             
+                 </li>            
+                </ul>           
+               </div>
+
   </section>
   <section class="col-md-3 side-panel">
     <aside class="searchbx">
