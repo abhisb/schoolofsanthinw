@@ -59,7 +59,7 @@
             deleteItem: function(item) {
                     // debugger;
             return $.ajax({
-                type: "DELETE",
+                type: "POST",
                 url: "/api/news/delete",
                 data:{ "id":item.id}
             });
