@@ -4,7 +4,7 @@
         <div class="card row homecard" ng-repeat="blog in shanthi.blogs">
             <div class="card-body">
                 
-                    <image src="{{blog.thumbnailSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
+                    <image src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;>
                
                 <div class="cardbodytxt" data-target="#detailedShanthiModal">
                     <h2>{{blog.title}}</h2>

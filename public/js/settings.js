@@ -52,7 +52,7 @@ sosSettings.controller('yogaBlogAddController', ['$scope', '$http', '$timeout', 
     if($routeParams.id &&  $routeParams.id.toLowerCase() == 'add'){
         $scope.blog = {};
     $scope.saveBlog = function(blog) {
-        if (!$('#blogDescription').summernote('code') || !blog.title || !blog.highlightText || !blog.image) {
+        if (!$('#blogDescription').summernote('code') || !blog.title || !blog.highlightText || !blog.image || !blog.thumbnailImage) {
             alert('Please fill the form details');
             return;
         }
@@ -97,7 +97,7 @@ sosSettings.controller('santhiBlogAddController', ['$scope', '$http', '$timeout'
     if($routeParams.id &&  $routeParams.id.toLowerCase() == 'add'){
         $scope.santhiBlog = {};
         $scope.savesanthiBlog = function(santhiBlog) {
-            if (!$('#santhiBlogDescription').summernote('code') || !santhiBlog.title || !santhiBlog.highlightText || !santhiBlog.image) {
+            if (!$('#santhiBlogDescription').summernote('code') || !santhiBlog.title || !santhiBlog.highlightText || !santhiBlog.image || !santhiBlog.thumbnailImage) {
                 alert('Please fill the form details');
                 return;
             }

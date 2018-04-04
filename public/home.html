@@ -200,7 +200,7 @@
         <div class="col-sm-6 col-md-4 col" ng-repeat="event in events" ng-if="event.isPrime">
             <div class="thumbnail thumbwidget" ng-if="event.isPrime">
                 <span class="imgbx">
-                    <img src="{{event.imageSrc}}" alt="...">
+                    <img src="{{event.thumbnailImage || event.imageSrc}}" alt="...">
                 </span>
                 <div class="caption">
                     <h3>{{event.name}}</h3>
