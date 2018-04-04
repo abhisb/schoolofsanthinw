@@ -152,6 +152,15 @@ sosSettings.controller('santhiBlogAddController', ['$scope', '$http', '$timeout'
 }]);
 
 sosSettings.controller('newsAddController', ['$scope', '$http', '$timeout', '$routeParams', function($scope, $http, $timeout, $routeParams) {
+
+    $scope.enableDescription = function(event) {
+        $('#newsDescription').summernote({
+            height: 150, //set editable area's height
+        });
+        $('#newsDescription').summernote('code', '');
+    }
+    $scope.enableDescription();
+
     if($routeParams.id &&  $routeParams.id.toLowerCase() == 'add'){
         $scope.isEdit = false;       
     }
@@ -160,6 +169,7 @@ sosSettings.controller('newsAddController', ['$scope', '$http', '$timeout', '$ro
         $scope.editNews = function(id) {
             $http.get('/api/news/getnews/' + id).then(function(res) {
                 $scope.news = res.data;
+                $('#newsDescription').summernote('code', res.data.description);
                 console.log(res);
                 $scope.isEdit = true;
                 $scope.editNewsId = id;
@@ -180,7 +190,7 @@ sosSettings.controller('newsAddController', ['$scope', '$http', '$timeout', '$ro
         }
         var data = {
             title: $scope.news.title,
-            description: $scope.news.description,
+            description: $('#newsDescription').summernote('code'),//$scope.news.description,
             slicedDesc: $scope.news.description.slice(0,100) + "..."
             //highlight: $scope.news.highlight
         }

@@ -98,7 +98,7 @@ app.delete('/api/santhiblog/delete', function(req, res) {
     res.status(200).send("The Santhi blog has been deleted successfully!!");
 });
 
-app.delete('/api/news/delete', function(req, res) {
+app.post('/api/news/delete', function(req, res) {
     service.deleteNews(req.body);
     res.status(200).send("The news has been deleted successfully!!");
 });
