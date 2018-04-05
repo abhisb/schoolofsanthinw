@@ -233,6 +233,16 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     $scope.reloadNewsGrid = function() {
         $('#newsGrid').jsGrid("render");
     }
+
+    $scope.saveGenSettings = function (settings) {
+        $scope.successAlert = '';
+        $http.post('/api/saveGeneralSettings', settings).then(function(res) {
+            $scope.successAlert = res.data;
+            angular.element("input[type='file']").val(null);
+            $scope.genSettings.knowYogaBannerImg = null;
+            $scope.genSettings.santhiBlogBannerImg = null;
+        })
+    }
 }]);
 
 sosSettings.controller('yogaGridController', ['$scope', '$location', function($scope, $location) {

@@ -1022,8 +1022,14 @@ $scope.setPage = function(n) {
     $scope.currentPage = n;    
 };
 
+$http.get("/api/getGeneralSettings")
+        .then(function (response, err) {
 
-$scope.shanthi.banner = "../bin/assets/banner.png";
+            $scope.shanthi.banner = response.data.santhiBlogBannerImg;
+
+        });
+
+//$scope.shanthi.banner = "../bin/assets/banner.png";
 $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
         $location.path(loc);
@@ -1145,7 +1151,13 @@ $scope.setPage = function(n) {
     $scope.currentPage = n;    
 };
 
-$scope.yoga.banner = "../bin/assets/banner.png";
+$http.get("/api/getGeneralSettings")
+        .then(function (response, err) {
+
+            $scope.yoga.banner = response.data.knowYogaBannerImg;
+
+        });
+
 $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
         $location.path(loc);
