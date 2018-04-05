@@ -1,7 +1,7 @@
 <section class="container-fluid">
 	<img src="{{yoga.banner}}" class="banner" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
   <section class="col-md-9">
-      <div class="card row homecard" ng-repeat="blog in yoga.blogs | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
+      <div class="card row homecard" ng-repeat="blog in yoga.blogs | filter:search | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
           <div class="card-body">
           <image ng-src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
           <div class="cardbodytxt" data-target="#detailedYogaModal">
@@ -37,7 +37,7 @@
   <section class="col-md-3 side-panel">
     <aside class="searchbx">
       <form class="search">
-        <input type="text" name="" class="form-control" placeholder="Search...">
+        <input type="text" name="" class="form-control" placeholder="Search..." ng-model="search.title">
         <button type="submit" class="btn btn-default">
           <img src="../Content/img/magnifier.png" alt="" />
         </button>

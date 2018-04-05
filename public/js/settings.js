@@ -243,11 +243,17 @@ sosSettings.controller('yogaGridController', ['$scope', '$location', function($s
 
 }]);
 
-sosSettings.controller('eventsGridController', ['$scope', '$location', function($scope, $location) {
+sosSettings.controller('eventsGridController', ['$scope', '$location','$http', function($scope, $location, $http) {
     $scope.editForm = function(id) {
         var loc = '/settings/#/edit/event/' + id;
         window.location.href = loc;
     };
+    $scope.saveEventCopy = function(event) {
+        $http.post("/api/edit/event", event).then(function(response) {
+            console.log(response);
+            $scope.successAlert = response.data;
+        });
+    }
 
 }]);
 sosSettings.directive('fileModel', ['$parse', function($parse) {
@@ -290,7 +296,6 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', '$
         $("#datetimepicker1").on("dp.change", function(e) {
             $('#datetimepicker3').data("DateTimePicker").maxDate(e.date);
         });
-
     });
     $scope.addRow = function() {
         $scope.event.schedule.push({
@@ -345,9 +350,8 @@ sosSettings.controller('eventController', ['$scope', '$http', '$routeParams', '$
         eve.regClosesOn = $filter('date')((new Date($('#datetimepicker3 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
         //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
         eve.description = $('#summernote').summernote('code');
-        $http.post("/api/edit/event", eve).then(function(response) {
-            $scope.successAlert = response.data;
-        });
+        
 
     };
+    
 }]);
