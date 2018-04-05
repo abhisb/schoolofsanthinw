@@ -658,6 +658,7 @@ app2.controller('eventController', function ($scope, $routeParams, $http, events
             $('.fb-share-button').attr('data-href', url);
         });
         $scope.submitForm = function () {
+            $scope.successAlert = false;
             var $ctrl = this;
             $uibModal.open({
                 animation: true,

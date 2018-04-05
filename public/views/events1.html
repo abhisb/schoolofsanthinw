@@ -49,7 +49,7 @@ jsGrid.fields.date = MyDateField;
         pageSize: 5,
         editing:true,
         data: data,
-         deleteConfirm: function(item) {
+        deleteConfirm: function(item) {
             return "The client \"" + item.name + "\" will be removed. Are you sure?";
         },
         onItemEditing: function(args) {
