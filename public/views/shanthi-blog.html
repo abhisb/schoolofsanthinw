@@ -7,7 +7,7 @@
                     <image src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;">
                
                 <div class="cardbodytxt" data-target="#detailedShanthiModal">
-                    <h2 style="margin-bottom:-8px">{{blog.title}}</h2>
+                    <h2 style="margin-bottom:-8px;cursor: pointer;" ng-click="loadDetailPage('/#/yoga/' + blog.id)">{{blog.title}}</h2>
                     <span class="dateText"><i>{{convertDate(blog.date)}}</i></span>
                     <p ng-bind-html="blog.slicedDesc || blog.highlightText">
                     </p>
