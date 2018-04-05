@@ -1054,9 +1054,22 @@ $scope.goToEvent = function (eventObj) {
         })
 $scope.getAllShanthiBlogs = function() {
     $http.get('/api/santhiblog/getAllBlogs').then(function(res) {
-        $scope.shanthi.blogs = res.data;
+        $scope.shanthi.blogs = res.data.sort($scope.compare).reverse();
     });
 }
+$scope.convertDate = function(date) {
+    var objDate = new Date(date);
+    return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
+}
+
+$scope.compare = function(a,b) {
+    if (a.date < b.date)
+      return -1;
+    if (a.date > b.date)
+      return 1;
+    return 0;
+  }
+  
 $scope.getAllShanthiBlogs();
 $scope.showSelectedShanthiBlog = function (shanthiblog) {
     $scope.shanthiTitle = shanthiblog.title;
@@ -1163,10 +1176,23 @@ $scope.goToEvent = function (eventObj) {
         })
 $scope.getAllYogaBlogs = function() {
     $http.get('/api/yogaBlog/getAllBlogs').then(function(res) {
-        $scope.yoga.blogs = res.data;
-        console.log(res.data)
+        $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
     });
 }
+
+$scope.convertDate = function(date) {
+    var objDate = new Date(date);
+    return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
+}
+
+$scope.compare = function(a,b) {
+    if (a.date < b.date)
+      return -1;
+    if (a.date > b.date)
+      return 1;
+    return 0;
+  }
+
 $scope.getAllYogaBlogs();
 $scope.showSelectedYogaBlog = function (yogablog) {
     $scope.yogaTitle = yogablog.title;

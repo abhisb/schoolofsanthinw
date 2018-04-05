@@ -5,12 +5,12 @@
           <div class="card-body">
           <image ng-src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
           <div class="cardbodytxt" data-target="#detailedYogaModal">
-              <h2>{{blog.title}}</h2>
-              <p ng-bind-html="blog.slicedDesc || blog.highlightText"></p><a class="readmore" href="/#/yoga/{{blog.id}}">Read more...</a>
+            <h2 style="margin-bottom:-8px">{{blog.title}}</h2>
+            <span class="dateText"><i>{{convertDate(blog.date)}}</i></span>
+            <p ng-bind-html="blog.slicedDesc || blog.highlightText"></p><a class="readmore" href="/#/yoga/{{blog.id}}">Read more...</a>
           </div>
           </div>
-        </div>
-
+        </div>        
         <div class="pagination-div" ng-if="yoga.blogs.length > 5"> 
                 <ul class="pagination"> 
                  <li ng-class="DisablePrevPage()">             
