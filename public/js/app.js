@@ -950,9 +950,78 @@ app1.controller('santhiBlogDetailCtrl', function($scope,  $routeParams, $locatio
     });
 });
 
+app1.filter('pagination', function()
+{
+  return function(input, start) {
+    start = parseInt(start, 10);
+    return input.slice(start);
+  };
+});
+
 app1.controller('shanthiBlogController', function($scope, $location, $http, eventsService, $timeout) {
-$scope.shanthi = {};
-$scope.shanthi.blogs = [];
+
+/*pagination*/
+$scope.itemsPerPage = 5; 
+ $scope.currentPage = 0; 
+ //$scope.datalists = data ;// Service
+ $scope.shanthi = {};
+ $scope.shanthi.blogs = [];
+
+ $scope.range = function() {
+    var rangeSize = 4;   
+    var ps = [];   
+    var start;   
+    start = $scope.currentPage;   
+    if ( start > $scope.pageCount()-rangeSize ) {   
+     start = $scope.pageCount()-rangeSize+1;   
+     }   
+    for (var i=start; i<start+rangeSize; i++) {   
+    ps.push(i);   
+   }   
+   return ps;   
+};
+
+$scope.prevPage = function() {
+    if ($scope.currentPage > 0) {    
+        $scope.currentPage--;    
+    }
+};
+
+$scope.firstPage = function() {
+    if ($scope.currentPage > 0) {    
+        $scope.currentPage = 0;    
+    }
+};
+
+$scope.DisablePrevPage = function() {
+    return $scope.currentPage === 0 ? "disabled" : "";    
+};
+
+$scope.pageCount = function() {
+    return Math.ceil($scope.shanthi.blogs.length/$scope.itemsPerPage)-1;    
+};
+    
+$scope.nextPage = function() {
+    if ($scope.currentPage < $scope.pageCount()) {    
+    $scope.currentPage++;    
+    }
+};
+
+$scope.lastPage = function() {
+    if ($scope.currentPage < $scope.pageCount()) {    
+    $scope.currentPage = $scope.pageCount();    
+    }
+};
+
+$scope.DisableNextPage = function() {
+    return $scope.currentPage === $scope.pageCount() ? "disabled" : "";    
+};
+
+$scope.setPage = function(n) {
+    $scope.currentPage = n;    
+};
+
+
 $scope.shanthi.banner = "../bin/assets/banner.png";
 $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
@@ -985,9 +1054,22 @@ $scope.goToEvent = function (eventObj) {
         })
 $scope.getAllShanthiBlogs = function() {
     $http.get('/api/santhiblog/getAllBlogs').then(function(res) {
-        $scope.shanthi.blogs = res.data;
+        $scope.shanthi.blogs = res.data.sort($scope.compare).reverse();
     });
 }
+$scope.convertDate = function(date) {
+    var objDate = new Date(date);
+    return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
+}
+
+$scope.compare = function(a,b) {
+    if (a.date < b.date)
+      return -1;
+    if (a.date > b.date)
+      return 1;
+    return 0;
+  }
+  
 $scope.getAllShanthiBlogs();
 $scope.showSelectedShanthiBlog = function (shanthiblog) {
     $scope.shanthiTitle = shanthiblog.title;
@@ -1004,6 +1086,64 @@ $scope.prevent = function (event) {
 app1.controller('yogaBlogHomeController', function($scope, $location, $http, eventsService, $timeout) {
 $scope.yoga = {};
 $scope.yoga.blogs = [];
+/*pagination*/
+$scope.itemsPerPage = 5; 
+ $scope.currentPage = 0; 
+
+ $scope.range = function() {
+    var rangeSize = 4;   
+    var ps = [];   
+    var start;   
+    start = $scope.currentPage;   
+    if ( start > $scope.pageCount()-rangeSize ) {   
+     start = $scope.pageCount()-rangeSize+1;   
+     }   
+    for (var i=start; i<start+rangeSize; i++) {   
+    ps.push(i);   
+   }   
+   return ps;   
+};
+
+$scope.prevPage = function() {
+    if ($scope.currentPage > 0) {    
+        $scope.currentPage--;    
+    }
+};
+
+$scope.firstPage = function() {
+    if ($scope.currentPage > 0) {    
+        $scope.currentPage = 0;    
+    }
+};
+
+$scope.DisablePrevPage = function() {
+    return $scope.currentPage === 0 ? "disabled" : "";    
+};
+
+$scope.pageCount = function() {
+    return Math.ceil($scope.yoga.blogs.length/$scope.itemsPerPage)-1;    
+};
+    
+$scope.nextPage = function() {
+    if ($scope.currentPage < $scope.pageCount()) {    
+    $scope.currentPage++;    
+    }
+};
+
+$scope.lastPage = function() {
+    if ($scope.currentPage < $scope.pageCount()) {    
+    $scope.currentPage = $scope.pageCount();    
+    }
+};
+
+$scope.DisableNextPage = function() {
+    return $scope.currentPage === $scope.pageCount() ? "disabled" : "";    
+};
+
+$scope.setPage = function(n) {
+    $scope.currentPage = n;    
+};
+
 $scope.yoga.banner = "../bin/assets/banner.png";
 $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
@@ -1036,10 +1176,23 @@ $scope.goToEvent = function (eventObj) {
         })
 $scope.getAllYogaBlogs = function() {
     $http.get('/api/yogaBlog/getAllBlogs').then(function(res) {
-        $scope.yoga.blogs = res.data;
-        console.log(res.data)
+        $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
     });
 }
+
+$scope.convertDate = function(date) {
+    var objDate = new Date(date);
+    return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
+}
+
+$scope.compare = function(a,b) {
+    if (a.date < b.date)
+      return -1;
+    if (a.date > b.date)
+      return 1;
+    return 0;
+  }
+
 $scope.getAllYogaBlogs();
 $scope.showSelectedYogaBlog = function (yogablog) {
     $scope.yogaTitle = yogablog.title;

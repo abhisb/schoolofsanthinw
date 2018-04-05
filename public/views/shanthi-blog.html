@@ -1,19 +1,43 @@
 <section class="container-fluid">
     <img src="{{shanthi.banner}}" class="banner" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
     <section class="col-md-9">
-        <div class="card row homecard" ng-repeat="blog in shanthi.blogs">
+        <div class="paginationclass card row homecard" ng-repeat="blog in shanthi.blogs | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
             <div class="card-body">
                 
-                    <image src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;>
+                    <image src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;">
                
                 <div class="cardbodytxt" data-target="#detailedShanthiModal">
-                    <h2>{{blog.title}}</h2>
+                    <h2 style="margin-bottom:-8px">{{blog.title}}</h2>
+                    <span class="dateText"><i>{{convertDate(blog.date)}}</i></span>
                     <p ng-bind-html="blog.slicedDesc || blog.highlightText">
                     </p>
                     <a class="readmore" href="/#/santhi/{{blog.id}}">Read more...</a>
                 </div>
-            </div>
+            </div>            
         </div>
+        
+        <div class="pagination-div" ng-if="shanthi.blogs.length > 5"> 
+            <ul class="pagination"> 
+             <li ng-class="DisablePrevPage()">             
+                <a href ng-click="firstPage()"><<</a>             
+             </li>           
+             <li ng-class="DisablePrevPage()">             
+             <a href ng-click="prevPage()"><</a>             
+             </li>             
+             <li ng-repeat="n in range()"              
+             ng-class="{active: n == currentPage}"             
+             ng-click="setPage(n)">             
+             <a href ng-if="(n+1) > 0">{{n+1}}</a>             
+             </li>             
+             <li ng-class="DisableNextPage()">             
+             <a href ng-click="nextPage()">></a>             
+             </li> 
+             <li ng-class="DisableNextPage()">             
+                    <a href ng-click="lastPage()">>></a>             
+             </li>            
+            </ul>           
+           </div>
+
     </section>
     <section class="col-md-3 side-panel">
         <aside class="searchbx">
