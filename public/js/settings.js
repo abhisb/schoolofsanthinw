@@ -235,6 +235,7 @@ sosSettings.controller('settingsController', ['$scope', '$http', '$timeout', fun
     }
 
     $scope.saveGenSettings = function (settings) {
+        $scope.successAlert = '';
         $http.post('/api/saveGeneralSettings', settings).then(function(res) {
             $scope.successAlert = res.data;
             angular.element("input[type='file']").val(null);
