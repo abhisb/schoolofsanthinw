@@ -242,6 +242,23 @@ app.post('/api/update/santhiblog', function(req, res) {
     res.status(200).send("Blog has been updated successfully!!");
 });
 
+/*app.post('/api/event/duplicate', function (req, res) {
+    service.duplicateEvent(req.body);
+    res.status(200).send("Duplicated successfully!!");
+});*/
+
+app.post('/api/saveGeneralSettings', function (req, res) {
+    service.saveGeneralSettings(req.body);
+    res.status(200).send("Settings saved successfully!!");
+});
+app.get('/api/getGeneralSettings', function (req, res) {
+    service.getGeneralSettings().then((result) => {
+        res.send(result);
+    }).catch(function(error) {
+        res.status(500).send(error);
+    });
+});
+
 // listen (start app with node server.js) ======================================
 app.listen(process.env.PORT || 8080);
 console.log("App listening on port 8080");

@@ -818,4 +818,106 @@ Service.prototype.deleteSanthiBlogs = function (req) {
     });
 };
 
+Service.prototype.saveGeneralSettings = function (event) {
+    var file = './bin/general-settings/config.json';
+    if (event.knowYogaBannerImg && event.knowYogaBannerImg != "") {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.knowYogaBannerImg)) {
+            var base64Data = event.knowYogaBannerImg.replace(/^data:image\/png;base64,/, "");
+            event.knowYogaBannerImgSrc = '../Content/img/general-settings/knowYogaBannerImg.png';
+            var filePath = './public/Content/img/general-settings/knowYogaBannerImg.png';
+            fs.unlink(filePath, function (err) {
+                console.log(err);
+            });
+        } else {
+            var base64Data = event.knowYogaBannerImg.replace(/^data:image\/jpeg;base64,/, "");
+            event.knowYogaBannerImgSrc = '../Content/img/general-settings/knowYogaBannerImg.jpg';
+            var filePath = './public/Content/img/general-settings/knowYogaBannerImg.jpg';
+            fs.unlink(filePath, function (err) {
+                console.log(err);
+            });
+        }
+
+        require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+            console.log(err);
+        });
+    }
+
+    if (event.santhiBlogBannerImg && event.santhiBlogBannerImg != "") {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.santhiBlogBannerImg)) {
+            var tbase64Data = event.santhiBlogBannerImg.replace(/^data:image\/png;base64,/, "");
+            event.santhiBlogBannerImgSrc = '../Content/img/general-settings/santhiBlogBannerImg.png';
+            var thumbnailFilePath = './public/Content/img/general-settings/santhiBlogBannerImg.png';
+            fs.unlink(thumbnailFilePath, function (err) {
+                console.log(err);
+            });
+        } else {
+            var tbase64Data = event.santhiBlogBannerImg.replace(/^data:image\/jpeg;base64,/, "");
+            event.santhiBlogBannerImgSrc = '../Content/img/general-settings/santhiBlogBannerImg.jpg';
+            var thumbnailFilePath = './public/Content/img/general-settings/santhiBlogBannerImg.jpg';
+            fs.unlink(thumbnailFilePath, function (err) {
+                console.log(err);
+            });
+        }
+        //event.image = "";
+        require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+            console.log(err);
+        });
+    }
+
+     jsonfile.readFile('./bin/general-settings/config.json',
+                (error, data) => {
+                    if (error) {
+                        
+                    } else {
+                        if (data.knowYogaBannerImg && !event.knowYogaBannerImg) {
+                            event.knowYogaBannerImg = data.knowYogaBannerImg;
+                        }
+                        if (data.santhiBlogBannerImg && !event.santhiBlogBannerImg) {
+                            event.santhiBlogBannerImg = data.santhiBlogBannerImg;
+                        }
+
+                        jsonfile.writeFile(file, event, function (err) {
+                            console.error(err)
+                        })
+                    }
+                });
+
+    /*jsonfile.writeFile(file, event, function (err) {
+        console.error(err)
+    })*/
+};
+
+Service.prototype.getGeneralSettings = function () {
+    return new Promise(
+        function (resolve, reject) {
+            jsonfile.readFile('./bin/general-settings/config.json',
+                (error, data) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
+                    }
+                });
+        });
+};
+
+/*Service.prototype.duplicateEvent = function (req) {
+    var id = req.id;
+    var token = randtoken.generate(5);
+    var duplicateFile = './bin/events/' + token + '.json';
+
+    var fileName = id + '.json';
+    jsonfile.readFile('./bin/events/' + fileName,
+        (error, data) => {
+            if (error) {
+                reject(error);
+            } else {
+                data.name += ' -Copy';
+                jsonfile.writeFile(duplicateFile, data, function (err) {
+                    console.error(err)
+                })
+            }
+        });
+}*/
+
 module.exports = new Service();
