@@ -1029,6 +1029,10 @@ $http.get("/api/getGeneralSettings")
 
         });
 
+        $scope.loadDetailPage = function (url) {
+            window.location.href = url;
+        }
+
 //$scope.shanthi.banner = "../bin/assets/banner.png";
 $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
@@ -1157,6 +1161,11 @@ $http.get("/api/getGeneralSettings")
             $scope.yoga.banner = response.data.knowYogaBannerImg;
 
         });
+
+
+$scope.loadDetailPage = function (url) {
+    window.location.href = url;
+}
 
 $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
