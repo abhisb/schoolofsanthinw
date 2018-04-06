@@ -6,13 +6,6 @@
 </section>
 
 <script>
-    var clients = [
-        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
-        { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
-        { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
-        { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
-        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
-    ];
     var MyDateField = function(config) {
     jsGrid.Field.call(this, config);
 };
@@ -47,14 +40,11 @@ jsGrid.fields.date = MyDateField;
         filtering :true,
         autoload: false,
         pageSize: 5,
-        editing:true,
+        editing:false,
         data: data,
         deleteConfirm: function(item) {
             return "The client \"" + item.name + "\" will be removed. Are you sure?";
         },
-        onItemEditing: function(args) {
-           $('#EventsForm').scope().editForm(args.item.id);
-    },
         controller:{
             loadData: function(filter) {
             return $.grep(data, function(client) {
@@ -81,11 +71,43 @@ jsGrid.fields.date = MyDateField;
                     var $button = $("<a>").attr("role", "button").attr("href", "/#/create/new-event").attr("title","Add new Event")
                         .addClass([this.buttonClass, this.modeButtonClass, this.insertModeButtonClass, "btn btn-info"].join(" "));
                     return $button;
+                },
+                itemTemplate: function(value, item) {
+                    var _that = this;
+                    var $result = jsGrid.fields.control.prototype.itemTemplate.apply(this, arguments);
+                    var $copyButton = $("<span>").attr("class","copy-button").attr("title","Copy")
+                    	.click(function(e) {                            
+                            var rowData = angular.copy(item);
+                            rowData.name = rowData.name + " - Copy";                            
+                            var id = rowData.id;
+                            var grid = _that._grid;
+                            grid.data.splice(findIndex(grid.data, id), 0, rowData);
+                            delete rowData.id;
+                            $('#EventsForm').scope().saveEventCopy(rowData);
+                            grid.refresh();
+                            e.stopPropagation();
+                        });
+
+                    var $editButton = $("<span>").attr("class","edit-button").attr("title","Edit")
+                    	.click(function(e) {
+                            $('#EventsForm').scope().editForm(item.id);
+                            e.stopPropagation();
+                        });
+                    
+                    return $result.add($copyButton).add($editButton);
                 }
             }
         ]
     });
  });
  
+ function findIndex(data, id) {
+    for(var i=0; i < data.length; i++) {
+        if(data[i].id == id) {
+            return i;
+        }
+    }
+    return false;
+ }
 </script>
  
