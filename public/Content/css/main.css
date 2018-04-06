@@ -1449,3 +1449,12 @@ div#santhiGrid .jsgrid-table .jsgrid-filter-row .jsgrid-cell:first-child input {
     margin-top: 15px;
     font-family: "PT Sans", 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
+
+.heading.tags {
+    font-size: 22px;
+    text-align: left;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-family: "PT Sans", 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
