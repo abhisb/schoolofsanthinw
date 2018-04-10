@@ -1,7 +1,5 @@
-var sosSettings = angular.module("sosSettings",
- [
-    "ngRoute",
-    'ngAnimate',
-    'ngSanitize'
+var app = angular.module("TestUIRouterAlone", [
+    'ui.bootstrap',
+    'ui.router'
 ]);
 

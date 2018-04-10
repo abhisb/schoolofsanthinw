@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="app/css/bootstrap.css">
+    <script src="app/js/angular.min.js"></script>
+    <script src="app/js/angular-ui-router.min.js"></script>
+    <script src="app/js/ui-bootstrap.tpls.min.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.routes.js"></script>
+  </head>
+  <body ng-app="TestUIRouterAlone" ng-controller="Tabs">
+    <a href="#" data-ng-click="addSecondState()">Add the second one</a>
+    <tabset>
+      <tab>
+        <tab-heading>
+          <a ui-sref="first">First</a>
+        </tab-heading>
+        <tab-heading>
+          <a ui-sref="second">First</a>
+        </tab-heading>
+      </tab>
+      <tab data-ng-repeat="tab in ui.tabs">
+        <tab-heading>
+          <a ui-sref="{{tab.sref}}">{{tab.name}}</a>
+        </tab-heading>
+      </tab>
+    </tabset>
+    <div ui-view>
+      <!--Here is the content-->
+    </div>
+  </body>
+</html>
