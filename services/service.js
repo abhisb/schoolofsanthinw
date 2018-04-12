@@ -27,57 +27,57 @@ Service.prototype.getAllPhotoNames = function () {
         });
 };
 
-Service.prototype.SendMail = function(data) {
+Service.prototype.SendMail = function (data) {
 
     var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'contactschoolofsanthi@gmail.com',
-        pass: 'Trivandrum123'
-      }
+        service: 'gmail',
+        auth: {
+            user: 'contactschoolofsanthi@gmail.com',
+            pass: 'Trivandrum123'
+        }
     });
-    
+
     var mailOptions = {
         from: '"School of Santhi" <contactschoolofsanthi@gmail.com>', // sender address
         to: data.applicant.email, // list of receivers
         subject: 'Confirmation of registration for ' + data.event.name + ' at School of Santhi', // Subject line
         html: 'Hi ' + data.applicant.name + ',<br>Your request for registration for the event <b>' + data.event.name + '</b> is being processed. We will get in touch with you shortly.<br><br></br>Regards,<br> School of Santhi' // html body
     };
-    
+
     var mailOptionsForSos = {
         from: '"School of Santhi" <contactschoolofsanthi@gmail.com>', // sender address
         to: 'contactschoolofsanthi@gmail.com', // list of receivers
         subject: 'Registration for ' + data.event.name, // Subject line
         html: 'Hi,<br>' + data.applicant.name + ' has requested to register for the event ' + data.event.name + '.<br>The details from the registration are,<br><br><b>Name :</b>    ' + data.applicant.name + '<br><b>Age :</b>    ' + data.applicant.age + '<br><b>Country :</b>    ' + data.applicant.country + '<br><b>Phone Number :</b>    ' + data.applicant.number + '<br><b>Best time to reach:</b>    ' + data.applicant.bestTime + '<br><b>Email :</b>    ' + data.applicant.email + '<br><b>Program :</b>    ' + data.event.type + '<br><b>Comments :</b> ' + data.applicant.reason + '<br><br><br>Regards,<br> School of Santhi' // html body
     }
-    
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-        error.message = "error";
-        return error;
-      } else {
-        console.log('Email sent: ' + info.response);
-        info.response.data = "Your application sucessfully submitted! Please check mail for details";
-        return info.response;
-      }
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            error.message = "error";
+            return error;
+        } else {
+            console.log('Email sent: ' + info.response);
+            info.response.data = "Your application sucessfully submitted! Please check mail for details";
+            return info.response;
+        }
     });
-    
-    transporter.sendMail(mailOptionsForSos, function(error, info){
-      if (error) {
-        console.log(error);
-        return error;
-        error.message = "error";
-      } else {
-        console.log('Email sent: ' + info.response);
-        info.response.data = "Your application sucessfully submitted! Please check mail for details"
-        return info.response;
-      }
+
+    transporter.sendMail(mailOptionsForSos, function (error, info) {
+        if (error) {
+            console.log(error);
+            return error;
+            error.message = "error";
+        } else {
+            console.log('Email sent: ' + info.response);
+            info.response.data = "Your application sucessfully submitted! Please check mail for details"
+            return info.response;
+        }
     });
     console.log(transporter)
     transporter.close()
-    
-    };
+
+};
 
 Service.prototype.EditEvent = function (event) {
     var file = './bin/events/' + event.id + '.json';
@@ -133,7 +133,8 @@ Service.prototype.EditEvent = function (event) {
 };
 
 Service.prototype.SaveEvent = function (event) {
-    var token = randtoken.generate(5);
+    //var token = randtoken.generate(5);
+    var token = crypto.randomBytes(8).toString('hex');
     var file = './bin/events/' + token + '.json';
     event.id = token;
     if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
@@ -243,29 +244,7 @@ Service.prototype.getBlog = function (id) {
                 });
         });
 };
-Service.prototype.ReadAllEvents = function () {
-    var events = [];
-    return new Promise(
-        function (resolve, reject) {
-            var data = fs.readdirSync('./bin/events');
 
-            var length = data.length;
-            data.forEach(function (fileName, i) {
-                var event = readFilePromisified('./bin/events/' + fileName).then((event, error) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        events.push(event);
-                        if (i == length - 1)
-                            resolve(events);
-                    }
-                })
-            })
-
-        });
-
-
-};
 
 Service.prototype.ReadAllBlogs = function () {
     var blogs = [];
@@ -288,9 +267,9 @@ Service.prototype.ReadAllBlogs = function () {
         });
 };
 
-Service.prototype.getYoga = function(id) {
+Service.prototype.getYoga = function (id) {
     return new Promise(
-        function(resolve, reject) {
+        function (resolve, reject) {
             var fileName = id + '.json';
             jsonfile.readFile('./bin/yoga/' + fileName,
                 (error, data) => {
@@ -304,9 +283,9 @@ Service.prototype.getYoga = function(id) {
         });
 };
 
-Service.prototype.getSanthi = function(id) {
+Service.prototype.getSanthi = function (id) {
     return new Promise(
-        function(resolve, reject) {
+        function (resolve, reject) {
             var fileName = id + '.json';
             jsonfile.readFile('./bin/santhiblogs/' + fileName,
                 (error, data) => {
@@ -318,7 +297,7 @@ Service.prototype.getSanthi = function(id) {
                     }
                 });
         });
-    };
+};
 
 Service.prototype.saveYogaBlog = function (blog) {
     var token = randtoken.generate(5);
@@ -334,10 +313,10 @@ Service.prototype.saveYogaBlog = function (blog) {
         var filePath = './public/bin/yoga/' + token + ".jpg";
     }
     blog.thumbnail = "";
-    require("fs").writeFile(filePath, base64Data, 'base64', function(err) {
+    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
         console.log(err);
     });
-    jsonfile.writeFile(file, blog, function(err) {
+    jsonfile.writeFile(file, blog, function (err) {
         console.error(err)
     })
 };
@@ -365,6 +344,34 @@ Service.prototype.saveBlog = function (blog) {
 };
 
 /***************************************************************************************/
+Service.prototype.ReadAllEvents = function () {
+    var events = [];
+    return new Promise(
+        function (resolve, reject) {
+            try {
+                var data = fs.readdirSync('./bin/events');
+                var length = data.length;
+                if (length > 0) {
+                    data.forEach(function (fileName, i) {
+                        var event = readFilePromisified('./bin/events/' + fileName).then((event, error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                events.push(event);
+                                if (i == length - 1)
+                                    resolve(events);
+                            }
+                        })
+                    })
+                }
+                else {
+                    resolve(blogs);
+                }
+            } catch (err) {
+                resolve(events);
+            }
+        });
+};
 
 Service.prototype.ReadAllNews = function () {
     var events = [];
@@ -372,19 +379,23 @@ Service.prototype.ReadAllNews = function () {
         function (resolve, reject) {
             try {
                 var data = fs.readdirSync('./bin/news');
-
                 var length = data.length;
-                data.forEach(function (fileName, i) {
-                    var event = readFilePromisified('./bin/news/' + fileName).then((event, error) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            events.push(event);
-                            if (i == length - 1)
-                                resolve(events);
-                        }
+                if (length > 0) {
+                    data.forEach(function (fileName, i) {
+                        var event = readFilePromisified('./bin/news/' + fileName).then((event, error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                events.push(event);
+                                if (i == length - 1)
+                                    resolve(events);
+                            }
+                        })
                     })
-                })
+                }
+                else {
+                    resolve(blogs);
+                }
             } catch (err) {
                 resolve(events);
             }
@@ -397,24 +408,60 @@ Service.prototype.ReadAllKnowYogaBlogs = function () {
     var blogs = [];
     return new Promise(
         function (resolve, reject) {
-            var data = fs.readdirSync('./bin/yoga');
-
-            var length = data.length;
-            data.forEach(function (fileName, i) {
-                var event = readFilePromisified('./bin/yoga/' + fileName).then((blog, error) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        blogs.push(blog);
-                        if (i == length - 1)
-                            resolve(blogs);
-                    }
-                })
-            })
-
+            try {
+                var data = fs.readdirSync('./bin/yoga');
+                var length = data.length;
+                if (length > 0) {
+                    data.forEach(function (fileName, i) {
+                        var event = readFilePromisified('./bin/yoga/' + fileName).then((blog, error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                blogs.push(blog);
+                                if (i == length - 1)
+                                    resolve(blogs);
+                            }
+                        })
+                    })
+                }
+                else {
+                    resolve(blogs);
+                }
+            } catch (err) {
+                resolve(events);
+            }
         });
+};
 
+Service.prototype.getAllSanthiBlogs = function () {
+    var blogs = [];
 
+    return new Promise(
+        function (resolve, reject) {
+            try {
+                var data = fs.readdirSync('./bin/santhiblogs');
+                var length = data.length;
+                if (length > 0) {
+                    data.forEach(function (fileName, i) {
+                        var event = readFilePromisified('./bin/santhiblogs/' + fileName).then((blog, error) => {
+                            console.log(blog, error)
+                            if (error) {
+                                reject(error);
+                            } else {
+                                blogs.push(blog);
+                                if (i == length - 1)
+                                    resolve(blogs);
+                            }
+                        })
+                    })
+                }
+                else {
+                    resolve(blogs);
+                }
+            } catch (err) {
+                resolve(blogs);
+            }
+        });
 };
 
 Service.prototype.saveYogaBlog = function (blog) {
@@ -654,30 +701,7 @@ Service.prototype.saveSanthiBlog = function (event) {
 
 };*/
 
-Service.prototype.getAllSanthiBlogs = function () {
-    var blogs = [];
-    return new Promise(
-        function (resolve, reject) {
-            try {
-                var data = fs.readdirSync('./bin/santhiblogs');
-                var length = data.length;
-                data.forEach(function (fileName, i) {
-                    var event = readFilePromisified('./bin/santhiblogs/' + fileName).then((blog, error) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            blogs.push(blog);
-                            if (i == length - 1)
-                                resolve(blogs);
-                        }
-                    })
-                })
 
-            } catch (err) {
-                resolve(blogs);
-            }
-        });
-};
 
 Service.prototype.updateKnowYogaBlog = function (event) {
 
@@ -866,23 +890,23 @@ Service.prototype.saveGeneralSettings = function (event) {
         });
     }
 
-     jsonfile.readFile('./bin/general-settings/config.json',
-                (error, data) => {
-                    if (error) {
-                        
-                    } else {
-                        if (data.knowYogaBannerImg && !event.knowYogaBannerImg) {
-                            event.knowYogaBannerImg = data.knowYogaBannerImg;
-                        }
-                        if (data.santhiBlogBannerImg && !event.santhiBlogBannerImg) {
-                            event.santhiBlogBannerImg = data.santhiBlogBannerImg;
-                        }
+    jsonfile.readFile('./bin/general-settings/config.json',
+        (error, data) => {
+            if (error) {
 
-                        jsonfile.writeFile(file, event, function (err) {
-                            console.error(err)
-                        })
-                    }
-                });
+            } else {
+                if (data.knowYogaBannerImg && !event.knowYogaBannerImg) {
+                    event.knowYogaBannerImg = data.knowYogaBannerImg;
+                }
+                if (data.santhiBlogBannerImg && !event.santhiBlogBannerImg) {
+                    event.santhiBlogBannerImg = data.santhiBlogBannerImg;
+                }
+
+                jsonfile.writeFile(file, event, function (err) {
+                    console.error(err)
+                })
+            }
+        });
 
     /*jsonfile.writeFile(file, event, function (err) {
         console.error(err)
