@@ -36,6 +36,7 @@
                 pageSize: 5,
                 editing: true,
                 data: data,
+                noDataContent: 'No data found',
                 deleteConfirm: function(item) {
                     return "The Santhi Blog titled \"" + item.title + "\" will be removed. Are you sure?";
                 },
@@ -86,9 +87,12 @@
                         type: "control",
                         headerTemplate: function() {
                             var grid = this._grid;
-                            var $button = $("<a>").attr("role", "button").attr("href", "/settings/#/create/santhiblog/add").attr("title", "Add new Event")
+                            var $button = $("<a>").attr("role", "button").attr("title", "Add new Event")
                                 .addClass([this.buttonClass, this.modeButtonClass, this.insertModeButtonClass, "btn btn-info"].join(" "));
-                            return $button;
+                                $button.on("click", function() {
+                                    $state.go('addEditSanthi');
+                                });
+                                return $button;
                         }
                     }
                 ]

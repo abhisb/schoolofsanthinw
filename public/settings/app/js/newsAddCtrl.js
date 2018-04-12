@@ -1,5 +1,5 @@
 (function () {
-    window.settingsApp.controller('newsAddController', ['$scope', '$http', '$timeout', '$stateParams', function ($scope, $http, $timeout, $stateParams) {
+    window.settingsApp.controller('newsAddController', ['$scope', '$http', '$timeout', '$state', '$stateParams', function ($scope, $http, $timeout, $state, $stateParams) {
 
         $scope.enableDescription = function (event) {
             $('#newsDescription').summernote({
@@ -9,10 +9,10 @@
         }
         $scope.enableDescription();
 
-        if ($stateParams.id && $stateParams.id.toLowerCase() == 'add') {
+        if (!$stateParams.id) {
             $scope.isEdit = false;
         }
-        else if ($stateParams.id && $stateParams.id.toLowerCase() != 'add') {
+        else {
             $scope.isEdit = true;
             $scope.editNews = function (id) {
                 $http.get('/api/news/getnews/' + id).then(function (res) {
@@ -28,6 +28,7 @@
             $scope.editNews($stateParams.id);
         }
         $scope.saveNews = function () {
+            $scope.news.description = $('#newsDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g);
             if (!$scope.news.title || !$scope.news.description) {
                 return;
             }
@@ -42,15 +43,28 @@
                 slicedDesc: $scope.news.description.slice(0, 100) + "..."
                 //highlight: $scope.news.highlight
             }
-            $http.post('/api/save/news', data).then(function (result) {
-                window.location.href = '/settings';
+            $("#alertModal").on('hide.bs.modal', function () {
+                angular.element(".modal-backdrop").remove();
+                $state.go('news', {}, {reload: true}); 
+            });
+            $http.post('/api/save/news', data).then(function (response) {
+                $scope.responseText = response.data;
+                $scope.successAlert = true;
+                delete $scope.errorAlert;
+                $('#newsDescription').summernote('reset');
+                angular.element("#alertModal").modal();
             }, function (error) {
-                console.log(error)
+                if (error) {
+                    $scope.responseText = "something went wrong, Event not saved Please try after some time...";
+                    $scope.errorAlert = true;
+                    delete $scope.successAlert;
+                    $('#newsDescription').summernote('reset');
+                    angular.element("#alertModal").modal();
+                }
             })
         }
-        $scope.editNewsForm = function (id) {
-            var loc = '/settings/#/create/news/' + id;
-            window.location.href = loc;
+        $scope.editNewsForm = function (newsId) {
+            $state.go('addEditNews', {id: newsId});
         };
         $scope.deleteNews = function (id) {
             var data = {

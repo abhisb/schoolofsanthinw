@@ -5,11 +5,11 @@
       enabled: true,
       requireBase: false
     });
-    $urlMatcherFactoryProvider.strictMode(false);
     $stateProvider
       .state('settings', {
-        url: '/settings/#events',
-        abstract: true
+        url: '',
+        abstract: true,
+        templateUrl: 'settings.html'
       })
       .state('events', {
         url: '/settings/#events',
@@ -17,6 +17,15 @@
           'content@': {
             templateUrl: 'views/events1.html',
             controller: 'eventsGridController',
+          }
+        }
+      })
+      .state('addEditEvents', {
+        url: '/settings/#addEditEvents/:id',
+        views: {
+          'content': {
+            templateUrl: 'views/create-event.html',
+            controller: 'eventController',
           }
         }
       })
@@ -28,7 +37,15 @@
             controller: 'newsCtrl'
           }
         }
-      })
+      }).state('addEditNews', {
+            url: '/settings/#addEditNews/:id',
+            views: {
+              'content': {
+                templateUrl: 'views/news-add.html',
+                controller: 'newsAddController'
+              }
+            }       
+          })
       .state('yoga', {
         url: '/settings/#yoga',
         views: {
@@ -38,8 +55,8 @@
           }
         }
       })
-      .state('addYoga', {
-        url: '/settings/#yoga/add',
+      .state('addEditYoga', {
+        url: '/settings/#addEditYoga/:id',
         views: {
           'content': {
             templateUrl: 'views/create-yoga-blog.html',
@@ -55,7 +72,15 @@
             controller: 'santhiCtrl'
           }
         }
-      })
+      }).state('addEditSanthi', {
+            url: '/settings/#addEditSanthi/:id',
+            views: {
+              'content': {
+                templateUrl: 'views/create-shanthi-blog.html',
+                controller: 'santhiAddCtrl'
+              }
+            }     
+          })
       .state('general', {
         url: '/settings/#general',
         views: {

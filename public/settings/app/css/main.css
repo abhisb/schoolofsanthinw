@@ -1,13 +1,21 @@
 html {
     font-size: 10px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    position: relative;
     min-height: 100%;
 }
-
+.input-group-addon:last-child {
+    cursor: pointer;
+}
 body {
     overflow-x: hidden;
 }
-
+.alert-herader {
+    color: blue;
+}
+.sub-state {
+    padding: 20px 60px;
+}
 @font-face {
     font-family: 'Samarkan';
     src: url('fonts/saman.eot');

@@ -1,9 +1,15 @@
 (function () {
-    window.settingsApp.controller('yogaCtrl', ['$scope', '$state', '$location','$http', function($scope, $state, $location, $http) {
+    window.settingsApp.controller('yogaCtrl', ['$rootScope', '$scope', '$state', '$location', '$window', '$http', function($rootScope, $scope, $state, $location, $window, $http) {
         var MyDateField = function(config) {
             jsGrid.Field.call(this, config);
         };
-        
+
+        $window.onpopstate = function() {
+            if($rootScope.addEditYoga){
+                alert("dasf")
+            }            
+           }
+
         MyDateField.prototype = new jsGrid.Field({
         
             css: "date-field", // redefine general property 'css'
@@ -36,6 +42,7 @@
                 pageSize: 5,
                 editing: true,
                 data: data,
+                noDataContent: 'No data found',
                 deleteConfirm: function(item) {
                     return "The Yoga Blog titled \"" + item.title + "\" will be removed. Are you sure?";
                 },
@@ -90,7 +97,7 @@
                             var $button = $("<a>").attr("role", "button").attr("id", "add-yoga").attr("title", "Add new Event")
                                 .addClass([this.buttonClass, this.modeButtonClass, this.insertModeButtonClass, "btn btn-info"].join(" "));
                                 $button.on("click", function() {
-                                    $state.go('addYoga');
+                                    $state.go('addEditYoga');
                                 });
                             return $button;
                         }
