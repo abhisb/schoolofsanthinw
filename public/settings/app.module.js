@@ -1,5 +1,7 @@
-var app = angular.module("TestUIRouterAlone", [
-    'ui.bootstrap',
-    'ui.router'
-]);
+(function () {
+    window.settingsApp = angular.module("settingsApp", [
+        'ui.bootstrap',
+        'ui.router'
+    ]);
+})();
 

@@ -1,32 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="app/css/bootstrap.css">
-    <script src="app/js/angular.min.js"></script>
-    <script src="app/js/angular-ui-router.min.js"></script>
-    <script src="app/js/ui-bootstrap.tpls.min.js"></script>
-    <script src="app.module.js"></script>
-    <script src="app.routes.js"></script>
-  </head>
-  <body ng-app="TestUIRouterAlone" ng-controller="Tabs">
-    <a href="#" data-ng-click="addSecondState()">Add the second one</a>
-    <tabset>
-      <tab>
-        <tab-heading>
-          <a ui-sref="first">First</a>
-        </tab-heading>
-        <tab-heading>
-          <a ui-sref="second">First</a>
-        </tab-heading>
-      </tab>
-      <tab data-ng-repeat="tab in ui.tabs">
-        <tab-heading>
-          <a ui-sref="{{tab.sref}}">{{tab.name}}</a>
-        </tab-heading>
-      </tab>
-    </tabset>
-    <div ui-view>
-      <!--Here is the content-->
-    </div>
-  </body>
+
+<head>
+    <!-- <base href="/settings/"> -->
+  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link type="text/css" rel="stylesheet" href="app/css/bootstrap.css"/>
+  <link type="text/css" rel="stylesheet" href="app/css/main.css"/>
+  <link href="app/css/bootstrap-datetimepicker.min.css"/>
+  <link href="app/css/fullcalendar.min.css"/>  
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css"/>
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+  <link href="app/css/bootstrap-social.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
+  <script src="app/js/libs/ui-bootstrap.tpls.min.js"></script>
+  
+  <script src="app/js/libs/moment.min.js"></script>
+  <script src="app/js/libs/fullcalendar.min.js"></script>
+  <script src="app/js/libs/gcal.min.js"></script>
+  <script src="app/js/libs/calendar.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="app/js/libs/bootstrap-datetimepicker.js"></script>
+  
+  <script src="app/js/libs/underscore-min.js"></script>
+  <script src="app.module.js"></script>
+  <script src="app.routes.js"></script>
+  <script src="app/services/directive.js"></script>
+  <script src="app/services/coreService.js"></script>
+
+  <script src="app/js/eventsController.js"></script>
+  <script src="app/js/settingsCtrl.js"></script>  
+  <script src="app/js/newsCtrl.js"></script>
+  <script src="app/js/yogaCtrl.js"></script>
+  <script src="app/js/santhiCtrl.js"></script>
+  <script src="app/js/generalCtrl.js"></script>
+  <script src="app/js/yogaBlogAddCtrl.js"></script>
+  <script src="app/js/santhiBlogAddCtrl.js"></script>
+  <script src="app/js/newsAddCtrl.js"></script>
+
+</head>
+
+<body ng-app="settingsApp">
+
+  <header ui-view="header" class="header" ng-controller="Header_Ctrl">
+    <section class="row no-gutter mt-10">
+      <section class="col-md-3 text-center logo">
+        <section class="col-md-3">
+          <img href="#" src="/Content/img/school%20of%20santhi.png">
+        </section>
+        <section class=" col-md-8 logo-text text-left">
+          <section class="sos-logo-text">school of santhi</section>
+          <section class="font-12">Traditional Yoga School</section>
+        </section>
+        <div class="col-md-11">
+          <button type="button" class="btn btnlogout btn-warning pull-right" ng-click="logout();">Logout</button>
+        </div>
+      </section>
+    </section>
+    <ul class="nav nav-tabs">
+      <li ui-sref-active="active">
+        <a data-toggle="tab" ui-sref="events">Events</a>
+      </li>
+      <li ui-sref-active="active">
+        <a data-toggle="tab" ui-sref="news">News</a>
+      </li>
+      <li ui-sref-active="active">
+        <a data-toggle="tab" ui-sref="yoga">Know Yoga</a>
+      </li>
+      <li ui-sref-active="active">
+        <a data-toggle="tab" ui-sref="santhi">Santhi Speaks</a>
+      </li>
+      <li ui-sref-active="active">
+        <a data-toggle="tab" ui-sref="general">General Settings</a>
+      </li>
+    </ul>
+  </header>
+  <div ui-view="content"></div>
+</body>
+
 </html>

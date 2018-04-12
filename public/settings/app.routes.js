@@ -1,77 +1,193 @@
-// Code goes here
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function isEmpty(obj) {
-
-    // null and undefined are "empty"
-    if (obj == null) return true;
-
-    // Assume if it has a length property with a non-zero value
-    // that that property is correct.
-    if (obj.length && obj.length > 0)    return false;
-    if (obj.length === 0)  return true;
-
-    // Otherwise, does it have any properties of its own?
-    // Note that this doesn't handle
-    // toString and toValue enumeration bugs in IE < 9
-    for (var key in obj) {
-        if (hasOwnProperty.call(obj, key)) return false;
-    }
-
-    return true;
-}
-
-
-
-
-app.config(function($stateProvider, $urlRouterProvider){
-  
-  $urlRouterProvider.when('', 'first');
-  
-  $stateProvider
-  .state('first', {
-    templateUrl: 'partials/first.html',
-    controller: 'FirstCtrl',
-    data:{
-      
-    }
-  })
-  .state('second', {
-    templateUrl: 'partials/second.html',
-    controller: 'SecondCtrl',
-    data: {
-      
-    }
-  });
-  
-});
-
-app.controller('FirstCtrl', ['$scope', function($scope){
-  
-}]);
-
-app.controller('SecondCtrl', ['$scope', '$stateParams', '$stateParams', '$state', function($scope,  $stateParams, $stateParams, $state){
-  if($state.current.data && !isEmpty($state.current.data)){
-     $scope.level = $state.current.data;
-  }else{
-    $scope.level = {
-      information : "keep"
-    }
+(function () {
+  'use strict';
+  var Core_Routes = function ($stateProvider, $locationProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
+    $urlMatcherFactoryProvider.strictMode(false);
+    $stateProvider
+      .state('settings', {
+        url: '/settings/#events',
+        abstract: true
+      })
+      .state('events', {
+        url: '/settings/#events',
+        views: {
+          'content@': {
+            templateUrl: 'views/events1.html',
+            controller: 'eventsGridController',
+          }
+        }
+      })
+      .state('news', {
+        url: '/settings/#news',
+        views: {
+          'content@': {
+            templateUrl: 'views/news.html',
+            controller: 'newsCtrl'
+          }
+        }
+      })
+      .state('yoga', {
+        url: '/settings/#yoga',
+        views: {
+          'content@': {
+            templateUrl: 'views/create-blog-yoga.html',
+            controller: 'yogaCtrl'
+          }
+        }
+      })
+      .state('addYoga', {
+        url: '/settings/#yoga/add',
+        views: {
+          'content': {
+            templateUrl: 'views/create-yoga-blog.html',
+            controller: 'yogaBlogAddController'
+          }
+        }
+      })
+      .state('santhi', {
+        url: '/settings/#santhi',
+        views: {
+          'content@': {
+            templateUrl: 'views/create-blog-shanthi.html',
+            controller: 'santhiCtrl'
+          }
+        }
+      })
+      .state('general', {
+        url: '/settings/#general',
+        views: {
+          'content@': {
+            templateUrl: 'views/general-settings.html',
+            controller: 'generalCtrl'
+          }
+        }
+      })
   }
-  $state.current.data = $scope.level;
-  console.log("Second CTRL", $stateParams, $state);
-}]);
 
-app.controller('Tabs', ['$scope', '$stateParams', '$state', function($scope, $stateParams, $state){
-  $scope.ui = {
-    tabs : []
-  };
-  $scope.addSecondState = function(){
-    $scope.ui.tabs.push({sref: 'second', name: "Second"});
-  };
-  $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-  });
-}]);
+  window.settingsApp.config(Core_Routes);
+})();
 
 
-//app.factory 
+
+// (function () {
+//   var Core_Routes = function ($stateProvider, $locationProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+//     $locationProvider.html5Mode({
+//       enabled: true,
+//       requireBase: false
+//     });
+//     $locationProvider.hashPrefix('');
+
+//   $stateProvider
+//    .state('events', {
+//     url: '/settings/#events',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/events1.html',
+//         controller: 'eventsGridController',
+//       }
+//     }  
+//   }).state('addEvents', {
+//     url: '/settings/#events/add',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-event.html',
+//         controller: 'eventController',
+//       }
+//     }  
+//   }).state('events.edit', {
+//     url: '/settings/#events/edit/:id',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-event.html',
+//         controller: 'eventController',
+//       }
+//     }   
+//   }).state('news', {
+//     url: '/settings/#news',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/news.html',
+//         controller: 'newsCtrl'
+//       }
+//     }       
+//   }).state('news.add', {
+//     url: '/settings/#news/add',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/news-add.html',
+//         controller: 'newsAddCtrl'
+//       }
+//     }       
+//   }).state('news.edit', {
+//     url: '/settings/#news/edit/:id',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/news-add.html',
+//         controller: 'newsAddCtrl'
+//       }
+//     }       
+//   }).state('yoga', {
+//     url: '/settings/#yoga',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-blog-yoga.html',
+//         controller: 'yogaCtrl'
+//       }
+//     }       
+//   }).state('addYoga', {
+//     url: '/settings/#yoga/add',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-yoga-blog.html',
+//         controller: 'yogaBlogAddController'
+//       }
+//     }      
+//   }).state('yoga.edit', {
+//     url: 'yoga/edit/:id',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-yoga-blog.html',
+//         controller: 'yogaAddCtrl'
+//       }
+//     }      
+//   }).state('santhi', {
+//     url: '/settings/#santhi',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-blog-shanthi.html',
+//         controller: 'santhiCtrl'
+//       }
+//     }       
+//   }).state('santhi.add', {
+//     url: '/settings/#santhi/add',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-shanthi-blog.html',
+//         controller: 'santhiAddCtrl'
+//       }
+//     }     
+//   }).state('santhi.edit', {
+//     url: '/settings/#santhi/edit/:id',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/create-shanthi-blog.html',
+//         controller: 'santhiAddCtrl'
+//       }
+//     }        
+//   }).state('general', {
+//     url: '/settings/#general',
+//     views: {
+//       'content': {
+//         templateUrl: 'views/general-settings.html',
+//         controller: 'generalCtrl'
+//       }
+//     }      
+//   })
+
+//   }
+//   settingsApp.config(Core_Routes);
+// })();
+
