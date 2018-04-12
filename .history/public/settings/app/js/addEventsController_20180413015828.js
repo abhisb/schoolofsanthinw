@@ -19,7 +19,10 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
         $("#datetimepicker1").on("dp.change", function (e) {
             $('#datetimepicker3').data("DateTimePicker").maxDate(e.date);
         });
-    });    
+    });
+    $scope.goToHome= function (state) {
+        $state.go(state)
+    }
 
     $scope.addRow = function () {
         $scope.event.schedule.push({

@@ -1,11 +1,9 @@
 (function () {
-    window.settingsApp.controller('Header_Ctrl', ['$rootScope', '$scope', '$state', '$location','$http', function($rootScope, $scope, $state, $location, $http) {
+    window.settingsApp.controller('Header_Ctrl', ['$scope', '$state', '$location','$http', function($scope, $state, $location, $http) {
         var url = window.location.href;
         var urlsplit = url.split("/")
         urlsplit = urlsplit[urlsplit.length-1];
-        $rootScope.goToHome= function (state) {
-            $state.go(state, {}, {reload: true})
-        }
+
         switch(urlsplit){
             case '#events':
             $state.go('events');

@@ -21,6 +21,7 @@
             else{
                 $rootScope.subState = false;
             }
+            
         });
     };
     window.settingsApp.run(Core_Run);

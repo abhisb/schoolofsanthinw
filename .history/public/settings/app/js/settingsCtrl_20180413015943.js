@@ -4,7 +4,7 @@
         var urlsplit = url.split("/")
         urlsplit = urlsplit[urlsplit.length-1];
         $rootScope.goToHome= function (state) {
-            $state.go(state, {}, {reload: true})
+            $state.go(state)
         }
         switch(urlsplit){
             case '#events':
