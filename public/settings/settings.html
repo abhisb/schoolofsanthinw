@@ -83,7 +83,7 @@
       </li>
     </ul>
   </header>
-  <div ui-view="content" ng-class="{'sub-state': subState}" class="ui-content"></div>
+  <div ui-view="content" ng-class="{'sub-state': subState, 'events': stateName=='events', 'news': stateName=='news', 'yoga': stateName=='yoga', 'santhi': stateName=='santhi', 'general': stateName=='general'}" class="ui-content"></div>
 </body>
 
 </html>

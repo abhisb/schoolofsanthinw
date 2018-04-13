@@ -1,5 +1,6 @@
 (function () {
-    window.settingsApp.controller('newsCtrl', ['$scope', '$state', '$location', '$http', function ($scope, $state, $location, $http) {
+    window.settingsApp.controller('newsCtrl', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {
+        $rootScope.stateName = 'news';
         var MyDateField = function (config) {
             jsGrid.Field.call(this, config);
         };

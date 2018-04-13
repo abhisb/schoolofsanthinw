@@ -1,5 +1,6 @@
 (function () {
-    window.settingsApp.controller('santhiCtrl', ['$scope', '$state', '$location', '$http', function ($scope, $state, $location, $http) {
+    window.settingsApp.controller('santhiCtrl', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {
+        $rootScope.stateName = 'santhi';
         var MyDateField = function (config) {
             jsGrid.Field.call(this, config);
         };

@@ -1,5 +1,6 @@
 (function () {
-    window.settingsApp.controller('generalCtrl', ['$scope', '$state', '$location', '$http', function ($scope, $state, $location, $http) {      
+    window.settingsApp.controller('generalCtrl', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {      
+        $rootScope.stateName = 'general';
         $scope.saveGenSettings = function (settings) {
             $scope.successAlert = '';
             $http.post('/api/saveGeneralSettings', settings).then(function (res) {

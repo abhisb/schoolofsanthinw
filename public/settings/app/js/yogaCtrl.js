@@ -1,5 +1,6 @@
 (function () {
     window.settingsApp.controller('yogaCtrl', ['$rootScope', '$scope', '$state', '$location', '$window', '$http', function ($rootScope, $scope, $state, $location, $window, $http) {
+        $rootScope.stateName = 'yoga';
         var MyDateField = function (config) {
             jsGrid.Field.call(this, config);
         };
