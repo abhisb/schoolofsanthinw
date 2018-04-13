@@ -38,10 +38,10 @@
                 sorting: true,
                 paging: true,
                 filtering: true,
-                autoload: false,
                 pageSize: 5,
                 editing: true,
                 data: data,
+                autoload: true,
                 noDataContent: 'No data found',
                 deleteConfirm: function(item) {
                     return "The Yoga Blog titled \"" + item.title + "\" will be removed. Are you sure?";

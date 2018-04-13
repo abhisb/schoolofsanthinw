@@ -8,7 +8,10 @@
             $('#newsDescription').summernote('code', '');
         }
         $scope.enableDescription();
-
+        $("#alertModal").on('hide.bs.modal', function () {
+            angular.element(".modal-backdrop").remove();
+            $state.go('news', {}, {relaod: true}); 
+        });
         if (!$stateParams.id) {
             $scope.isEdit = false;
         }
@@ -42,11 +45,7 @@
                 description: $('#newsDescription').summernote('code'),//$scope.news.description,
                 slicedDesc: $scope.news.description.slice(0, 100) + "..."
                 //highlight: $scope.news.highlight
-            }
-            $("#alertModal").on('hide.bs.modal', function () {
-                angular.element(".modal-backdrop").remove();
-                $state.go('news', {}, {reload: true}); 
-            });
+            }           
             $http.post('/api/save/news', data).then(function (response) {
                 $scope.responseText = response.data;
                 $scope.successAlert = true;
@@ -71,7 +70,6 @@
                 "id": id
             }
             $http.post('/api/news/delete', data).then(function (res) {
-                getAllNews();
                 $scope.news.title = '';
                 $scope.news.description = '';
                 //$scope.news.highlight = '';

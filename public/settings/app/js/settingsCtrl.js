@@ -6,30 +6,10 @@
         $rootScope.goToHome= function (state) {
             $state.go(state, {}, {reload: true})
         }
-        switch(urlsplit){
-            case '#events':
-            $state.go('events');
-            break;
-
-            case '#news':
-            $state.go('news');
-            break;
-
-            case '#yoga':
-            $state.go('yoga');
-            break;
-
-            case '#santhi':
-            $state.go('santhi');
-            break;
-
-            case '#general':
-            $state.go('general');
-            break;
-
-            default:
-            $state.go('events');
-            break;
+        $rootScope.logout = function() {
+            $http.get('/api/logout').then(function() {
+                location.href = '../#/login';
+            })
         }
     }]);    
 

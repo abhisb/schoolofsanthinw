@@ -8,7 +8,10 @@
             $('#blogDescription').summernote('code', '');
         }
         $scope.enableDescription();
-
+        $("#alertModal").on('hide.bs.modal', function () {
+            angular.element(".modal-backdrop").remove();
+            $state.go("yoga");
+        });
         if (!$stateParams.id) {
             $scope.blog = {};
             $scope.saveBlog = function (blog) {
@@ -19,26 +22,20 @@
                 blog.date = (new Date()).getTime();
                 blog.description = $('#blogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");
                 blog.slicedDesc = blog.description.slice(0, 270) + "...";
-                $("#alertModal").on('hide.bs.modal', function () {
-                    angular.element(".modal-backdrop").remove();
-                    $state.go("yoga", {}, {reload: true});
-                });
                 $http.post("/api/yogablog/save", blog).then(function (response) {
                     $scope.responseText = response.data;
                     $scope.successAlert = true;
                     delete $scope.errorAlert;
                     $scope.blog = {};
-                    $('#summernote').summernote('reset');
+                    $('#blogDescription').summernote('reset');
                     angular.element("#alertModal").modal();
                 }, function (error) {
                     if (error) {
-                        $scope.responseText = "something went wrong, Event not saved Please try after some time...";
+                        $scope.responseText = "something went wrong, Yoga Blog is not saved Please try after some time...";
                         $scope.errorAlert = true;
                         delete $scope.successAlert;
-                        $scope.event = {
-                            type: "TTC"
-                        };
-                        $('#summernote').summernote('reset');
+                        $scope.blog = {};
+                        $('#blogDescription').summernote('reset');
                         angular.element("#alertModal").modal();
                     }
                 });
@@ -52,16 +49,31 @@
                     $scope.blog = res.data;
                     $('#blogDescription').summernote('code', res.data.description);
                 }, function (error) {
-                    window.location.href = '/settings';
+                    if (error) {
+                        $scope.responseText = "Server error, Can't fetch data now, Please try after some time";
+                        $scope.errorAlert = true;
+                        delete $scope.successAlert;
+                        angular.element("#alertModal").modal();
+                    }
                 });
             }
             $scope.updateYogaBlog = function (blog) {
                 blog.description = $('#blogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");        
                 blog.slicedDesc = blog.description.slice(0, 270) + "...";
-                $http.post('/api/update/knowyoga', blog).then(function (res) {
-                    window.location.href = '/settings';
+                $http.post('/api/update/knowyoga', blog).then(function (response) {
+                    $scope.responseText = response.data;
+                    $scope.successAlert = true;
+                    delete $scope.errorAlert;
+                    $scope.blog = {};
+                    $('#blogDescription').summernote('reset');
+                    angular.element("#alertModal").modal();
                 }, function (error) {
-                    console.log(error)
+                    $scope.responseText = "Server error, Can't update now, Please try after some time...";
+                    $scope.errorAlert = true;
+                    delete $scope.successAlert;
+                    $scope.blog = {};
+                    $('#blogDescription').summernote('reset');
+                    angular.element("#alertModal").modal();
                 });
             }
 

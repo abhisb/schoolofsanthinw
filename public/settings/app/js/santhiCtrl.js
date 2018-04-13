@@ -32,7 +32,7 @@
                 sorting: true,
                 paging: true,
                 filtering: true,
-                autoload: false,
+                autoload: true,
                 pageSize: 5,
                 editing: true,
                 data: data,

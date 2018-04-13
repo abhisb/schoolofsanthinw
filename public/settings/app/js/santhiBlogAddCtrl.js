@@ -1,6 +1,9 @@
 (function () {
-window.settingsApp.controller('santhiBlogAddController', ['$scope', '$http', '$timeout', '$stateParams', function($scope, $http, $timeout, $stateParams) {
-   
+window.settingsApp.controller('santhiBlogAddController', ['$scope', '$state', '$http', '$timeout', '$stateParams', function($scope, $state, $http, $timeout, $stateParams) {
+    $("#alertModal").on('hide.bs.modal', function () {
+        angular.element(".modal-backdrop").remove();
+        $state.go("santhi");
+    });
     if(!$stateParams.id){
         $scope.santhiBlog = {};
         $scope.savesanthiBlog = function(santhiBlog) {
@@ -14,9 +17,21 @@ window.settingsApp.controller('santhiBlogAddController', ['$scope', '$http', '$t
             santhiBlog.slicedDesc = santhiBlog.description.slice(0,270) + "...";
             santhiBlog.thumbnailSrc = santhiBlog.image;
             $http.post("/api/santhiblog/save", santhiBlog).then(function(response) {
-                window.location.href = '/settings';
+                    $scope.responseText = response.data;
+                    $scope.successAlert = true;
+                    delete $scope.errorAlert;
+                    $scope.santhiBlog = {};
+                    $('#santhiBlogDescription').summernote('reset');
+                    angular.element("#alertModal").modal();
             },function(error){
-                console.log(error)
+                if (error) {
+                    $scope.responseText = "something went wrong, santhi blog is not saved Please try after some time...";
+                    $scope.errorAlert = true;
+                    delete $scope.successAlert;
+                    $scope.santhiBlog = {};
+                    $('#santhiBlogDescription').summernote('reset');
+                    angular.element("#alertModal").modal();
+                }
             });
         };
     
@@ -36,24 +51,38 @@ window.settingsApp.controller('santhiBlogAddController', ['$scope', '$http', '$t
                 $scope.santhiBlog = res.data;
                 $('#santhiBlogDescription').summernote('code', res.data.description);
             },function(error){
-                console.log(error)
+                $scope.responseText = "something went wrong, Can't fetch data Please try after some time...";
+                    $scope.errorAlert = true;
+                    delete $scope.successAlert;
+                    angular.element("#alertModal").modal();
             });  
         }
     
         $scope.updateSanthiBlog = function (blog) {        
             blog.description = $('#santhiBlogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");        
             blog.slicedDesc = blog.description.slice(0,270) + "...";
-            $http.post('/api/update/santhiblog', blog).then(function(res) {
-                window.location.href = '/settings';
+            $http.post('/api/update/santhiblog', blog).then(function(response) {
+                $scope.responseText = response.data;
+                    $scope.successAlert = true;
+                    delete $scope.errorAlert;
+                    $scope.santhiBlog = {};
+                    $('#santhiBlogDescription').summernote('reset');
+                    angular.element("#alertModal").modal();
             },function(error){
-                console.log(error)
+                if (error) {
+                    $scope.responseText = "something went wrong, santhi blog is not saved Please try after some time...";
+                    $scope.errorAlert = true;
+                    delete $scope.successAlert;
+                    $scope.santhiBlog = {};
+                    $('#santhiBlogDescription').summernote('reset');
+                    angular.element("#alertModal").modal();
+                }
             });  
         }    
         $scope.editSanthiBlog($stateParams.id);
     }
-    $scope.editSanthiForm  = function(id) {
-        var loc = '/settings/#/create/santhiblog/' + id;
-        window.location.href = loc;
+    $scope.editSanthiForm  = function(santhiId) {
+        $state.go('addEditSanthi', {id: santhiId});
     };
     
 }]);

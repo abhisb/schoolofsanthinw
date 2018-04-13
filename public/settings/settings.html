@@ -67,23 +67,23 @@
     </section>
     <ul class="nav nav-tabs">
       <li ui-sref-active="active">
-        <a data-toggle="tab" ui-sref="events">Events</a>
+        <a data-toggle="tab" data-href="/events" ui-sref="events">Events</a>
       </li>
       <li ui-sref-active="active">
-        <a data-toggle="tab" ui-sref="news">News</a>
+        <a data-toggle="tab" data-href="/news" ui-sref="news">News</a>
       </li>
       <li ui-sref-active="active">
-        <a data-toggle="tab" ui-sref="yoga">Know Yoga</a>
+        <a data-toggle="tab" data-href="/yoga" ui-sref="yoga">Know Yoga</a>
       </li>
       <li ui-sref-active="active">
-        <a data-toggle="tab" ui-sref="santhi">Santhi Speaks</a>
+        <a data-toggle="tab" data-href="/santhi" ui-sref="santhi">Santhi Speaks</a>
       </li>
       <li ui-sref-active="active">
-        <a data-toggle="tab" ui-sref="general">General Settings</a>
+        <a data-toggle="tab" data-href="/general" ui-sref="general">General Settings</a>
       </li>
     </ul>
   </header>
-  <div ui-view="content" ng-class="{'sub-state': subState}"></div>
+  <div ui-view="content" ng-class="{'sub-state': subState}" class="ui-content"></div>
 </body>
 
 </html>
