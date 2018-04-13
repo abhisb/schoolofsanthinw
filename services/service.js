@@ -350,9 +350,9 @@ Service.prototype.ReadAllEvents = function () {
     return new Promise(
         function (resolve, reject) {
             try {
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
+                // if (!fs.existsSync(dir)) {
+                //     fs.mkdirSync(dir);
+                // }
                 var data = fs.readdirSync(dir),
                     length = data.length;
                 if (length > 0) {
@@ -383,9 +383,9 @@ Service.prototype.ReadAllNews = function () {
     return new Promise(
         function (resolve, reject) {
             try {
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
+                // if (!fs.existsSync(dir)) {
+                //     fs.mkdirSync(dir);
+                // }
                 var data = fs.readdirSync(dir),
                     length = data.length;
                 if (length > 0) {
@@ -418,9 +418,9 @@ Service.prototype.ReadAllKnowYogaBlogs = function () {
     return new Promise(
         function (resolve, reject) {
             try {
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
+                // if (!fs.existsSync(dir)) {
+                //     fs.mkdirSync(dir);
+                // }
                 var data = fs.readdirSync(dir);
                 var length = data.length;
                 if (length > 0) {
@@ -451,9 +451,9 @@ Service.prototype.getAllSanthiBlogs = function () {
     return new Promise(
         function (resolve, reject) {
             try {
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
+                // if (!fs.existsSync(dir)) {
+                //     fs.mkdirSync(dir);
+                // }
                 var data = fs.readdirSync(dir),
                     length = data.length;
                 if (length > 0) {
