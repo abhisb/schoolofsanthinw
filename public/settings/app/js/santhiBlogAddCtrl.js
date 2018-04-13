@@ -1,7 +1,7 @@
 (function () {
 window.settingsApp.controller('santhiBlogAddController', ['$scope', '$http', '$timeout', '$stateParams', function($scope, $http, $timeout, $stateParams) {
    
-    if($stateParams.id &&  $stateParams.id.toLowerCase() == 'add'){
+    if(!$stateParams.id){
         $scope.santhiBlog = {};
         $scope.savesanthiBlog = function(santhiBlog) {
             if (!$('#santhiBlogDescription').summernote('code') || !santhiBlog.title || !santhiBlog.highlightText || !santhiBlog.image || !santhiBlog.thumbnailImage) {
@@ -28,7 +28,7 @@ window.settingsApp.controller('santhiBlogAddController', ['$scope', '$http', '$t
         }
         $scope.enableSanthiBlogDescription();
     }
-    else if($stateParams.id &&  $stateParams.id.toLowerCase() != 'add'){
+    else {
         $scope.editSanthiBlog = function(id){
             $scope.isEditSanthi = true;
             $http.get('/api/santhi/getSanthi/'+id).then(function(res) {

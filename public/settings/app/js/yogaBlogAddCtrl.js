@@ -1,5 +1,5 @@
 (function () {
-    window.settingsApp.controller('yogaBlogAddController', ['$rootScope', '$scope', '$http', '$timeout', '$stateParams', '$window', '$state' , function ($rootScope, $scope, $http, $timeout, $stateParams, $window, $state) {
+    window.settingsApp.controller('yogaBlogAddController', ['$rootScope', '$scope', '$http', '$timeout', '$stateParams', '$window', '$state', function ($rootScope, $scope, $http, $timeout, $stateParams, $window, $state) {
 
         $scope.enableDescription = function (event) {
             $('#blogDescription').summernote({
@@ -15,18 +15,36 @@
                 if (!$('#blogDescription').summernote('code') || !blog.title || !blog.highlightText || !blog.image || !blog.thumbnailImage) {
                     alert('Please fill the form details');
                     return;
-                }
+                }                
                 blog.date = (new Date()).getTime();
                 blog.description = $('#blogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");
                 blog.slicedDesc = blog.description.slice(0, 270) + "...";
+                $("#alertModal").on('hide.bs.modal', function () {
+                    angular.element(".modal-backdrop").remove();
+                    $state.go("yoga", {}, {reload: true});
+                });
                 $http.post("/api/yogablog/save", blog).then(function (response) {
-                    window.location.href = '/settings';
-                },function (error) {
-                    window.location.href = '/settings';
+                    $scope.responseText = response.data;
+                    $scope.successAlert = true;
+                    delete $scope.errorAlert;
+                    $scope.blog = {};
+                    $('#summernote').summernote('reset');
+                    angular.element("#alertModal").modal();
+                }, function (error) {
+                    if (error) {
+                        $scope.responseText = "something went wrong, Event not saved Please try after some time...";
+                        $scope.errorAlert = true;
+                        delete $scope.successAlert;
+                        $scope.event = {
+                            type: "TTC"
+                        };
+                        $('#summernote').summernote('reset');
+                        angular.element("#alertModal").modal();
+                    }
                 });
             };
         }
-        else{
+        else {
             $scope.editYogaBlog = function (id) {
                 $scope.editYoga = true;
                 $http.get('/api/yoga/getYoga/' + id).then(function (res) {
@@ -50,7 +68,7 @@
             $scope.editYogaBlog($stateParams.id);
         }
         $scope.editYogaForm = function (yogaId) {
-            $state.go('addEditYoga', {id: yogaId});
+            $state.go('addEditYoga', { id: yogaId });
         };
     }]);
 })();

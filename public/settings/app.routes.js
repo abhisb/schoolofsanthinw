@@ -12,7 +12,7 @@
         templateUrl: 'settings.html'
       })
       .state('events', {
-        url: '/settings/#events',
+        url: '/settings/events',
         views: {
           'content@': {
             templateUrl: 'views/events1.html',
@@ -21,7 +21,7 @@
         }
       })
       .state('addEditEvents', {
-        url: '/settings/#addEditEvents/:id',
+        url: '/settings/addEditEvents/:id',
         views: {
           'content': {
             templateUrl: 'views/create-event.html',
@@ -30,7 +30,7 @@
         }
       })
       .state('news', {
-        url: '/settings/#news',
+        url: '/settings/news',
         views: {
           'content@': {
             templateUrl: 'views/news.html',
@@ -38,7 +38,7 @@
           }
         }
       }).state('addEditNews', {
-            url: '/settings/#addEditNews/:id',
+            url: '/settings/addEditNews/:id',
             views: {
               'content': {
                 templateUrl: 'views/news-add.html',
@@ -47,7 +47,7 @@
             }       
           })
       .state('yoga', {
-        url: '/settings/#yoga',
+        url: '/settings/yoga',
         views: {
           'content@': {
             templateUrl: 'views/create-blog-yoga.html',
@@ -56,7 +56,7 @@
         }
       })
       .state('addEditYoga', {
-        url: '/settings/#addEditYoga/:id',
+        url: '/settings/addEditYoga/:id',
         views: {
           'content': {
             templateUrl: 'views/create-yoga-blog.html',
@@ -65,7 +65,7 @@
         }
       })
       .state('santhi', {
-        url: '/settings/#santhi',
+        url: '/settings/santhi',
         views: {
           'content@': {
             templateUrl: 'views/create-blog-shanthi.html',
@@ -73,16 +73,16 @@
           }
         }
       }).state('addEditSanthi', {
-            url: '/settings/#addEditSanthi/:id',
+            url: '/settings/addEditSanthi/:id',
             views: {
               'content': {
-                templateUrl: 'views/create-shanthi-blog.html',
-                controller: 'santhiAddCtrl'
+                templateUrl: 'views/create-santhi-blog.html',
+                controller: 'santhiBlogAddController'
               }
             }     
           })
       .state('general', {
-        url: '/settings/#general',
+        url: '/settings/general',
         views: {
           'content@': {
             templateUrl: 'views/general-settings.html',
@@ -107,7 +107,7 @@
 
 //   $stateProvider
 //    .state('events', {
-//     url: '/settings/#events',
+//     url: '/settings/events',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/events1.html',
@@ -115,7 +115,7 @@
 //       }
 //     }  
 //   }).state('addEvents', {
-//     url: '/settings/#events/add',
+//     url: '/settings/events/add',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/create-event.html',
@@ -123,7 +123,7 @@
 //       }
 //     }  
 //   }).state('events.edit', {
-//     url: '/settings/#events/edit/:id',
+//     url: '/settings/events/edit/:id',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/create-event.html',
@@ -131,7 +131,7 @@
 //       }
 //     }   
 //   }).state('news', {
-//     url: '/settings/#news',
+//     url: '/settings/news',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/news.html',
@@ -139,7 +139,7 @@
 //       }
 //     }       
 //   }).state('news.add', {
-//     url: '/settings/#news/add',
+//     url: '/settings/news/add',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/news-add.html',
@@ -147,7 +147,7 @@
 //       }
 //     }       
 //   }).state('news.edit', {
-//     url: '/settings/#news/edit/:id',
+//     url: '/settings/news/edit/:id',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/news-add.html',
@@ -155,7 +155,7 @@
 //       }
 //     }       
 //   }).state('yoga', {
-//     url: '/settings/#yoga',
+//     url: '/settings/yoga',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/create-blog-yoga.html',
@@ -163,7 +163,7 @@
 //       }
 //     }       
 //   }).state('addYoga', {
-//     url: '/settings/#yoga/add',
+//     url: '/settings/yoga/add',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/create-yoga-blog.html',
@@ -179,7 +179,7 @@
 //       }
 //     }      
 //   }).state('santhi', {
-//     url: '/settings/#santhi',
+//     url: '/settings/santhi',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/create-blog-shanthi.html',
@@ -187,7 +187,7 @@
 //       }
 //     }       
 //   }).state('santhi.add', {
-//     url: '/settings/#santhi/add',
+//     url: '/settings/santhi/add',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/create-shanthi-blog.html',
@@ -195,7 +195,7 @@
 //       }
 //     }     
 //   }).state('santhi.edit', {
-//     url: '/settings/#santhi/edit/:id',
+//     url: '/settings/santhi/edit/:id',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/create-shanthi-blog.html',
@@ -203,7 +203,7 @@
 //       }
 //     }        
 //   }).state('general', {
-//     url: '/settings/#general',
+//     url: '/settings/general',
 //     views: {
 //       'content': {
 //         templateUrl: 'views/general-settings.html',

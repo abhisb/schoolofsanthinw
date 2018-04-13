@@ -345,15 +345,19 @@ Service.prototype.saveBlog = function (blog) {
 
 /***************************************************************************************/
 Service.prototype.ReadAllEvents = function () {
-    var events = [];
+    var events = [],
+        dir = './bin/events';
     return new Promise(
         function (resolve, reject) {
             try {
-                var data = fs.readdirSync('./bin/events');
-                var length = data.length;
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                var data = fs.readdirSync(dir),
+                    length = data.length;
                 if (length > 0) {
                     data.forEach(function (fileName, i) {
-                        var event = readFilePromisified('./bin/events/' + fileName).then((event, error) => {
+                        var event = readFilePromisified(dir + "/" + fileName).then((event, error) => {
                             if (error) {
                                 reject(error);
                             } else {
@@ -368,21 +372,25 @@ Service.prototype.ReadAllEvents = function () {
                     resolve(blogs);
                 }
             } catch (err) {
-                resolve(events);
+                reject(err);
             }
         });
 };
 
 Service.prototype.ReadAllNews = function () {
-    var events = [];
+    var events = [],
+        dir = './bin/news';
     return new Promise(
         function (resolve, reject) {
             try {
-                var data = fs.readdirSync('./bin/news');
-                var length = data.length;
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                var data = fs.readdirSync(dir),
+                    length = data.length;
                 if (length > 0) {
                     data.forEach(function (fileName, i) {
-                        var event = readFilePromisified('./bin/news/' + fileName).then((event, error) => {
+                        var event = readFilePromisified(dir + "/" + fileName).then((event, error) => {
                             if (error) {
                                 reject(error);
                             } else {
@@ -397,7 +405,7 @@ Service.prototype.ReadAllNews = function () {
                     resolve(blogs);
                 }
             } catch (err) {
-                resolve(events);
+                reject(err);
             }
 
         });
@@ -405,15 +413,19 @@ Service.prototype.ReadAllNews = function () {
 
 
 Service.prototype.ReadAllKnowYogaBlogs = function () {
-    var blogs = [];
+    var blogs = [],
+        dir = './bin/yoga'
     return new Promise(
         function (resolve, reject) {
             try {
-                var data = fs.readdirSync('./bin/yoga');
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                var data = fs.readdirSync(dir);
                 var length = data.length;
                 if (length > 0) {
                     data.forEach(function (fileName, i) {
-                        var event = readFilePromisified('./bin/yoga/' + fileName).then((blog, error) => {
+                        var event = readFilePromisified(dir + "/" + fileName).then((blog, error) => {
                             if (error) {
                                 reject(error);
                             } else {
@@ -428,22 +440,25 @@ Service.prototype.ReadAllKnowYogaBlogs = function () {
                     resolve(blogs);
                 }
             } catch (err) {
-                resolve(events);
+                reject(err);
             }
         });
 };
 
 Service.prototype.getAllSanthiBlogs = function () {
-    var blogs = [];
-
+    var blogs = [],
+        dir = './bin/santhiblogs';
     return new Promise(
         function (resolve, reject) {
             try {
-                var data = fs.readdirSync('./bin/santhiblogs');
-                var length = data.length;
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                var data = fs.readdirSync(dir),
+                    length = data.length;
                 if (length > 0) {
                     data.forEach(function (fileName, i) {
-                        var event = readFilePromisified('./bin/santhiblogs/' + fileName).then((blog, error) => {
+                        var event = readFilePromisified(dir + "/" + fileName).then((blog, error) => {
                             console.log(blog, error)
                             if (error) {
                                 reject(error);
@@ -459,7 +474,7 @@ Service.prototype.getAllSanthiBlogs = function () {
                     resolve(blogs);
                 }
             } catch (err) {
-                resolve(blogs);
+                reject(err);
             }
         });
 };
