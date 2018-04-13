@@ -38,10 +38,10 @@ node_modules/
 jspm_packages/
 .history/
 
-#Remove this block to add files from local
+#Remove this block to add files from local.
 bin/
 public/bin/
-#Remove this block  to add files from local
+#Remove this block  to add files from local.
 
 # Typescript v1 declaration files
 typings/
