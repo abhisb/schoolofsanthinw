@@ -36,6 +36,11 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.history/
+
+#Remove this to add files from local
+bin/
+public/bin/
 
 # Typescript v1 declaration files
 typings/
