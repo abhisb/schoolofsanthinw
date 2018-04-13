@@ -108,11 +108,10 @@
             return false;
         }
         $scope.editForm = function (eventId) {
-            $state.go('addEditEvents', {id: eventId});
+            $state.go('addEditEvents', { id: eventId });
         };
         $scope.saveEventCopy = function (event) {
             $http.post("/api/edit/event", event).then(function (response) {
-                console.log(response);
                 $scope.successAlert = response.data;
             });
         }

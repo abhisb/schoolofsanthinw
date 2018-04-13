@@ -1,5 +1,4 @@
 window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '$stateParams', '$filter', function ($scope, $http, $state, $stateParams, $filter) {
-    console.log($stateParams)
     $(document).ready(function () {
         $('.selectpicker').selectpicker();
         //$scope.event.type = $scope.event.type;
@@ -23,7 +22,7 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
             angular.element(".modal-backdrop").remove();
             $state.go("events");
         });
-    });    
+    });
 
     $scope.addRow = function () {
         $scope.event.schedule.push({
@@ -79,7 +78,7 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
         eve.endDate = $filter('date')((new Date($('#datetimepicker2 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.regClosesOn = $filter('date')((new Date($('#datetimepicker3 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
         //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
-        eve.description = $('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g);        
+        eve.description = $('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g);
         $http.post("/api/event/save", eve).then(function (response) {
             $scope.responseText = response.data;
             $scope.successAlert = true;
@@ -89,8 +88,8 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
             };
             $('#summernote').summernote('reset');
             angular.element("#alertModal").modal();
-        }, function(error){
-            if(error){
+        }, function (error) {
+            if (error) {
                 $scope.responseText = "something went wrong, Event not saved Please try after some time...";
                 $scope.errorAlert = true;
                 delete $scope.successAlert;
@@ -100,8 +99,6 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
                 $('#summernote').summernote('reset');
                 angular.element("#alertModal").modal();
             }
-            
-
         });
     };
 

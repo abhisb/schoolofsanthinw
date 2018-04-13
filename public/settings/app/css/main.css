@@ -12,6 +12,9 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
 }
+img.preview-banner {
+    height: 330px;
+}
 .alert-herader {
     color: blue;
 }
