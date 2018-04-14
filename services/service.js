@@ -913,14 +913,17 @@ Service.prototype.saveGeneralSettings = function (event) {
             if (error) {
 
             } else {
-                if (data.knowYogaBannerImg && !event.knowYogaBannerImg) {
+                if (data.knowYogaBannerImgSrc && !event.knowYogaBannerImgSrc) {
                     event.knowYogaBannerImg = data.knowYogaBannerImg;
                     event.knowYogaBannerImgSrc = data.knowYogaBannerImgSrc;
                 }
-                if (data.santhiBlogBannerImg && !event.santhiBlogBannerImg) {
+                if (data.santhiBlogBannerImgSrc && !event.santhiBlogBannerImgSrc) {
                     event.santhiBlogBannerImg = data.santhiBlogBannerImg;
                     event.santhiBlogBannerImgSrc = data.santhiBlogBannerImgSrc;
                 }
+
+                event.santhiBlogBannerImg = '';
+                event.knowYogaBannerImg = '';
 
                 jsonfile.writeFile(file, event, function (err) {
                     console.error(err)
