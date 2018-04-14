@@ -39,10 +39,10 @@
                 loadIndicator: function (config) {
                     return {
                         show: function () {
-                            $rootScope.showTableSpinner = true;
+                            $(".gridLloader").show()
                         },
                         hide: function () {
-                            $rootScope.showTableSpinner = false;
+                            $(".gridLloader").hide()
                         }
                     };
                 },

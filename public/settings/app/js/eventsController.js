@@ -4,7 +4,7 @@
         var MyDateField = function (config) {
             jsGrid.Field.call(this, config);
         };
-
+        $(".gridLloader").show();
         MyDateField.prototype = new jsGrid.Field({
 
             css: "date-field",            // redefine general property 'css'
@@ -40,10 +40,10 @@
                 loadIndicator: function (config) {                    
                     return {
                         show: function () {
-                            $("#jsGrid").append('<div class="loader></div>"')
+                            $(".gridLloader").show()
                         },
                         hide: function () {
-                            console.log($("#jsGrid .loader"))
+                            $(".gridLloader").hide()
                         }
                     };
                 },
