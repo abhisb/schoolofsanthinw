@@ -196,7 +196,10 @@ a {
     border: 1px solid silver;
     border-radius: 5px;
 }
-
+.gridLloader.general-loader {
+    background-color: black;
+    opacity: .4;
+}
 /*@media (min-width: 1768px) {
 .nav-disappear {display: none !important;}}    
 

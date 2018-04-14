@@ -1,10 +1,12 @@
 (function () {
     window.settingsApp.controller('generalCtrl', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {      
         $rootScope.stateName = 'general';
+        $("#gridLloader").show();
         $scope.genSettings = {};
         $("#alertModal").on('hide.bs.modal', function () {
             angular.element(".modal-backdrop").remove();
             window.location.reload();
+            $(".gridLloader").hide();
         });
         $scope.saveGenSettings = function (settings) {
             $scope.successAlert = '';
@@ -18,6 +20,7 @@
                 $scope.getSavedImages();
                 angular.element("#alertModal").modal();
             }, function (error) {
+                $(".gridLloader").hide();
                 if (error) {
                     $scope.responseText = "Something went wrong, Can't save general settings";
                     $scope.errorAlert = true;
@@ -32,6 +35,7 @@
         $scope.getSavedImages = function () {
             $http.get("/api/getGeneralSettings")
                 .then(function (response, error) {
+                    $(".gridLloader").hide();
                     if (response) {
                         $scope.yogaBanner = response.data.knowYogaBannerImg;
                         $scope.shanthiBanner = response.data.santhiBlogBannerImg;
@@ -46,6 +50,7 @@
                     }
 
                 }, function (error) {
+                    $(".gridLloader").hide();
                     $scope.yogaBanner = null;
                     $scope.shanthiBanner = null;
                     $scope.yogaBannerSrc = null;
