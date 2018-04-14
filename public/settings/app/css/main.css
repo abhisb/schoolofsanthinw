@@ -177,7 +177,7 @@ a {
 #yogaForm,
 #newsForm,
 #EventsForm {
-    min-height: 200px;
+    min-height: 200px!important;
 }
 .gridLloader {
     position: absolute;
@@ -192,11 +192,6 @@ a {
     opacity: 0.75;
     width: 100%;
 }
-
-.ui-content.events {
-    padding: 0px 20px 50px 20px;
-}
-
 .border {
     border: 1px solid silver;
     border-radius: 5px;
