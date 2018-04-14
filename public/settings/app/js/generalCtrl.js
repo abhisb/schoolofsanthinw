@@ -2,6 +2,10 @@
     window.settingsApp.controller('generalCtrl', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {      
         $rootScope.stateName = 'general';
         $scope.genSettings = {};
+        $("#alertModal").on('hide.bs.modal', function () {
+            angular.element(".modal-backdrop").remove();
+            window.location.reload();
+        });
         $scope.saveGenSettings = function (settings) {
             $scope.successAlert = '';
             $http.post('/api/saveGeneralSettings', settings).then(function (res) {
