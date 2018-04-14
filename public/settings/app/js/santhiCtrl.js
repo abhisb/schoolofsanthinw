@@ -37,12 +37,14 @@
                 data: data,
                 noDataContent: 'No data found',
                 loadIndicator: function (config) {
+                    var container = $("#jsGrid")[0];
+                    var spinner = new Spinner();
                     return {
                         show: function () {
-                            console.log("loading started: " + config.message);
+                            spinner.spin(container);
                         },
                         hide: function () {
-                            console.log("loading finished");
+                            spinner.stop();
                         }
                     };
                 },
