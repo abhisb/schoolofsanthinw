@@ -20,7 +20,7 @@
                 return new Date(value).toDateString();
             },
         });
-
+        var config = {"container":"jsGrid","message":"Loading","shading":true}
         jsGrid.fields.date = MyDateField;
         $.ajax({
             type: "GET",
