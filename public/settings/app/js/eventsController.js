@@ -88,6 +88,7 @@
                                 .click(function (e) {
                                     var rowData = angular.copy(item);
                                     rowData.name = rowData.name + " - Copy";
+                                    rowData.description = rowData.description.replace(/<\/?[^>]+(>|$)/g);
                                     var id = rowData.id;
                                     var grid = _that._grid;
                                     grid.data.splice(findIndex(grid.data, id), 0, rowData);
@@ -122,7 +123,7 @@
             $state.go('addEditEvents', { id: eventId });
         };
         $scope.saveEventCopy = function (event) {
-            $http.post("/api/edit/event", event).then(function (response) {
+            $http.post("/api/event/save", event).then(function (response) {
                 $scope.successAlert = response.data;
             });
         }

@@ -137,34 +137,36 @@ Service.prototype.SaveEvent = function (event) {
     var token = crypto.randomBytes(8).toString('hex');
     var file = './bin/events/' + token + '.json';
     event.id = token;
-    if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
-        var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
-        event.imageSrc = '../bin/events/' + token + ".png";
-        var filePath = './public/bin/events/' + token + ".png";
-    } else {
-        var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
-        event.imageSrc = '../bin/events/' + token + ".jpg";
-        var filePath = './public/bin/events/' + token + ".jpg";
+    if (event && event.image) {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
+            var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
+            event.imageSrc = '../bin/events/' + token + ".png";
+            var filePath = './public/bin/events/' + token + ".png";
+        } else {
+            var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
+            event.imageSrc = '../bin/events/' + token + ".jpg";
+            var filePath = './public/bin/events/' + token + ".jpg";
+        }
+        event.image = "";
+        require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+            console.log(err);
+        });
     }
 
-    if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
-        var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
-        event.thumbnailImage = '../bin/events/' + token + "-thumbnail.png";
-        var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.png";
-    } else {
-        var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
-        event.thumbnailImage = '../bin/events/' + token + "-thumbnail.jpg";
-        var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.jpg";
+    if (event && event.thumbnailImage) {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
+            var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
+            event.thumbnailImage = '../bin/events/' + token + "-thumbnail.png";
+            var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.png";
+        } else {
+            var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
+            event.thumbnailImage = '../bin/events/' + token + "-thumbnail.jpg";
+            var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.jpg";
+        }
+        require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+            console.log(err);
+        });
     }
-
-    require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
-        console.log(err);
-    });
-
-    event.image = "";
-    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
-        console.log(err);
-    });
     jsonfile.writeFile(file, event, function (err) {
         console.error(err)
     })
