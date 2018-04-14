@@ -9,6 +9,7 @@
             $(".gridLloader").hide();
         });
         $scope.saveGenSettings = function (settings) {
+            $("#gridLloader").show();
             $scope.successAlert = '';
             $http.post('/api/saveGeneralSettings', settings).then(function (res) {
                 angular.element("input[type='file']").val(null);
