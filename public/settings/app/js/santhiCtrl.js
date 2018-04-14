@@ -37,7 +37,7 @@
                 data: data,
                 noDataContent: 'No data found',
                 loadIndicator: function (config) {
-                    var container = $("#jsGrid")[0];
+                    var container = $("#santhiGrid")[0];
                     var spinner = new Spinner();
                     return {
                         show: function () {
