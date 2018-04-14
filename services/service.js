@@ -914,9 +914,11 @@ Service.prototype.saveGeneralSettings = function (event) {
             } else {
                 if (data.knowYogaBannerImg && !event.knowYogaBannerImg) {
                     event.knowYogaBannerImg = data.knowYogaBannerImg;
+                    event.knowYogaBannerImgSrc = data.knowYogaBannerImgSrc;
                 }
                 if (data.santhiBlogBannerImg && !event.santhiBlogBannerImg) {
                     event.santhiBlogBannerImg = data.santhiBlogBannerImg;
+                    event.santhiBlogBannerImgSrc = data.santhiBlogBannerImgSrc;
                 }
 
                 jsonfile.writeFile(file, event, function (err) {
