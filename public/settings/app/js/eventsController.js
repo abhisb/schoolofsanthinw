@@ -38,14 +38,12 @@
                 data: data,
                 noDataContent: 'No data found',
                 loadIndicator: function (config) {                    
-                    var container = document.getElementById('jsGrid');
-                    var spinner = new Spinner();
                     return {
                         show: function () {
-                            spinner.spin(container);
+                            $("jsGrid").append('<div class="loader></div>"')
                         },
                         hide: function () {
-                            spinner.stop();
+                            console.log($("#jsGrid .loader"))
                         }
                     };
                 },

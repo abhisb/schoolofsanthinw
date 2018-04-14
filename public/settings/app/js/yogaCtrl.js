@@ -43,14 +43,12 @@
                 autoload: true,
                 noDataContent: 'No data found',
                 loadIndicator: function (config) {
-                    var container = $("#yogaGrid")[0];
-                    var spinner = new Spinner();
                     return {
                         show: function () {
-                            spinner.spin(container);
+                            $rootScope.showTableSpinner = true;
                         },
                         hide: function () {
-                            spinner.stop();
+                            $rootScope.showTableSpinner = false;
                         }
                     };
                 },
