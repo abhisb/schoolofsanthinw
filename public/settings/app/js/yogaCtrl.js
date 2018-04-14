@@ -42,6 +42,16 @@
                 data: data,
                 autoload: true,
                 noDataContent: 'No data found',
+                loadIndicator: function (config) {
+                    return {
+                        show: function () {
+                            console.log("loading started: " + config.message);
+                        },
+                        hide: function () {
+                            console.log("loading finished");
+                        }
+                    };
+                },
                 deleteConfirm: function (item) {
                     return "The Yoga Blog titled \"" + item.title + "\" will be removed. Are you sure?";
                 },

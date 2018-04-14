@@ -33,10 +33,21 @@
                 sorting: true,
                 paging: true,
                 filtering: true,
-                autoload: false,
+                autoload: true,
                 pageSize: 5,
                 editing: false,
                 data: data,
+                noDataContent: 'No data found',
+                loadIndicator: function (config) {
+                    return {
+                        show: function () {
+                            console.log("loading started: " + config.message);
+                        },
+                        hide: function () {
+                            console.log("loading finished");
+                        }
+                    };
+                },
                 deleteConfirm: function (item) {
                     return "The client \"" + item.name + "\" will be removed. Are you sure?";
                 },

@@ -36,6 +36,16 @@
                 editing: true,
                 data: data,
                 noDataContent: 'No data found',
+                loadIndicator: function (config) {
+                    return {
+                        show: function () {
+                            console.log("loading started: " + config.message);
+                        },
+                        hide: function () {
+                            console.log("loading finished");
+                        }
+                    };
+                },
                 deleteConfirm: function (item) {
                     return "The Santhi Blog titled \"" + item.title + "\" will be removed. Are you sure?";
                 },
@@ -66,13 +76,6 @@
                             $("#dialog").dialog("open");
                         });
                     },
-                    // editTemplate: function() {
-                    //     var insertControl = this.insertControl = $("<input>").prop("type", "file");
-                    //     return insertControl;
-                    // },
-                    // editValue: function() {
-                    //     return this.insertControl[0].files[0]; 
-                    // },
                     align: "center",
                     type: "text",
                     title: "Image",
