@@ -1,12 +1,11 @@
 (function () {
     window.settingsApp.controller('generalCtrl', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {      
-        $rootScope.stateName = 'general';
-        $(".gridLloader").show();
+        $rootScope.stateName = 'general';        
         $scope.genSettings = {};
         $("#alertModal").on('hide.bs.modal', function () {
             angular.element(".modal-backdrop").remove();
-            window.location.reload();
             $(".gridLloader").hide();
+            $state.go('general');            
         });
         $scope.saveGenSettings = function (settings) {
             $(".gridLloader").show(); 
@@ -34,6 +33,7 @@
             })
         }
         $scope.getSavedImages = function () {
+            $(".gridLloader").show();
             $http.get("/api/getGeneralSettings")
                 .then(function (response, error) {
                     $(".gridLloader").hide();

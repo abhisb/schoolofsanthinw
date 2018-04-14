@@ -903,9 +903,9 @@ Service.prototype.saveGeneralSettings = function (event) {
             });
         }
         //event.image = "";
-        require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
-            console.log(err);
-        });
+        // require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+        //     console.log(err);
+        // });
     }
 
     jsonfile.readFile('./bin/general-settings/config.json',
