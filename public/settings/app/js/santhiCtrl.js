@@ -74,10 +74,9 @@
                     //     return this.insertControl[0].files[0]; 
                     // },
                     align: "center",
-                    width: 120,
                     type: "text",
                     title: "Image",
-                    width: 46,
+                    width: 52,
                     validate: "required"
                 },
                 { name: "title", type: "text", title: "Title", width: 50 },
