@@ -40,7 +40,7 @@
                 loadIndicator: function (config) {                    
                     return {
                         show: function () {
-                            $("jsGrid").append('<div class="loader></div>"')
+                            $("#jsGrid").append('<div class="loader></div>"')
                         },
                         hide: function () {
                             console.log($("#jsGrid .loader"))
