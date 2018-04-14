@@ -74,7 +74,6 @@ Service.prototype.SendMail = function (data) {
             return info.response;
         }
     });
-    console.log(transporter)
     transporter.close()
 
 };
@@ -432,7 +431,7 @@ Service.prototype.ReadAllKnowYogaBlogs = function () {
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                var data = fs.readdirSync(dir);
+                var data = fs.readdirSync(dir);                
                 var length = data.length;
                 if (length > 0) {
                     data.forEach(function (fileName, i) {
@@ -470,7 +469,6 @@ Service.prototype.getAllSanthiBlogs = function () {
                 if (length > 0) {
                     data.forEach(function (fileName, i) {
                         var event = readFilePromisified(dir + "/" + fileName).then((blog, error) => {
-                            console.log(blog, error)
                             if (error) {
                                 reject(error);
                             } else {

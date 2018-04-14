@@ -1,54 +1,54 @@
 <section class="row">
-        <section class="col-md-12">
-                <button type="button" class="btn btn-primary" ng-click="goToHome('yoga')">Know Yoga</button>
-            </section>
-        <section class="col-md-12">
-            <form class="form-horizontal">
-                <h3 class="text-center">CREATE A NEW YOGA BLOG</h3>
-                <section class="col-md-2"></section>
-                <section class="col-md-10">
-                    <section class="form-group">
-                        <label class="control-label col-md-3">Title :</label>
-                        <section class="col-md-6">
-                            <input class="form-control" ng-model="blog.title" />
-                        </section>
-                    </section>
-                    <section class="form-group">
-                        <label class="control-label col-md-3">Tag :</label>
-                        <section class="col-md-6">
-                            <input class="form-control" ng-model="blog.highlightText" />
-                        </section>
-                    </section>
-                    <section class="form-group">
-                        <label class="control-label col-md-3">Content :</label>
-                        <section class="col-md-6">
-                            <div id="blogDescription"></div>
-                        </section>
-                    </section>
-                    <section class="form-group">
-                        <label class="control-label col-md-3">Banner Image :</label>
-                        <section class="col-md-3">
-                            <input type="file" class="form-control" file-model="blog.image" />
-                        </section>
-                    </section>
-                    <section class="form-group">
-                        <label class="control-label col-md-3">Thumbnail Image :</label>
-                        <section class="col-md-3">
-                            <input type="file" class="form-control" file-model="blog.thumbnailImage" />
-                        </section>
-                    </section>
-                    <section class="form-group" style="text-align: center;">
-                        <button type="submit" class="btn btn-info"  ng-if="!editYoga" ng-click="saveBlog(blog)">Save Blog</button>
-                        <button type="submit" class="btn btn-info"  ng-if="editYoga" ng-click="updateYogaBlog(blog)">Update Blog</button>
-                    </section>
-    
-                    <section class="col-md-2"></section>
-                </section>
-            </form>
-        </section>
+    <section class="col-md-12">
+        <button type="button" class="btn btn-primary" ng-click="goToHome('yoga')">Know Yoga</button>
     </section>
+    <section class="col-md-12">
+        <form class="form-horizontal">
+            <h3 class="text-center">CREATE A NEW YOGA BLOG</h3>
+            <section class="col-md-2"></section>
+            <section class="col-md-10">
+                <section class="form-group">
+                    <label class="control-label col-md-3">Title :</label>
+                    <section class="col-md-6">
+                        <input class="form-control" ng-model="blog.title" />
+                    </section>
+                </section>
+                <section class="form-group">
+                    <label class="control-label col-md-3">Tag :</label>
+                    <section class="col-md-6">
+                        <tags-input ng-model="blog.tags" placeholder="Add tags here"></tags-input>
+                    </section>
+                </section>
+                <section class="form-group">
+                    <label class="control-label col-md-3">Content :</label>
+                    <section class="col-md-6">
+                        <div id="blogDescription"></div>
+                    </section>
+                </section>
+                <section class="form-group">
+                        <label class="control-label col-md-3 image-label">Banner Image :<br/><span class="img-size">(Size should be <i class="image-size">1175 x 465</i> in pixels)</span></label>
+                    <section class="col-md-3">
+                        <input type="file" class="form-control" file-model="blog.image" />
+                    </section>
+                </section>
+                <section class="form-group">
+                        <label class="control-label col-md-3 image-label">Thumbnail Image :<br/><span class="img-size">(Size should be <i class="image-size">200 x 100</i> in pixels)</span></label>
+                    <section class="col-md-3">
+                        <input type="file" class="form-control" file-model="blog.thumbnailImage" />
+                    </section>
+                </section>
+                <section class="form-group" style="text-align: center;">
+                    <button type="submit" class="btn btn-info" ng-if="!editYoga" ng-click="saveBlog(blog)">Save Blog</button>
+                    <button type="submit" class="btn btn-info" ng-if="editYoga" ng-click="updateYogaBlog(blog)">Update Blog</button>
+                </section>
 
-    <!-- Modal -->
+                <section class="col-md-2"></section>
+            </section>
+        </form>
+    </section>
+</section>
+
+<!-- Modal -->
 <div class="modal fade" id="alertModal" role="dialog">
     <div class="modal-dialog">
 

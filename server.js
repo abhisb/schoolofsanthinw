@@ -25,8 +25,6 @@ app.get('/api/gallery', function (req, res) {
 })
 
 app.post('/api/submit', function (req, res) {
-    console.log(req);
-    console.log(res)
     var status = service.SendMail(req.body);
     res.status(200).send("Your application sucessfully submitted! Please check mail for details");
 });

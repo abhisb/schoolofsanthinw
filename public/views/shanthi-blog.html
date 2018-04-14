@@ -46,25 +46,12 @@
                 <button type="submit" class="btn btn-default"><img src="../Content/img/magnifier.png" alt="" /></button>
             </form>
         </aside>
-        <!-- <aside class="popular-posts">
-            <h3>Popular posts</h3>
-            <p>No posts to display</p>
-        </aside> -->
-        <aside class="listing">
-            <h2 class="heading">Tags</h2>
+        <aside class="listing" ng-if="shanthi.fullTags.length > 0">
+            <h2 class="heading">Tags of listed blogs</h2>
             <ul>
-                <li>
-                    <a href="">Workshop and Spiritual Retreats</a>
-                </li>
-                <li>
-                    <a href="">Satsang</a>
-                </li>
-                <li>
-                    <a href="">Teacher Training Course</a>
-                </li>
-                <li>
-                    <a href="">Satsang</a>
-                </li>
+                    <li ng-repeat="tag in shanthi.fullTags">
+                            <a href="">{{tag}}</a>
+                        </li>  
             </ul>
         </aside>
         <aside class="youtube">

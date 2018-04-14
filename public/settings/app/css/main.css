@@ -1253,11 +1253,30 @@ aside.youtube {
 .searchbx {
     margin-bottom: 30px;
 }
-
+.image-label {
+    padding-top: 0!important;
+    margin-top: -3px;
+}
 .search .form-control {
     height: 40px;
 }
-
+span.img-size {
+    font-size: 11px;
+}
+tags-input .tags input {
+    min-height: 26px!important;
+}
+tags-input .tags li.tag-item {
+    background-color: #3c587d!important;
+    background: -webkit-linear-gradient(top,#3c587d 0,#3c587d 47%,#3c587d 100%);
+    background: linear-gradient(to bottom,#3c587d 0,#3c587d 47%,#3c587d 100%);
+}
+.image-size {
+    color: #3c587d!important;
+}
+tags-input .tags li.tag-item .remove-button {
+    color: white;
+}
 .news-content {
     height: 199px;
     overflow-x: hidden;

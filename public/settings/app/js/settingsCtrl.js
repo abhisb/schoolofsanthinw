@@ -11,6 +11,15 @@
                 location.href = '../#/login';
             })
         }
+        $rootScope.processTags = function (tags) {
+            var tagArray = [];
+            if (tags && tags.length) {
+                for (var i = 0; i < tags.length; i++) {
+                    tagArray.push(tags[i].text);
+                }
+            }
+            return tagArray;
+        }
     }]);    
 
     window.settingsApp.controller('settingsController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {

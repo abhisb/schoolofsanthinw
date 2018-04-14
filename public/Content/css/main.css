@@ -1,7 +1,11 @@
 html {
     font-size: 10px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    position: relative;
     min-height: 100%;
+}
+aside.listing {
+    max-height: 250px;
 }
 body{
     overflow-x: hidden;
@@ -1246,7 +1250,7 @@ aside.youtube {
     width: 100%;
 }
 .searchbx {
-     margin-bottom: 30px; 
+     margin-bottom: 5px; 
 }
 
 .search .form-control {
@@ -1364,6 +1368,9 @@ aside.youtube {
     list-style: none;
     float: left;
     width: 100%;
+    max-height: 200px;
+    overflow: scroll;
+    border: 1px solid #cccccc;
 }
 .side-panel .heading{
     font-size: 22px;

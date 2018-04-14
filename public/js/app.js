@@ -3,6 +3,16 @@
  * Trivandrum
  * Author : Shanmuga Priya Dhandapani
  */
+Array.prototype.unique = function() {
+    var a = this.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+    return a;
+};
 var app1 = angular.module("sosMain", ["ngRoute", 'ngAnimate', 'ngSanitize', 'ui.calendar', 'ui.bootstrap', 'ngMap']);
 var app2 = angular.module("maps", ["ngMap", "ngSanitize"]);
 //var app = angular.module("sos",["sosMain","maps"]);
@@ -47,7 +57,7 @@ app1.config(function ($routeProvider, $locationProvider) {
             templateUrl: "views/event.html",
             controller: "eventController"
 
-        })        
+        })
         .when("/program/TTC", {
             templateUrl: "views/program.html",
             controller: "ttcController"
@@ -72,7 +82,7 @@ app1.config(function ($routeProvider, $locationProvider) {
         .when("/create/new-event", {
             templateUrl: "views/create-event.html",
             controller: "eventController"
-        })        
+        })
         .when("/events", {
             templateUrl: "views/events.html"
         })
@@ -92,8 +102,8 @@ app1.config(function ($routeProvider, $locationProvider) {
             templateUrl: "home.html",
             controller: 'homeController'
         });
-}).filter('to_trusted', ['$sce', function($sce){
-    return function(text) {
+}).filter('to_trusted', ['$sce', function ($sce) {
+    return function (text) {
         return $sce.trustAsHtml(text);
     };
 }]);
@@ -298,7 +308,7 @@ app1.controller('homeController', function ($scope, $location, $routeParams, $ht
                 event.startDay = event.startDate.split('/')[0];
                 event.slicedName = event.name.slice(0, 39);
                 event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
-                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95)+"...";
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95) + "...";
             });
             var events = response.data.sort(function (a, b) {
                 return new Date(a.startDate) - new Date(b.startDate);
@@ -312,7 +322,7 @@ app1.controller('homeController', function ($scope, $location, $routeParams, $ht
             });
         })
 
-    $http.get('/api/yoga/getYoga/' + $routeParams.yogaId).then(function(res) {
+    $http.get('/api/yoga/getYoga/' + $routeParams.yogaId).then(function (res) {
         $scope.details = res.data;
     });
 
@@ -322,7 +332,7 @@ app1.controller('homeController', function ($scope, $location, $routeParams, $ht
         $http.get('/api/news/getAll').then(function (res) {
             //$scope.newsDataSet = [];
             console.log(res);
-            $scope.newsItems = res.data;    
+            $scope.newsItems = res.data;
         });
     }
 
@@ -542,7 +552,7 @@ app1.controller('ttcController', function ($scope, $routeParams, eventsService, 
             $(e.currentTarget).addClass('fa-angle-double-down').removeClass('fa-angle-double-up');
         }
     };
-    
+
 });
 app1.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
     var $ctrl = this;
@@ -555,32 +565,32 @@ app1.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
     };
 });
 app1.controller('contactController', function ($scope, $http) {
-    $scope.loadedInIndia = false;  
+    $scope.loadedInIndia = false;
 
     if (navigator.geolocation) {
         var location_timeout = setTimeout("$scope.locationFailed = true;", 10000);
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             $http({
-              method: 'GET',
-              url: 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDC3m9iYece09zWTYbxV9J8tiGWA7d0CCk&latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&sensor=false'
+                method: 'GET',
+                url: 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDC3m9iYece09zWTYbxV9J8tiGWA7d0CCk&latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&sensor=false'
             }).then(function successCallback(response) {
-                if(response.data) {
+                if (response.data) {
                     $scope.locationFailed = false;
-                    for(var i=0; i<response.data.results.length; i++){
-                        for(var j=0; j<response.data.results[i].address_components.length; j++){
-                            if(response.data.results[i].address_components[j].long_name.toLowerCase() == "india" && response.data.results[i].address_components[j].short_name.toLowerCase() == "in"){
+                    for (var i = 0; i < response.data.results.length; i++) {
+                        for (var j = 0; j < response.data.results[i].address_components.length; j++) {
+                            if (response.data.results[i].address_components[j].long_name.toLowerCase() == "india" && response.data.results[i].address_components[j].short_name.toLowerCase() == "in") {
                                 $scope.loadedInIndia = true;
-                                return;  
+                                return;
                             }
                         }
                     }
                 }
-              }, function errorCallback(response) {
-                 console.log(response)
-              });                      
+            }, function errorCallback(response) {
+                console.log(response)
+            });
         });
     }
-    else{
+    else {
         $scope.locationFailed = true;
     }
 
@@ -789,7 +799,7 @@ app2.controller('eventController', function ($scope, $routeParams, $http, events
                 $(e.currentTarget.children[0]).addClass('fa-caret-down').removeClass('fa-caret-up');
             }
         };
-        
+
         $scope.map = {
             center: {
                 latitude: 8.708693,
@@ -877,7 +887,7 @@ app1.controller('loginController', ['$scope', '$http', function ($scope, $http) 
 }]);
 
 //From Esterrado team
-app1.controller('yogaBlogDetailCtrl', function($scope,  $routeParams, $location, $http, eventsService, $timeout) {
+app1.controller('yogaBlogDetailCtrl', function ($scope, $routeParams, $location, $http, eventsService, $timeout) {
     console.log($routeParams.yogaId)
     $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
@@ -895,7 +905,7 @@ app1.controller('yogaBlogDetailCtrl', function($scope,  $routeParams, $location,
                 event.startDay = event.startDate.split('/')[0];
                 event.slicedName = event.name.slice(0, 39);
                 event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
-                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95)+"...";
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95) + "...";
             });
             var events = response.data.sort(function (a, b) {
                 return new Date(a.startDate) - new Date(b.startDate);
@@ -909,12 +919,13 @@ app1.controller('yogaBlogDetailCtrl', function($scope,  $routeParams, $location,
             });
         })
 
-    $http.get('/api/yoga/getYoga/' + $routeParams.yogaId).then(function(res) {
+    $http.get('/api/yoga/getYoga/' + $routeParams.yogaId).then(function (res) {
         $scope.details = res.data;
+        console.log($scope.details)
     });
 });
 
-app1.controller('santhiBlogDetailCtrl', function($scope,  $routeParams, $location, $http, eventsService, $timeout) {
+app1.controller('santhiBlogDetailCtrl', function ($scope, $routeParams, $location, $http, eventsService, $timeout) {
     console.log($routeParams.santhiId)
     $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
@@ -932,7 +943,7 @@ app1.controller('santhiBlogDetailCtrl', function($scope,  $routeParams, $locatio
                 event.startDay = event.startDate.split('/')[0];
                 event.slicedName = event.name.slice(0, 39);
                 event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
-                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95)+"...";
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95) + "...";
             });
             var events = response.data.sort(function (a, b) {
                 return new Date(a.startDate) - new Date(b.startDate);
@@ -946,95 +957,94 @@ app1.controller('santhiBlogDetailCtrl', function($scope,  $routeParams, $locatio
             });
         })
 
-    $http.get('/api/santhi/getSanthi/' + $routeParams.santhiId).then(function(res) {
-         $scope.details = res.data;
+    $http.get('/api/santhi/getSanthi/' + $routeParams.santhiId).then(function (res) {
+        $scope.details = res.data;
     });
 });
 
-app1.filter('pagination', function()
-{
-  return function(input, start) {
-    start = parseInt(start, 10);
-    return input.slice(start);
-  };
+app1.filter('pagination', function () {
+    return function (input, start) {
+        start = parseInt(start, 10);
+        return input.slice(start);
+    };
 });
 
-app1.controller('shanthiBlogController', function($scope, $location, $http, eventsService, $timeout) {
+app1.controller('shanthiBlogController', function ($scope, $location, $http, eventsService, $timeout) {
 
-/*pagination*/
-$scope.itemsPerPage = 5; 
- $scope.currentPage = 0; 
- //$scope.datalists = data ;// Service
- $scope.shanthi = {};
- $scope.shanthi.blogs = [];
+    /*pagination*/
+    $scope.itemsPerPage = 5;
+    $scope.currentPage = 0;
+    //$scope.datalists = data ;// Service
+    $scope.shanthi = {};
+    $scope.shanthi.blogs = [];
 
- $scope.range = function() {
-    var rangeSize = 4;   
-    var ps = [];   
-    var start;   
-    start = $scope.currentPage;   
-    if ( start > $scope.pageCount()-rangeSize ) {   
-     start = $scope.pageCount()-rangeSize+1;   
-     }   
-    for (var i=start; i<start+rangeSize; i++) {   
-    ps.push(i);   
-   }   
-   return ps;   
-};
+    $scope.range = function () {
+        var rangeSize = 4;
+        var ps = [];
+        var start;
+        start = $scope.currentPage;
+        if (start > $scope.pageCount() - rangeSize) {
+            start = $scope.pageCount() - rangeSize + 1;
+        }
+        for (var i = start; i < start + rangeSize; i++) {
+            ps.push(i);
+        }
+        return ps;
+    };
 
-$scope.prevPage = function() {
-    if ($scope.currentPage > 0) {    
-        $scope.currentPage--;    
-    }
-};
+    $scope.prevPage = function () {
+        if ($scope.currentPage > 0) {
+            $scope.currentPage--;
+        }
+    };
 
-$scope.firstPage = function() {
-    if ($scope.currentPage > 0) {    
-        $scope.currentPage = 0;    
-    }
-};
+    $scope.firstPage = function () {
+        if ($scope.currentPage > 0) {
+            $scope.currentPage = 0;
+        }
+    };
 
-$scope.DisablePrevPage = function() {
-    return $scope.currentPage === 0 ? "disabled" : "";    
-};
+    $scope.DisablePrevPage = function () {
+        return $scope.currentPage === 0 ? "disabled" : "";
+    };
 
-$scope.pageCount = function() {
-    return Math.ceil($scope.shanthi.blogs.length/$scope.itemsPerPage)-1;    
-};
-    
-$scope.nextPage = function() {
-    if ($scope.currentPage < $scope.pageCount()) {    
-    $scope.currentPage++;    
-    }
-};
+    $scope.pageCount = function () {
+        return Math.ceil($scope.shanthi.blogs.length / $scope.itemsPerPage) - 1;
+    };
 
-$scope.lastPage = function() {
-    if ($scope.currentPage < $scope.pageCount()) {    
-    $scope.currentPage = $scope.pageCount();    
-    }
-};
+    $scope.nextPage = function () {
+        if ($scope.currentPage < $scope.pageCount()) {
+            $scope.currentPage++;
+        }
+    };
 
-$scope.DisableNextPage = function() {
-    return $scope.currentPage === $scope.pageCount() ? "disabled" : "";    
-};
+    $scope.lastPage = function () {
+        if ($scope.currentPage < $scope.pageCount()) {
+            $scope.currentPage = $scope.pageCount();
+        }
+    };
 
-$scope.setPage = function(n) {
-    $scope.currentPage = n;    
-};
+    $scope.DisableNextPage = function () {
+        return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+    };
 
-$http.get("/api/getGeneralSettings")
+    $scope.setPage = function (n) {
+        $scope.currentPage = n;
+    };
+
+    $http.get("/api/getGeneralSettings")
         .then(function (response, err) {
 
             $scope.shanthi.banner = response.data.santhiBlogBannerImg;
 
         });
 
-        $scope.loadDetailPage = function (url) {
-            window.location.href = url;
-        }
+    $scope.loadDetailPage = function (url) {
+        window.location.href = url;
+    }
 
-//$scope.shanthi.banner = "../bin/assets/banner.png";
-$scope.goToEvent = function (eventObj) {
+    //$scope.shanthi.banner = "../bin/assets/banner.png";
+    $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
         $location.path(loc);
         window.location.reload();
@@ -1050,7 +1060,7 @@ $scope.goToEvent = function (eventObj) {
                 event.startDay = event.startDate.split('/')[0];
                 event.slicedName = event.name.slice(0, 39);
                 event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
-                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95)+"...";
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95) + "...";
             });
             var events = response.data.sort(function (a, b) {
                 return new Date(a.startDate) - new Date(b.startDate);
@@ -1063,99 +1073,105 @@ $scope.goToEvent = function (eventObj) {
                 return i <= 3;
             });
         })
-$scope.getAllShanthiBlogs = function() {
-    $http.get('/api/santhiblog/getAllBlogs').then(function(res) {
-        $scope.shanthi.blogs = res.data.sort($scope.compare).reverse();
-    });
-}
-$scope.convertDate = function(date) {
-    var objDate = new Date(date);
-    return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
-}
+    $scope.getAllShanthiBlogs = function () {
+        $http.get('/api/santhiblog/getAllBlogs').then(function (res) {
+            $scope.shanthi.blogs = res.data.sort($scope.compare).reverse();
+            $scope.shanthi.fullTags = [];            
+            for (var i = 0; i < $scope.shanthi.blogs.length; i++) {
+                if ($scope.shanthi.blogs[i].tags && $scope.shanthi.blogs[i].tags.length) {
+                    $scope.shanthi.fullTags = $scope.shanthi.fullTags.concat($scope.shanthi.blogs[i].tags).unique();
+                }
+            }
+        });
+    }
+    $scope.convertDate = function (date) {
+        var objDate = new Date(date);
+        return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
+    }
 
-$scope.compare = function(a,b) {
-    if (a.date < b.date)
-      return -1;
-    if (a.date > b.date)
-      return 1;
-    return 0;
-  }
-  
-$scope.getAllShanthiBlogs();
-$scope.showSelectedShanthiBlog = function (shanthiblog) {
-    $scope.shanthiTitle = shanthiblog.title;
-    $scope.shanthiDescription = shanthiblog.description;
-}
-$scope.closeShanthiModal = function () {
-    $('#detailedShanthiModal').modal('hide');
-}
-$scope.prevent = function (event) {
-    event.preventDefault();
-}
+    $scope.compare = function (a, b) {
+        if (a.date < b.date)
+            return -1;
+        if (a.date > b.date)
+            return 1;
+        return 0;
+    }
+
+    $scope.getAllShanthiBlogs();
+    $scope.showSelectedShanthiBlog = function (shanthiblog) {
+        $scope.shanthiTitle = shanthiblog.title;
+        $scope.shanthiDescription = shanthiblog.description;
+    }
+    $scope.closeShanthiModal = function () {
+        $('#detailedShanthiModal').modal('hide');
+    }
+    $scope.prevent = function (event) {
+        event.preventDefault();
+    }
 });
 
-app1.controller('yogaBlogHomeController', function($scope, $location, $http, eventsService, $timeout) {
-$scope.yoga = {};
-$scope.yoga.blogs = [];
-/*pagination*/
-$scope.itemsPerPage = 5; 
- $scope.currentPage = 0; 
+app1.controller('yogaBlogHomeController', function ($scope, $location, $http, eventsService, $timeout) {
+    $scope.yoga = {};
+    $scope.yoga.blogs = [];
+    /*pagination*/
+    $scope.itemsPerPage = 5;
+    $scope.currentPage = 0;
 
- $scope.range = function() {
-    var rangeSize = 4;   
-    var ps = [];   
-    var start;   
-    start = $scope.currentPage;   
-    if ( start > $scope.pageCount()-rangeSize ) {   
-     start = $scope.pageCount()-rangeSize+1;   
-     }   
-    for (var i=start; i<start+rangeSize; i++) {   
-    ps.push(i);   
-   }   
-   return ps;   
-};
+    $scope.range = function () {
+        var rangeSize = 4;
+        var ps = [];
+        var start;
+        start = $scope.currentPage;
+        if (start > $scope.pageCount() - rangeSize) {
+            start = $scope.pageCount() - rangeSize + 1;
+        }
+        for (var i = start; i < start + rangeSize; i++) {
+            ps.push(i);
+        }
+        return ps;
+    };
 
-$scope.prevPage = function() {
-    if ($scope.currentPage > 0) {    
-        $scope.currentPage--;    
-    }
-};
+    $scope.prevPage = function () {
+        if ($scope.currentPage > 0) {
+            $scope.currentPage--;
+        }
+    };
 
-$scope.firstPage = function() {
-    if ($scope.currentPage > 0) {    
-        $scope.currentPage = 0;    
-    }
-};
+    $scope.firstPage = function () {
+        if ($scope.currentPage > 0) {
+            $scope.currentPage = 0;
+        }
+    };
 
-$scope.DisablePrevPage = function() {
-    return $scope.currentPage === 0 ? "disabled" : "";    
-};
+    $scope.DisablePrevPage = function () {
+        return $scope.currentPage === 0 ? "disabled" : "";
+    };
 
-$scope.pageCount = function() {
-    return Math.ceil($scope.yoga.blogs.length/$scope.itemsPerPage)-1;    
-};
-    
-$scope.nextPage = function() {
-    if ($scope.currentPage < $scope.pageCount()) {    
-    $scope.currentPage++;    
-    }
-};
+    $scope.pageCount = function () {
+        return Math.ceil($scope.yoga.blogs.length / $scope.itemsPerPage) - 1;
+    };
 
-$scope.lastPage = function() {
-    if ($scope.currentPage < $scope.pageCount()) {    
-    $scope.currentPage = $scope.pageCount();    
-    }
-};
+    $scope.nextPage = function () {
+        if ($scope.currentPage < $scope.pageCount()) {
+            $scope.currentPage++;
+        }
+    };
 
-$scope.DisableNextPage = function() {
-    return $scope.currentPage === $scope.pageCount() ? "disabled" : "";    
-};
+    $scope.lastPage = function () {
+        if ($scope.currentPage < $scope.pageCount()) {
+            $scope.currentPage = $scope.pageCount();
+        }
+    };
 
-$scope.setPage = function(n) {
-    $scope.currentPage = n;    
-};
+    $scope.DisableNextPage = function () {
+        return $scope.currentPage === $scope.pageCount() ? "disabled" : "";
+    };
 
-$http.get("/api/getGeneralSettings")
+    $scope.setPage = function (n) {
+        $scope.currentPage = n;
+    };
+
+    $http.get("/api/getGeneralSettings")
         .then(function (response, err) {
 
             $scope.yoga.banner = response.data.knowYogaBannerImg;
@@ -1163,11 +1179,11 @@ $http.get("/api/getGeneralSettings")
         });
 
 
-$scope.loadDetailPage = function (url) {
-    window.location.href = url;
-}
+    $scope.loadDetailPage = function (url) {
+        window.location.href = url;
+    }
 
-$scope.goToEvent = function (eventObj) {
+    $scope.goToEvent = function (eventObj) {
         var loc = '/event/' + eventObj.id;
         $location.path(loc);
         window.location.reload();
@@ -1183,7 +1199,7 @@ $scope.goToEvent = function (eventObj) {
                 event.startDay = event.startDate.split('/')[0];
                 event.slicedName = event.name.slice(0, 39);
                 event.slicedDesc = $($(event.description)[0]).text().slice(0, 70);
-                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95)+"...";
+                event.slicedDescPrime = $($(event.description)[0]).text().slice(0, 95) + "...";
             });
             var events = response.data.sort(function (a, b) {
                 return new Date(a.startDate) - new Date(b.startDate);
@@ -1196,60 +1212,66 @@ $scope.goToEvent = function (eventObj) {
                 return i <= 3;
             });
         })
-$scope.getAllYogaBlogs = function() {
-    $http.get('/api/yogaBlog/getAllBlogs').then(function(res) {
-        $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
-    });
-}
+    $scope.getAllYogaBlogs = function () {
+        $http.get('/api/yogaBlog/getAllBlogs').then(function (res) {
+            $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
+            $scope.yoga.fullTags = [];            
+            for (var i = 0; i < $scope.yoga.blogs.length; i++) {
+                if ($scope.yoga.blogs[i].tags && $scope.yoga.blogs[i].tags.length) {
+                    $scope.yoga.fullTags = $scope.yoga.fullTags.concat($scope.yoga.blogs[i].tags).unique();
+                }
+            }
+        });
+    }
 
-$scope.convertDate = function(date) {
-    var objDate = new Date(date);
-    return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
-}
+    $scope.convertDate = function (date) {
+        var objDate = new Date(date);
+        return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
+    }
 
-$scope.compare = function(a,b) {
-    if (a.date < b.date)
-      return -1;
-    if (a.date > b.date)
-      return 1;
-    return 0;
-  }
+    $scope.compare = function (a, b) {
+        if (a.date < b.date)
+            return -1;
+        if (a.date > b.date)
+            return 1;
+        return 0;
+    }
 
-$scope.getAllYogaBlogs();
-$scope.showSelectedYogaBlog = function (yogablog) {
-    $scope.yogaTitle = yogablog.title;
-    $scope.yogaDescription = yogablog.description;
-}
-$scope.closeYogaModal = function () {
-    $('#detailedYogaModal').modal('hide');
-}
-$scope.prevent = function (event) {
-    event.preventDefault();
-}
+    $scope.getAllYogaBlogs();
+    $scope.showSelectedYogaBlog = function (yogablog) {
+        $scope.yogaTitle = yogablog.title;
+        $scope.yogaDescription = yogablog.description;
+    }
+    $scope.closeYogaModal = function () {
+        $('#detailedYogaModal').modal('hide');
+    }
+    $scope.prevent = function (event) {
+        event.preventDefault();
+    }
 });
 
 app1.filter('cut', function () {
-        return function (value, wordwise, max, tail) {
-            if (!value) return '';
+    return function (value, wordwise, max, tail) {
+        if (!value) return '';
 
-            max = parseInt(max, 10);
-            if (!max) return value;
-            if (value.length <= max) return value;
+        max = parseInt(max, 10);
+        if (!max) return value;
+        if (value.length <= max) return value;
 
-            value = value.substr(0, max);
-            if (wordwise) {
-                var lastspace = value.lastIndexOf(' ');
-                if (lastspace !== -1) {
-                  //Also remove . and , so its gives a cleaner result.
-                  if (value.charAt(lastspace-1) === '.' || value.charAt(lastspace-1) === ',') {
+        value = value.substr(0, max);
+        if (wordwise) {
+            var lastspace = value.lastIndexOf(' ');
+            if (lastspace !== -1) {
+                //Also remove . and , so its gives a cleaner result.
+                if (value.charAt(lastspace - 1) === '.' || value.charAt(lastspace - 1) === ',') {
                     lastspace = lastspace - 1;
-                  }
-                  value = value.substr(0, lastspace);
                 }
+                value = value.substr(0, lastspace);
             }
+        }
 
-            return value + (tail || ' …');
-        };
-    });
+        return value + (tail || ' …');
+    };
+});
 
 angular.module("sos", ["sosMain", "maps"]);

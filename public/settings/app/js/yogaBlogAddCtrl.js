@@ -15,13 +15,14 @@
         if (!$stateParams.id) {
             $scope.blog = {};
             $scope.saveBlog = function (blog) {
-                if (!$('#blogDescription').summernote('code') || !blog.title || !blog.highlightText || !blog.image || !blog.thumbnailImage) {
+                if (!$('#blogDescription').summernote('code') || !blog.title || !blog.tags || !blog.image || !blog.thumbnailImage) {
                     alert('Please fill the form details');
                     return;
-                }                
+                }
                 blog.date = (new Date()).getTime();
                 blog.description = $('#blogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");
                 blog.slicedDesc = blog.description.slice(0, 270) + "...";
+                blog.tags = $rootScope.processTags(blog.tags);
                 $http.post("/api/yogablog/save", blog).then(function (response) {
                     $scope.responseText = response.data;
                     $scope.successAlert = true;
@@ -60,6 +61,7 @@
             $scope.updateYogaBlog = function (blog) {
                 blog.description = $('#blogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");        
                 blog.slicedDesc = blog.description.slice(0, 270) + "...";
+                blog.tags = $rootScope.processTags(blog.tags);
                 $http.post('/api/update/knowyoga', blog).then(function (response) {
                     $scope.responseText = response.data;
                     $scope.successAlert = true;
@@ -81,6 +83,6 @@
         }
         $scope.editYogaForm = function (yogaId) {
             $state.go('addEditYoga', { id: yogaId });
-        };
+        };        
     }]);
 })();

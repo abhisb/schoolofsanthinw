@@ -15,7 +15,7 @@
                 <section class="form-group">
                     <label class="control-label col-md-3">Tag :</label>
                     <section class="col-md-6">
-                        <input class="form-control" ng-model="santhiBlog.highlightText" />
+                        <tags-input ng-model="santhiBlog.tags" placeholder="Add tags here"></tags-input>
                     </section>
                 </section>
                 <section class="form-group">
@@ -25,13 +25,13 @@
                     </section>
                 </section>
                 <section class="form-group">
-                    <label class="control-label col-md-3">Banner Image :</label>
+                    <label class="control-label col-md-3 image-label">Banner Image :<br/><span class="img-size">(Size should be <i class="image-size">1175 x 465</i> in pixels)</span></label>
                     <section class="col-md-3">
                         <input type="file" class="form-control" file-model="santhiBlog.image" />
                     </section>
                 </section>
                 <section class="form-group">
-                    <label class="control-label col-md-3">Thumbnail Image :</label>
+                    <label class="control-label col-md-3 image-label">Thumbnail Image :<br/><span class="img-size">(Size should be <i class="image-size">200 x 100</i> in pixels)</span></label>
                     <section class="col-md-3">
                         <input type="file" class="form-control" file-model="santhiBlog.thumbnailImage" />
                     </section>
@@ -44,8 +44,8 @@
         </form>
     </section>
 </section>
-   <!-- Modal -->
-   <div class="modal fade" id="alertModal" role="dialog">
+<!-- Modal -->
+<div class="modal fade" id="alertModal" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->

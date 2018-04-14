@@ -1,13 +1,13 @@
 (function () {
-window.settingsApp.controller('santhiBlogAddController', ['$scope', '$state', '$http', '$timeout', '$stateParams', function($scope, $state, $http, $timeout, $stateParams) {
+window.settingsApp.controller('santhiBlogAddController', ['$rootScope', '$scope', '$state', '$http', '$timeout', '$stateParams', function($rootScope, $scope, $state, $http, $timeout, $stateParams) {
     $("#alertModal").on('hide.bs.modal', function () {
         angular.element(".modal-backdrop").remove();
         $state.go("santhi");
     });
-    if(!$stateParams.id){
+    if(!$stateParams.id){        
         $scope.santhiBlog = {};
         $scope.savesanthiBlog = function(santhiBlog) {
-            if (!$('#santhiBlogDescription').summernote('code') || !santhiBlog.title || !santhiBlog.highlightText || !santhiBlog.image || !santhiBlog.thumbnailImage) {
+            if (!$('#santhiBlogDescription').summernote('code') || !santhiBlog.title || !santhiBlog.tags || !santhiBlog.image || !santhiBlog.thumbnailImage) {
                 alert('Please fill the form details');
                 return;
             }
@@ -16,6 +16,7 @@ window.settingsApp.controller('santhiBlogAddController', ['$scope', '$state', '$
             santhiBlog.description = $('#santhiBlogDescription').summernote('code');
             santhiBlog.slicedDesc = santhiBlog.description.slice(0,270) + "...";
             santhiBlog.thumbnailSrc = santhiBlog.image;
+            santhiBlog.tags = $rootScope.processTags(santhiBlog.tags);
             $http.post("/api/santhiblog/save", santhiBlog).then(function(response) {
                     $scope.responseText = response.data;
                     $scope.successAlert = true;
@@ -61,6 +62,7 @@ window.settingsApp.controller('santhiBlogAddController', ['$scope', '$state', '$
         $scope.updateSanthiBlog = function (blog) {        
             blog.description = $('#santhiBlogDescription').summernote('code');//.replace(/<\/?[^>]+(>|$)/g, "");        
             blog.slicedDesc = blog.description.slice(0,270) + "...";
+            blog.tags = $rootScope.processTags(blog.tags);
             $http.post('/api/update/santhiblog', blog).then(function(response) {
                 $scope.responseText = response.data;
                     $scope.successAlert = true;

@@ -43,21 +43,12 @@
         </button>
       </form>
     </aside>
-    <aside class="listing">
-          <h2 class="heading">Tags</h2>
+    <aside class="listing" ng-if="yoga.fullTags.length > 0">
+          <h2 class="heading">Tags of listed blogs</h2>
           <ul>
-            <li>
-              <a href="">Workshop and Spiritual Retreats</a>
-            </li>
-            <li>
-              <a href="">Satsang</a>
-            </li>
-            <li>
-              <a href="">Teacher Training Course</a>
-            </li>
-            <li>
-              <a href="">Satsang</a>
-            </li>
+                <li ng-repeat="tag in yoga.fullTags">
+                        <a href="">{{tag}}</a>
+                    </li>  
           </ul>
         </aside>
       <!-- <aside class="popular-posts">
