@@ -1,7 +1,7 @@
 (function () {
     window.settingsApp.controller('generalCtrl', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {      
         $rootScope.stateName = 'general';
-        $("#gridLloader").show();
+        $(".gridLloader").show();
         $scope.genSettings = {};
         $("#alertModal").on('hide.bs.modal', function () {
             angular.element(".modal-backdrop").remove();
@@ -9,7 +9,7 @@
             $(".gridLloader").hide();
         });
         $scope.saveGenSettings = function (settings) {
-            $("#gridLloader").show(); 
+            $(".gridLloader").show(); 
             $scope.successAlert = '';
             $http.post('/api/saveGeneralSettings', settings).then(function (res) {
                 angular.element("input[type='file']").val(null);
