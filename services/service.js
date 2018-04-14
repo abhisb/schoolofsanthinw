@@ -149,7 +149,10 @@ Service.prototype.SaveEvent = function (event) {
         }
         event.image = "";
         require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
-            console.log(err);
+            if (err) {
+                return console.log(err);
+            }
+            console.log("File saved successfully!");
         });
     }
 
@@ -167,10 +170,16 @@ Service.prototype.SaveEvent = function (event) {
             console.log(err);
         });
     }
-    jsonfile.writeFile(file, event, function (err) {
-        console.error(err)
-    })
-
+    return new Promise(
+        function (resolve, reject) {            
+            jsonfile.writeFile(file, event, function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else
+                    resolve(event);
+            })
+        });
 };
 
 function readFilePromisified(filename) {
@@ -691,35 +700,6 @@ Service.prototype.saveSanthiBlog = function (event) {
 
 };
 
-/*Service.prototype.readAllknowYogaBlogs = function () {
-    var blogs = [];
-    return new Promise(
-        function (resolve, reject) {
-            try {
-                var data = fs.readdirSync('./bin/yoga');
-
-                var length = data.length;
-                data.forEach(function (fileName, i) {
-                    var event = readFilePromisified('./bin/yoga/' + fileName).then((blog, error) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            blogs.push(blog);
-                            if (i == length - 1)
-                                resolve(blogs);
-                        }
-                    })
-                })
-            } catch (err) {
-                resolve(blogs);
-            }
-
-        });
-
-};*/
-
-
-
 Service.prototype.updateKnowYogaBlog = function (event) {
 
     var dateTime = (new Date()).getTime();
@@ -831,17 +811,6 @@ Service.prototype.updateSanthiBlog = function (event) {
 
 };
 
-/*Service.prototype.deleteKnowYogaBlog = function (req) {
-    fs.unlink('./bin/blogs/' + req.id + '.json', function (err) {
-        console.log(err);
-    });
-};
-
-Service.prototype.deleteSanthiBlog = function (req) {
-    fs.unlink('./bin/santhiblogs/' + req.id + '.json', function (err) {
-        console.log(err);
-    });
-};*/
 
 Service.prototype.deleteKnowYogaBlogs = function (req) {
     fs.unlink('./bin/yoga/' + req.id + '.json', function (res) {
@@ -902,10 +871,6 @@ Service.prototype.saveGeneralSettings = function (event) {
                 console.log(err);
             });
         }
-        //event.image = "";
-        // require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
-        //     console.log(err);
-        // });
     }
 
     jsonfile.readFile('./bin/general-settings/config.json',
@@ -930,10 +895,6 @@ Service.prototype.saveGeneralSettings = function (event) {
                 })
             }
         });
-
-    /*jsonfile.writeFile(file, event, function (err) {
-        console.error(err)
-    })*/
 };
 
 Service.prototype.getGeneralSettings = function () {

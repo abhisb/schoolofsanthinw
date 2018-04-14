@@ -23,7 +23,7 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
             $state.go("events");
         });
     });
-
+    $scope.endpoint = "";
     $scope.addRow = function () {
         $scope.event.schedule.push({
             starts: "",
@@ -53,7 +53,7 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
             schedule: ""
         }]
     };
-    if ($stateParams.id) {
+    if ($stateParams.id) {        
         $http.get("/api/event/getEvent/" + $stateParams.id).then(function (response, err) {
             if (err)
                 return;
@@ -74,12 +74,16 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
         });
     }
     $scope.saveEvent = function (eve) {
+        if($stateParams.id)
+        $scope.endpoint = "/api/edit/event";
+        else
+        $scope.endpoint = "/api/event/save";
         eve.startDate = $filter('date')((new Date($('#datetimepicker1 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker1').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.endDate = $filter('date')((new Date($('#datetimepicker2 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.regClosesOn = $filter('date')((new Date($('#datetimepicker3 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
         //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
-        eve.description = $('#summernote').summernote('code').replace(/<\/?[^>]+(>|$)/g);
-        $http.post("/api/event/save", eve).then(function (response) {
+        eve.description = $('#summernote').summernote('code');//.replace(/<\/?[^>]+(>|$)/g);
+        $http.post($scope.endpoint, eve).then(function (response) {
             $scope.responseText = response.data;
             $scope.successAlert = true;
             delete $scope.errorAlert;

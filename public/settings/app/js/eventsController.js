@@ -1,5 +1,5 @@
 (function () {
-    window.settingsApp.controller('eventsGridController', ['$rootScope', '$scope', '$state', '$location', '$http', function ($rootScope, $scope, $state, $location, $http) {
+    window.settingsApp.controller('eventsGridController', ['$rootScope', 'Core_Service', '$scope', '$state', '$location', '$http', '$timeout', function ($rootScope, Core_Service, $scope, $state, $location, $http, $timeout) {
         $rootScope.stateName = 'events';
         var MyDateField = function (config) {
             jsGrid.Field.call(this, config);
@@ -88,13 +88,11 @@
                                 .click(function (e) {
                                     var rowData = angular.copy(item);
                                     rowData.name = rowData.name + " - Copy";
-                                    rowData.description = rowData.description.replace(/<\/?[^>]+(>|$)/g);
-                                    var id = rowData.id;
-                                    var grid = _that._grid;
-                                    grid.data.splice(findIndex(grid.data, id), 0, rowData);
+                                    rowData.description = rowData.description;
+                                    var id = angular.copy(rowData.id);
+                                    var grid = _that._grid;                                    
                                     delete rowData.id;
-                                    $('#EventsForm').scope().saveEventCopy(rowData);
-                                    grid.refresh();
+                                    $('#EventsForm').scope().saveEventCopy(rowData, grid, id);                                    
                                     e.stopPropagation();
                                 });
 
@@ -122,10 +120,19 @@
         $scope.editForm = function (eventId) {
             $state.go('addEditEvents', { id: eventId });
         };
-        $scope.saveEventCopy = function (event) {
-            $http.post("/api/event/save", event).then(function (response) {
-                $scope.successAlert = response.data;
-            });
+        $scope.saveEventCopy = function (event, grid, id) {
+            $(".gridLloader").show()
+            event.optype = 'COPY';
+            Core_Service.saveCopiedEvent(event).then(function(response){
+                grid.data.splice(findIndex(grid.data, id), 0, response);                
+                $timeout(function (){     
+                    grid.refresh();               
+                    window.dispatchEvent(new Event('resize'));
+                    $(".gridLloader").hide()
+                },1000)
+            }, function(error){
+                console.log(error);
+            })
         }
 
 
