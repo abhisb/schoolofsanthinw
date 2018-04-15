@@ -77,8 +77,8 @@
                 fields: [{
                     name: "name",
                     itemTemplate: function (val, item) {
-                        return $("<img>").attr("src", item.thumbnailImage || item.thumbnailSrc).css({ height: 100, width: 200 }).on("click", function () {
-                            $("#imagePreview").attr("src", item.thumbnailImage || item.thumbnailSrc);
+                        return $("<img>").attr("src", item.thumbnailSrc).css({ height: 100, width: 200 }).on("click", function () {
+                            $("#imagePreview").attr("src", item.imageSrc);
                             $("#dialog").dialog("open");
                         });
                     },

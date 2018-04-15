@@ -28,28 +28,14 @@ app.post('/api/submit', function (req, res) {
     var status = service.SendMail(req.body);
     res.status(200).send("Your application sucessfully submitted! Please check mail for details");
 });
-app.post('/api/event/save', function (req, res) {
-    service.SaveEvent(req.body).then((result) => {
-        if (result.optype == "COPY") {
-            res.send(result);
-        }
-        else {
-            res.status(200).send("Event has been saved successfully!!");
-        }
-    }).catch(function (error) {
-        res.status(500).send(error);
-    });
-});
+
 
 app.post('/api/edit/event', function (req, res) {
     service.EditEvent(req.body);
     res.status(200).send("Event has been saved successfully!!");
 });
 
-app.post('/api/yogablog/save', function (req, res) {
-    service.saveYogaBlog(req.body);
-    res.status(200).send("The blog has been saved successfully!!");
-});
+
 
 /*app.post('/api/blog/save', function(req, res) {
     service.saveBlog(req.body);
@@ -81,6 +67,8 @@ app.get('/api/yoga/getblog/:id', function (req, res) {
     });
 });
 
+/*Get Apis for settings*/
+
 app.get('/api/event/getAll', function (req, res) {
     var events;
     service.ReadAllEvents().then((result) => {
@@ -90,6 +78,61 @@ app.get('/api/event/getAll', function (req, res) {
     });
 });
 
+app.get('/api/yogaBlog/getAllBlogs', function (req, res) {
+    var events;
+    service.ReadAllKnowYogaBlogs().then((result) => {
+        res.send(result);
+    }).catch(function (error) {
+        res.status(500).send(error);
+    });
+});
+
+app.get('/api/santhiblog/getAllBlogs', function (req, res) {
+    var events;
+    service.getAllSanthiBlogs().then((result) => {
+        res.send(result);
+    }).catch(function (error) {
+        res.status(500).send(error);
+    });
+});
+
+app.get('/api/news/getAll', function (req, res) {
+    var events;
+    service.ReadAllNews().then((result) => {
+        res.send(result);
+    }).catch(function (error) {
+        res.status(500).send(error);
+    });
+});
+
+/*Get Apis for settings*/
+
+/* Save apis for settings*/
+app.post('/api/event/save', function (req, res) {
+    service.SaveEvent(req.body).then((result) => {
+        if (result.optype == "COPY") {
+            res.send(result);
+        }
+        else {
+            res.status(200).send("Event has been saved successfully!!");
+        }
+    }).catch(function (error) {
+        res.status(500).send(error);
+    });
+});
+
+app.post('/api/yogablog/save', function (req, res) {
+    service.saveYogaBlog(req.body);
+    res.status(200).send("The blog has been saved successfully!!");
+});
+
+app.post('/api/santhiblog/save', function (req, res) {
+    service.saveSanthiBlog(req.body);
+    res.status(200).send("The blog has been saved successfully!!");
+});
+/* Save apis for settings*/
+
+/* delete apis for settings*/
 app.delete('/api/delete/event', function (req, res) {
     service.deleteEvent(req.body);
     res.status(200).send("The event has been deleted successfully!!");
@@ -167,22 +210,7 @@ app.get('/api/logout', function (req, res) {
     });
 });
 
-app.get('/api/yogaBlog/getAllBlogs', function (req, res) {
-    var events;
-    service.ReadAllKnowYogaBlogs().then((result) => {
-        res.send(result);
-    }).catch(function (error) {
-        res.status(500).send(error);
-    });
-});
-app.get('/api/santhiblog/getAllBlogs', function (req, res) {
-    var events;
-    service.getAllSanthiBlogs().then((result) => {
-        res.send(result);
-    }).catch(function (error) {
-        res.status(500).send(error);
-    });
-});
+
 
 app.get('/api/yoga/getYoga/:id', function (req, res) {
     var id = req.params.id;
@@ -211,23 +239,13 @@ app.get('/api/news/getnews/:id', function (req, res) {
         res.status(500).send(error);
     });
 });
-app.get('/api/news/getAll', function (req, res) {
-    var events;
-    service.ReadAllNews().then((result) => {
-        res.send(result);
-    }).catch(function (error) {
-        res.status(500).send(error);
-    });
-});
+
 app.post('/api/news/updateNews', function (req, res) {
     service.updateNews(req.body);
     res.status(200).send("News has been updated successfully!!");
 });
 
-app.post('/api/santhiblog/save', function (req, res) {
-    service.saveSanthiBlog(req.body);
-    res.status(200).send("The blog has been saved successfully!!");
-});
+
 
 app.post('/api/blog/save', function (req, res) {
     service.saveKnowYogaBlog(req.body);

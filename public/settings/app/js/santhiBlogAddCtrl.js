@@ -15,7 +15,6 @@ window.settingsApp.controller('santhiBlogAddController', ['$rootScope', '$scope'
             $('#santhiBlogDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g, "");
             santhiBlog.description = $('#santhiBlogDescription').summernote('code');
             santhiBlog.slicedDesc = santhiBlog.description.slice(0,270) + "...";
-            santhiBlog.thumbnailSrc = santhiBlog.image;
             santhiBlog.tags = $rootScope.processTags(santhiBlog.tags);
             $http.post("/api/santhiblog/save", santhiBlog).then(function(response) {
                     $scope.responseText = response.data;

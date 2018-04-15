@@ -9,7 +9,7 @@ var requestIp = require('request-ip');
 var rp = require('request-promise');
 
 /* Client-Secret Downloaded from Google Development */
-var clientSecret = { "installed": { "client_id": "982763164156-pitvrjea6s1noggdpin2oc3mj59m58td.apps.googleusercontent.com", "project_id": "school-of-santhi-165807", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://accounts.google.com/o/oauth2/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_secret": "xohRYlibbdgV-tHIN6O66PRn", "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob", "http://localhost"] } };
+var clientSecret = { "installed": { "client_id": "982763164156-pitvrjea6s1noggdpin2oc3mj59m58td.apps.googleusercontent.com", "project_id": "school-of-santhi-165807", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://accounts.google.com/o/oauth2/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_secret": "xohRYlibbdgV-tHIN6O66PRn", "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob", "http://localhost", "http://schoolofsanthi.in"] } };
 // Message 
 var Service = function () { };
 
@@ -131,55 +131,6 @@ Service.prototype.EditEvent = function (event) {
 
 };
 
-Service.prototype.SaveEvent = function (event) {
-    //var token = randtoken.generate(5);
-    var token = crypto.randomBytes(8).toString('hex');
-    var file = './bin/events/' + token + '.json';
-    event.id = token;
-    if (event && event.image) {
-        if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
-            var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
-            event.imageSrc = '../bin/events/' + token + ".png";
-            var filePath = './public/bin/events/' + token + ".png";
-        } else {
-            var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
-            event.imageSrc = '../bin/events/' + token + ".jpg";
-            var filePath = './public/bin/events/' + token + ".jpg";
-        }
-        event.image = "";
-        require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
-            if (err) {
-                return console.log(err);
-            }
-            console.log("File saved successfully!");
-        });
-    }
-
-    if (event && event.thumbnailImage) {
-        if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
-            var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
-            event.thumbnailImage = '../bin/events/' + token + "-thumbnail.png";
-            var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.png";
-        } else {
-            var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
-            event.thumbnailImage = '../bin/events/' + token + "-thumbnail.jpg";
-            var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.jpg";
-        }
-        require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
-            console.log(err);
-        });
-    }
-    return new Promise(
-        function (resolve, reject) {            
-            jsonfile.writeFile(file, event, function (err) {
-                if (err) {
-                    reject(err);
-                }
-                else
-                    resolve(event);
-            })
-        });
-};
 
 function readFilePromisified(filename) {
     return new Promise(
@@ -309,27 +260,7 @@ Service.prototype.getSanthi = function (id) {
         });
 };
 
-Service.prototype.saveYogaBlog = function (blog) {
-    var token = randtoken.generate(5);
-    var file = './bin/yoga/' + token + '.json';
-    blog.id = token;
-    if (new RegExp(/^data:image\/png;base64,/).test(blog.thumbnail)) {
-        var base64Data = blog.thumbnail.replace(/^data:image\/png;base64,/, "");
-        blog.thumbnailSrc = '../bin/yoga/' + token + ".png";
-        var filePath = './public/bin/yoga/' + token + ".png";
-    } else {
-        var base64Data = blog.thumbnail.replace(/^data:image\/jpeg;base64,/, "");
-        blog.thumbnailSrc = '../bin/yoga/' + token + ".jpg";
-        var filePath = './public/bin/yoga/' + token + ".jpg";
-    }
-    blog.thumbnail = "";
-    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
-        console.log(err);
-    });
-    jsonfile.writeFile(file, blog, function (err) {
-        console.error(err)
-    })
-};
+
 Service.prototype.saveBlog = function (blog) {
     //var token = randtoken.generate(5);
     var token = crypto.randomBytes(8).toString('hex');
@@ -353,7 +284,8 @@ Service.prototype.saveBlog = function (blog) {
     })
 };
 
-/***************************************************************************************/
+/* Read apis for settings*/
+
 Service.prototype.ReadAllEvents = function () {
     var events = [],
         dir = './bin/events';
@@ -366,6 +298,7 @@ Service.prototype.ReadAllEvents = function () {
                 var data = fs.readdirSync(dir),
                     length = data.length;
                 if (length > 0) {
+                    ``
                     data.forEach(function (fileName, i) {
                         var event = readFilePromisified(dir + "/" + fileName).then((event, error) => {
                             if (error) {
@@ -374,6 +307,39 @@ Service.prototype.ReadAllEvents = function () {
                                 events.push(event);
                                 if (i == length - 1)
                                     resolve(events);
+                            }
+                        })
+                    })
+                }
+                else {
+                    resolve(blogs);
+                }
+            } catch (err) {
+                reject(err);
+            }
+        });
+};
+
+Service.prototype.ReadAllKnowYogaBlogs = function () {
+    var blogs = [],
+        dir = './bin/yoga'
+    return new Promise(
+        function (resolve, reject) {
+            try {
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                var data = fs.readdirSync(dir);
+                var length = data.length;
+                if (length > 0) {
+                    data.forEach(function (fileName, i) {
+                        var event = readFilePromisified(dir + "/" + fileName).then((blog, error) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                blogs.push(blog);
+                                if (i == length - 1)
+                                    resolve(blogs);
                             }
                         })
                     })
@@ -422,38 +388,7 @@ Service.prototype.ReadAllNews = function () {
 };
 
 
-Service.prototype.ReadAllKnowYogaBlogs = function () {
-    var blogs = [],
-        dir = './bin/yoga'
-    return new Promise(
-        function (resolve, reject) {
-            try {
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
-                }
-                var data = fs.readdirSync(dir);                
-                var length = data.length;
-                if (length > 0) {
-                    data.forEach(function (fileName, i) {
-                        var event = readFilePromisified(dir + "/" + fileName).then((blog, error) => {
-                            if (error) {
-                                reject(error);
-                            } else {
-                                blogs.push(blog);
-                                if (i == length - 1)
-                                    resolve(blogs);
-                            }
-                        })
-                    })
-                }
-                else {
-                    resolve(blogs);
-                }
-            } catch (err) {
-                reject(err);
-            }
-        });
-};
+
 
 Service.prototype.getAllSanthiBlogs = function () {
     var blogs = [],
@@ -487,30 +422,140 @@ Service.prototype.getAllSanthiBlogs = function () {
             }
         });
 };
+/* Read apis for settings*/
 
-Service.prototype.saveYogaBlog = function (blog) {
+/*Save apis for settings*/
+Service.prototype.SaveEvent = function (event) {
     //var token = randtoken.generate(5);
     var token = crypto.randomBytes(8).toString('hex');
-    var file = './bin/yoga/' + token + '.json';
-    blog.id = token;
-    blog.thumbnail = blog.image;
-    if (new RegExp(/^data:image\/png;base64,/).test(blog.thumbnail)) {
-        var base64Data = blog.thumbnail.replace(/^data:image\/png;base64,/, "");
-        blog.thumbnailSrc = '../bin/yoga/' + token + ".png";
-        var filePath = './public/bin/yoga/' + token + ".png";
-    } else {
-        var base64Data = blog.thumbnail.replace(/^data:image\/jpeg;base64,/, "");
-        blog.thumbnailSrc = '../bin/yoga/' + token + ".jpg";
-        var filePath = './public/bin/yoga/' + token + ".jpg";
+    var file = './bin/events/' + token + '.json';
+    event.id = token;
+    if (event && event.image) {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
+            var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
+            event.imageSrc = '../bin/events/' + token + ".png";
+            var filePath = './public/bin/events/' + token + ".png";
+        } else {
+            var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
+            event.imageSrc = '../bin/events/' + token + ".jpg";
+            var filePath = './public/bin/events/' + token + ".jpg";
+        }
+        event.image = "";
+        require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log("File saved successfully!");
+        });
     }
-    blog.thumbnail = "";
-    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+
+    if (event && event.thumbnailImage) {
+        if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
+            var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
+            event.thumbnailImage = '../bin/events/' + token + "-thumbnail.png";
+            var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.png";
+        } else {
+            var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
+            event.thumbnailImage = '../bin/events/' + token + "-thumbnail.jpg";
+            var thumbnailFilePath = './public/bin/events/' + token + "-thumbnail.jpg";
+        }
+        require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+            console.log(err);
+        });
+    }
+    return new Promise(
+        function (resolve, reject) {
+            jsonfile.writeFile(file, event, function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else
+                    resolve(event);
+            })
+        });
+};
+
+Service.prototype.saveYogaBlog = function (yogaBlog) {
+    //var token = randtoken.generate(5);
+    var dateTime = (new Date()).getTime();
+    yogaBlog.dateTime = dateTime;
+    var token = crypto.randomBytes(8).toString('hex');
+    var file = './bin/yoga/' + token + '.json';
+    yogaBlog.id = token;
+    if (new RegExp(/^data:image\/png;base64,/).test(yogaBlog.image)) {
+        var imageBase64Data = yogaBlog.image.replace(/^data:image\/png;base64,/, "");
+        yogaBlog.imageSrc = '../bin/yoga/' + token + ".png";
+        var imageFilePath = './public/bin/yoga/' + token + ".png";
+    } else {
+        var imageBase64Data = yogaBlog.image.replace(/^data:image\/jpeg;base64,/, "");
+        yogaBlog.imageSrc = '../bin/yoga/' + token + ".jpg";
+        var imageFilePath = './public/bin/yoga/' + token + ".jpg";
+    }
+    delete yogaBlog.image;
+    require("fs").writeFile(imageFilePath, imageBase64Data, 'base64', function (err) {
         console.log(err);
     });
-    jsonfile.writeFile(file, blog, function (err) {
+
+    if (new RegExp(/^data:image\/png;base64,/).test(yogaBlog.thumbnailImage)) {
+        var thumbBase64Data = yogaBlog.thumbnailImage.replace(/^data:image\/png;base64,/, "");
+        yogaBlog.thumbnailSrc = '../bin/yoga/' + token + "-thumbnail.png";
+        var thumbFilePath = './public/bin/yoga/' + token + "-thumbnail.png";
+    } else {
+        var base64Data = yogaBlog.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
+        yogaBlog.thumbnailSrc = '../bin/yoga/' + token + "-thumbnail.jpg";
+        var thumbFilePath = './public/bin/yoga/' + token + "-thumbnail.jpg";
+    }
+    delete yogaBlog.thumbnailImage;
+    require("fs").writeFile(thumbFilePath, thumbBase64Data, 'base64', function (err) {
+        console.log(err);
+    });
+    jsonfile.writeFile(file, yogaBlog, function (err) {
         console.error(err)
     })
 };
+
+Service.prototype.saveSanthiBlog = function (santhiBlog) {
+
+    var dateTime = (new Date()).getTime();
+    santhiBlog.dateTime = dateTime;
+    var token = crypto.randomBytes(8).toString('hex');
+    var file = './bin/santhiblogs/' + token + '.json';
+    santhiBlog.id = token;
+    if (new RegExp(/^data:image\/png;base64,/).test(santhiBlog.image)) {
+        var imageBase64Data = santhiBlog.image.replace(/^data:image\/png;base64,/, "");
+        santhiBlog.imageSrc = '../bin/santhiblogs/' + token + ".png";
+        var imageFilePath = './public/bin/santhiblogs/' + token + ".png";
+    } else {
+        var imageBase64Data = santhiBlog.image.replace(/^data:image\/jpeg;base64,/, "");
+        santhiBlog.imageSrc = '../bin/santhiblogs/' + token + ".jpg";
+        var imageFilePath = './public/bin/santhiblogs/' + token + ".jpg";
+    }
+    delete santhiBlog.image;
+    require("fs").writeFile(imageFilePath, imageBase64Data, 'base64', function (err) {
+        console.log(err);
+    });
+    if (new RegExp(/^data:image\/png;base64,/).test(santhiBlog.thumbnailImage)) {
+        var thumbBase64Data = santhiBlog.thumbnailImage.replace(/^data:image\/png;base64,/, "");
+        santhiBlog.thumbnailSrc = '../bin/santhiblogs/' + token + "-thumbnail.png";
+        var thumbFilePath = './public/bin/santhiblogs/' + token + "-thumbnail.png";
+    } else {
+        var thumbBase64Data = santhiBlog.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
+        santhiBlog.thumbnailSrc = '../bin/santhiblogs/' + token + "-thumbnail.jpg";
+        var thumbFilePath = './public/bin/santhiblogs/' + token + "-thumbnail.jpg";
+    }
+    delete santhiBlog.thumbnailImage;
+    require("fs").writeFile(thumbFilePath, thumbBase64Data, 'base64', function (err) {
+        console.log(err);
+    });
+
+    jsonfile.writeFile(file, santhiBlog, function (err) {
+        console.error(err)
+    })
+
+};
+/*Save apis for settings*/
+
+
 
 Service.prototype.getBlog = function (id) {
     return new Promise(
@@ -617,113 +662,90 @@ Service.prototype.deleteNews = function (req) {
     });
 };
 
-Service.prototype.saveKnowYogaBlog = function (event) {
-    var dateTime = (new Date()).getTime();
-    event.dateTime = dateTime;
+// Service.prototype.saveKnowYogaBlog = function (event) {
+//     var dateTime = (new Date()).getTime();
+//     event.dateTime = dateTime;
 
-    var token = crypto.randomBytes(8).toString('hex');
-    var file = './bin/yoga/' + token + '.json';
-    event.id = token;
-    if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
-        var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
-        event.image = '../bin/yoga/' + token + ".png";
-        var filePath = './public/bin/yoga/' + token + ".png";
-    } else {
-        var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
-        event.image = '../bin/yoga/' + token + ".jpg";
-        var filePath = './public/bin/yoga/' + token + ".jpg";
-    }
+//     var token = crypto.randomBytes(8).toString('hex');
+//     var file = './bin/yoga/' + token + '.json';
+//     event.id = token;
+//     if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
+//         var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
+//         event.image = '../bin/yoga/' + token + ".png";
+//         var filePath = './public/bin/yoga/' + token + ".png";
+//     } else {
+//         var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
+//         event.image = '../bin/yoga/' + token + ".jpg";
+//         var filePath = './public/bin/yoga/' + token + ".jpg";
+//     }
 
-    if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
-        var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
-        event.thumbnailImage = '../bin/yoga/' + token + "-thumbnail.png";
-        var thumbnailFilePath = './public/bin/yoga/' + token + "-thumbnail.png";
-    } else {
-        var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
-        event.thumbnailImage = '../bin/yoga/' + token + "-thumbnail.jpg";
-        var thumbnailFilePath = './public/bin/yoga/' + token + "-thumbnail.jpg";
-    }
+//     if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
+//         var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
+//         event.thumbnailImage = '../bin/yoga/' + token + "-thumbnail.png";
+//         var thumbnailFilePath = './public/bin/yoga/' + token + "-thumbnail.png";
+//     } else {
+//         var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
+//         event.thumbnailImage = '../bin/yoga/' + token + "-thumbnail.jpg";
+//         var thumbnailFilePath = './public/bin/yoga/' + token + "-thumbnail.jpg";
+//     }
 
-    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
-        console.log(err);
-    });
+//     require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+//         console.log(err);
+//     });
 
-    require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
-        console.log(err);
-    });
+//     require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+//         console.log(err);
+//     });
 
 
-    jsonfile.writeFile(file, event, function (err) {
-        console.error(err)
-    })
+//     jsonfile.writeFile(file, event, function (err) {
+//         console.error(err)
+//     })
 
-};
+// };
 
-Service.prototype.saveSanthiBlog = function (event) {
-    var dateTime = (new Date()).getTime();
-    event.dateTime = dateTime;
 
-    var token = crypto.randomBytes(8).toString('hex');
-    var file = './bin/santhiblogs/' + token + '.json';
-    event.id = token;
-    if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
-        var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
-        event.image = '../bin/santhiblogs/' + token + ".png";
-        var filePath = './public/bin/santhiblogs/' + token + ".png";
-    } else {
-        var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
-        event.image = '../bin/santhiblogs/' + token + ".jpg";
-        var filePath = './public/bin/santhiblogs/' + token + ".jpg";
-    }
-
-    if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
-        var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
-        event.thumbnailImage = '../bin/santhiblogs/' + token + "-thumbnail.png";
-        var thumbnailFilePath = './public/bin/santhiblogs/' + token + "-thumbnail.png";
-    } else {
-        var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
-        event.thumbnailImage = '../bin/santhiblogs/' + token + "-thumbnail.jpg";
-        var thumbnailFilePath = './public/bin/santhiblogs/' + token + "-thumbnail.jpg";
-    }
-    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
-        console.log(err);
-    });
-    require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
-        console.log(err);
-    });
-
-    jsonfile.writeFile(file, event, function (err) {
-        console.error(err)
-    })
-
-};
 
 Service.prototype.updateKnowYogaBlog = function (event) {
-
+    console.log(event)
     var dateTime = (new Date()).getTime();
     event.dateTime = dateTime;
 
     var file = './bin/yoga/' + event.id + '.json';
-    if (event.image != "") {
+    if (event.image && event.image != "") {
         if (new RegExp(/^data:image\/png;base64,/).test(event.image)) {
             var base64Data = event.image.replace(/^data:image\/png;base64,/, "");
             event.imageSrc = '../bin/yoga/' + event.id + ".png";
             var filePath = './public/bin/yoga/' + event.id + ".png";
             fs.unlink('./public/bin/yoga/' + event.id + '.png', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/yoga/' + event.id + '.jpg', function (err) {
+                        if (!err) {
+                            delete event.image;
+                            require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+                }
             });
         } else {
             var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
             event.imageSrc = '../bin/yoga/' + event.id + ".jpg";
             var filePath = './public/bin/yoga/' + event.id + ".jpg";
             fs.unlink('./public/bin/yoga/' + event.id + '.jpg', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/yoga/' + event.id + '.png', function (err) {
+                        if (!err) {
+                            delete event.image;
+                            require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+                }
             });
         }
-        //event.image = "";
-        require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
-            console.log(err);
-        });
     }
 
     if (event.thumbnailImage && event.thumbnailImage != "") {
@@ -732,20 +754,34 @@ Service.prototype.updateKnowYogaBlog = function (event) {
             //event.imageSrc = '../bin/yoga/' + event.id + ".png";
             var thumbnailFilePath = './public/bin/yoga/' + event.id + "-thumbnail.png";
             fs.unlink('./public/bin/yoga/' + event.id + '-thumbnail.png', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/yoga/' + event.id + '-thumbnail.jpg', function (err) {
+                        if (!err) {
+                            delete event.thumbnailImage;
+                            require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+                }
             });
         } else {
             var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
             //event.imageSrc = '../bin/yoga/' + event.id + ".jpg";
             var thumbnailFilePath = './public/bin/yoga/' + event.id + "-thumbnail.jpg";
             fs.unlink('./public/bin/yoga/' + event.id + '-thumbnail.jpg', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/yoga/' + event.id + '-thumbnail.png', function (err) {
+                        if (!err) {
+                            delete event.thumbnailImage;
+                            require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+                }
             });
         }
-        //event.image = "";
-        require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
-            console.log(err);
-        });
     }
     jsonfile.writeFile(file, event, function (err) {
         console.error(err)
@@ -765,17 +801,25 @@ Service.prototype.updateSanthiBlog = function (event) {
             event.imageSrc = '../bin/santhiblogs/' + event.id + ".png";
             var filePath = './public/bin/santhiblogs/' + event.id + ".png";
             fs.unlink('./public/bin/santhiblogs/' + event.id + '.png', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/santhiblogs/' + event.id + '.jpg', function (err) {
+                        console.log(err);
+                    });
+                }
             });
         } else {
             var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
             event.imageSrc = '../bin/santhiblogs/' + event.id + ".jpg";
             var filePath = './public/bin/santhiblogs/' + event.id + ".jpg";
             fs.unlink('./public/bin/santhiblogs/' + event.id + '.jpg', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/santhiblogs/' + event.id + '.png', function (err) {
+                        console.log(err);
+                    });
+                }
             });
         }
-        //event.image = "";
+        delete event.image;
         require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
             console.log(err);
         });
@@ -787,17 +831,25 @@ Service.prototype.updateSanthiBlog = function (event) {
             //event.imageSrc = '../bin/santhiblogs/' + event.id + ".png";
             var thumbnailFilePath = './public/bin/santhiblogs/' + event.id + "-thumbnail.png";
             fs.unlink('./public/bin/santhiblogs/' + event.id + '-thumbnail.png', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/santhiblogs/' + event.id + '-thumbnail.jpg', function (err) {
+                        console.log(err);
+                    });
+                }
             });
         } else {
             var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
             //event.imageSrc = '../bin/santhiblogs/' + event.id + ".jpg";
             var thumbnailFilePath = './public/bin/santhiblogs/' + event.id + "-thumbnail.jpg";
             fs.unlink('./public/bin/santhiblogs/' + event.id + '-thumbnail.jpg', function (err) {
-                console.log(err);
+                if (err) {
+                    fs.unlink('./public/bin/santhiblogs/' + event.id + '-thumbnail.png', function (err) {
+                        console.log(err);
+                    });
+                }
             });
         }
-        //event.image = "";
+        delete event.thumbnailImage;
         require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
             console.log(err);
         });
