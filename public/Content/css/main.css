@@ -25,6 +25,9 @@ body{
     border-color: #385e92!important;
     color: white!important;
 }
+a.logo-link:hover, a.logo-link {
+    color: black;
+}
 .copy-button,
 .edit-button {
     width: 20px;

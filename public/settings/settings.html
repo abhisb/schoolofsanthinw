@@ -60,18 +60,19 @@
 
   <header ui-view="header" class="header" ng-controller="Header_Ctrl" ng-if="!subState">
     <section class="row no-gutter mt-10">
+        <a href="/" class="col-md-12 logo-link">
       <section class="col-md-3 text-center logo">
         <section class="col-md-3">
           <img href="#" src="/Content/img/school%20of%20santhi.png">
         </section>
-        <a href="/"><section class=" col-md-8 logo-text text-left">
+        <section class=" col-md-8 logo-text text-left">
           <section class="sos-logo-text">school of santhi</section>
           <section class="font-12">Traditional Yoga School</section>
-        </section></a>
+        </section>
         <div class="col-md-11">
           <button type="button" class="btn btnlogout btn-warning pull-right" ng-click="logout();">Logout</button>
         </div>
-      </section>
+      </section></a>
     </section>
     <ul class="nav nav-tabs">
       <li ui-sref-active="active">
