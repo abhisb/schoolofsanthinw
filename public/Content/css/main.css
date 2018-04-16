@@ -20,7 +20,11 @@ body{
     url('fonts/saman.svg#svgFontName') format('svg');
     /* Legacy iOS */
 }
-
+.selected-filter a{
+    background-color: #3c587d!important;
+    border-color: #385e92!important;
+    color: white!important;
+}
 .copy-button,
 .edit-button {
     width: 20px;

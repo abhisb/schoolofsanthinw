@@ -312,7 +312,7 @@ Service.prototype.ReadAllEvents = function () {
                     })
                 }
                 else {
-                    resolve(blogs);
+                    resolve(events);
                 }
             } catch (err) {
                 reject(err);
@@ -364,6 +364,7 @@ Service.prototype.ReadAllNews = function () {
                 }
                 var data = fs.readdirSync(dir),
                     length = data.length;
+                    
                 if (length > 0) {
                     data.forEach(function (fileName, i) {
                         var event = readFilePromisified(dir + "/" + fileName).then((event, error) => {
@@ -378,7 +379,7 @@ Service.prototype.ReadAllNews = function () {
                     })
                 }
                 else {
-                    resolve(blogs);
+                    resolve(events);
                 }
             } catch (err) {
                 reject(err);

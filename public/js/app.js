@@ -3,11 +3,11 @@
  * Trivandrum
  * Author : Shanmuga Priya Dhandapani
  */
-Array.prototype.unique = function() {
+Array.prototype.unique = function () {
     var a = this.concat();
-    for(var i=0; i<a.length; ++i) {
-        for(var j=i+1; j<a.length; ++j) {
-            if(a[i] === a[j])
+    for (var i = 0; i < a.length; ++i) {
+        for (var j = i + 1; j < a.length; ++j) {
+            if (a[i] === a[j])
                 a.splice(j--, 1);
         }
     }
@@ -1076,13 +1076,32 @@ app1.controller('shanthiBlogController', function ($scope, $location, $http, eve
     $scope.getAllShanthiBlogs = function () {
         $http.get('/api/santhiblog/getAllBlogs').then(function (res) {
             $scope.shanthi.blogs = res.data.sort($scope.compare).reverse();
-            $scope.shanthi.fullTags = [];            
+            $scope.shanthi.blogsCopy = angular.copy($scope.shanthi.blogs);
+            $scope.shanthi.fullTags = ["All"];
             for (var i = 0; i < $scope.shanthi.blogs.length; i++) {
                 if ($scope.shanthi.blogs[i].tags && $scope.shanthi.blogs[i].tags.length) {
                     $scope.shanthi.fullTags = $scope.shanthi.fullTags.concat($scope.shanthi.blogs[i].tags).unique();
                 }
             }
         });
+    }
+    $scope.filterByTags = function (tag, event) {
+        angular.element(".tags-filter").removeClass("selected-filter");
+        angular.element(event.currentTarget).addClass("selected-filter");
+        $scope.filteredBlogs = [];
+        $scope.shanthi.blogs = angular.copy($scope.shanthi.blogsCopy);
+        for (var i = 0; i < $scope.shanthi.blogs.length; i++) {
+            if ($scope.shanthi.blogs[i].tags.indexOf(tag) > -1 || $scope.shanthi.blogs[i].tags.indexOf(tag.toLowerCase()) > -1) {
+                $scope.filteredBlogs.push($scope.shanthi.blogs[i]);
+            }
+        }
+        if (tag.toLowerCase() == "all") {
+            $scope.shanthi.blogs = angular.copy($scope.shanthi.blogsCopy);
+        }
+        else {
+            $scope.shanthi.blogs = $scope.filteredBlogs;
+        }
+
     }
     $scope.convertDate = function (date) {
         var objDate = new Date(date);
@@ -1215,7 +1234,8 @@ app1.controller('yogaBlogHomeController', function ($scope, $location, $http, ev
     $scope.getAllYogaBlogs = function () {
         $http.get('/api/yogaBlog/getAllBlogs').then(function (res) {
             $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
-            $scope.yoga.fullTags = [];            
+            $scope.yoga.blogsCopy = angular.copy($scope.yoga.blogs);
+            $scope.yoga.fullTags = ["all"];
             for (var i = 0; i < $scope.yoga.blogs.length; i++) {
                 if ($scope.yoga.blogs[i].tags && $scope.yoga.blogs[i].tags.length) {
                     $scope.yoga.fullTags = $scope.yoga.fullTags.concat($scope.yoga.blogs[i].tags).unique();
@@ -1224,6 +1244,24 @@ app1.controller('yogaBlogHomeController', function ($scope, $location, $http, ev
         });
     }
 
+    $scope.filterByTags = function (tag, event) {
+        angular.element(".tags-filter").removeClass("selected-filter");
+        angular.element(event.currentTarget).addClass("selected-filter");
+        $scope.filteredBlogs = [];
+        $scope.yoga.blogs = angular.copy($scope.yoga.blogsCopy);
+        for (var i = 0; i < $scope.yoga.blogs.length; i++) {
+            if ($scope.yoga.blogs[i].tags.indexOf(tag) > -1 || $scope.yoga.blogs[i].tags.indexOf(tag.toLowerCase()) > -1) {
+                $scope.filteredBlogs.push($scope.yoga.blogs[i]);
+            }
+        }
+        if (tag.toLowerCase() == "all") {
+            $scope.yoga.blogs = angular.copy($scope.yoga.blogsCopy);
+        }
+        else {
+            $scope.yoga.blogs = $scope.filteredBlogs;
+        }
+
+    }
     $scope.convertDate = function (date) {
         var objDate = new Date(date);
         return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();

@@ -82,7 +82,7 @@ window.settingsApp.controller('eventController', ['$scope', '$http', '$state', '
         eve.endDate = $filter('date')((new Date($('#datetimepicker2 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker2').data("DateTimePicker").date().format("DD/MMM/YYYY");
         eve.regClosesOn = $filter('date')((new Date($('#datetimepicker3 input').val())).getTime(), 'dd/MMM/yyyy');//$('#datetimepicker3').data("DateTimePicker").date().format("DD/MMM/YYYY");
         //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
-        eve.description = $('#summernote').summernote('code');//.replace(/<\/?[^>]+(>|$)/g);
+        eve.description = $('#summernote').summernote('code');
         $http.post($scope.endpoint, eve).then(function (response) {
             $scope.responseText = response.data;
             $scope.successAlert = true;

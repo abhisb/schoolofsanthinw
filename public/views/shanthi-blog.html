@@ -49,7 +49,7 @@
         <aside class="listing" ng-if="shanthi.fullTags.length > 0">
             <h2 class="heading">Tags of listed blogs</h2>
             <ul>
-                    <li ng-repeat="tag in shanthi.fullTags">
+                    <li class="tags-filter" ng-repeat="tag in shanthi.fullTags" ng-click="filterByTags(tag, $event)">
                             <a href="">{{tag}}</a>
                         </li>  
             </ul>

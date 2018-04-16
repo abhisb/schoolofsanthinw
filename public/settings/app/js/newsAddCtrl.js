@@ -29,7 +29,7 @@
             $scope.editNews($stateParams.id);
         }
         $scope.saveNews = function () {
-            $scope.news.description = $('#newsDescription').summernote('code').replace(/<\/?[^>]+(>|$)/g);
+            $scope.news.description = $('#newsDescription').summernote('code');
             if (!$scope.news.title || !$scope.news.description) {
                 return;
             }
@@ -38,12 +38,14 @@
                 $scope.deleteNews($scope.editNewsId);
                 $scope.isEdit = false;
             }
+            console.log( $scope.news.description)
             var data = {
                 title: $scope.news.title,
                 description: $('#newsDescription').summernote('code'),//$scope.news.description,
-                slicedDesc: $scope.news.description.slice(0, 100) + "..."
+                slicedDesc: $scope.news.description.slice(0, 100) + "..."                
                 //highlight: $scope.news.highlight
             }
+            console.log(data)
             $http.post('/api/save/news', data).then(function (response) {
                 $scope.responseText = response.data;
                 $scope.successAlert = true;
