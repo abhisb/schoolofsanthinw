@@ -502,7 +502,7 @@ Service.prototype.saveYogaBlog = function (yogaBlog) {
         yogaBlog.thumbnailSrc = '../bin/yoga/' + token + "-thumbnail.png";
         var thumbFilePath = './public/bin/yoga/' + token + "-thumbnail.png";
     } else {
-        var base64Data = yogaBlog.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
+        var thumbBase64Data = yogaBlog.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
         yogaBlog.thumbnailSrc = '../bin/yoga/' + token + "-thumbnail.jpg";
         var thumbFilePath = './public/bin/yoga/' + token + "-thumbnail.jpg";
     }
