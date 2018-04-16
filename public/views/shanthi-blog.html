@@ -4,7 +4,7 @@
         <div class="paginationclass card row homecard" ng-repeat="blog in shanthi.blogs | filter:search | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
             <div class="card-body">
                 
-                    <image src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;">
+                    <image src="{{blog.thumbnailSrc || blog.imageSrc || blog.image}}" alt="Shanthi" onerror="this.onerror=null;">
                
                 <div class="cardbodytxt" data-target="#detailedShanthiModal">
                     <h2 style="margin-bottom:-8px;cursor: pointer;" ng-click="loadDetailPage('/#/yoga/' + blog.id)">{{blog.title}}</h2>

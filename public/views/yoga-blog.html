@@ -3,7 +3,7 @@
   <section class="col-md-9">
       <div class="card row homecard" ng-repeat="blog in yoga.blogs | filter:search | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
           <div class="card-body">
-          <image ng-src="{{blog.thumbnailImage || blog.thumbnailSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
+          <image ng-src="{{blog.thumbnailSrc  || blog.imageSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">
           <div class="cardbodytxt" data-target="#detailedYogaModal">
             <h2 style="margin-bottom:-8px;cursor: pointer;" ng-click="loadDetailPage('/#/yoga/' + blog.id)">{{blog.title}}</h2>
             <span class="dateText"><i>{{convertDate(blog.date)}}</i></span>
