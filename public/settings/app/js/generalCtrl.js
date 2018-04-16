@@ -18,6 +18,10 @@
                 $scope.successAlert = true;
                 delete $scope.errorAlert;
                 $scope.getSavedImages();
+                // setInterval(function() {
+                //     $scope.getSavedImages();
+                // }, 500)
+                
                 angular.element("#alertModal").modal();
             }, function (error) {
                 $(".gridLloader").hide();
@@ -34,7 +38,9 @@
         }
         $scope.getSavedImages = function () {
             $(".gridLloader").show();
-            $http.get("/api/getGeneralSettings")
+
+            setInterval(function() {
+                 $http.get("/api/getGeneralSettings")
                 .then(function (response, error) {
                     $(".gridLloader").hide();
                     if (response) {
@@ -57,6 +63,8 @@
                     $scope.yogaBannerSrc = null;
                     $scope.shanthiBannerSrc = null;
                 });
+            }, 500)
+           
         }
         $scope.getSavedImages();
     }]);

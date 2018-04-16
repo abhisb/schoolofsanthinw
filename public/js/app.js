@@ -1035,7 +1035,7 @@ app1.controller('shanthiBlogController', function ($scope, $location, $http, eve
     $http.get("/api/getGeneralSettings")
         .then(function (response, err) {
 
-            $scope.shanthi.banner = response.data.santhiBlogBannerImg;
+            $scope.shanthi.banner = response.data.santhiBlogBannerImgSrc;
 
         });
 
@@ -1174,7 +1174,7 @@ app1.controller('yogaBlogHomeController', function ($scope, $location, $http, ev
     $http.get("/api/getGeneralSettings")
         .then(function (response, err) {
 
-            $scope.yoga.banner = response.data.knowYogaBannerImg;
+            $scope.yoga.banner = response.data.knowYogaBannerImgSrc;
 
         });
 
