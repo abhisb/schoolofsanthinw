@@ -46,8 +46,8 @@
     <aside class="listing" ng-if="yoga.fullTags.length > 0">
           <h2 class="heading">Tags of listed blogs</h2>
           <ul>
-                <li class="tags-filter" ng-repeat="tag in yoga.fullTags" ng-click= "filterByTags(tag, $event)">
-                        <a href="">{{tag}}</a>
+                <li class="tags-filter" ng-repeat="tag in yoga.fullTags">
+                        <a href="/#/knowyoga/{{tag}}">{{tag}}</a>
                     </li>  
           </ul>
         </aside>

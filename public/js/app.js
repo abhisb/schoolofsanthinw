@@ -26,7 +26,7 @@ app1.config(function ($routeProvider, $locationProvider) {
         .when("/program/classes", {
             templateUrl: "views/classes.html"
         })
-        .when("/knowyoga", {
+        .when("/knowyoga/:tag?", {
             templateUrl: "views/yoga-blog.html",
             controller: 'yogaBlogHomeController'
         })
@@ -34,7 +34,7 @@ app1.config(function ($routeProvider, $locationProvider) {
             templateUrl: "views/book.html",
             controller: 'bookController'
         })
-        .when("/santhispeaks", {
+        .when("/santhispeaks/:tag?", {
             templateUrl: "views/shanthi-blog.html",
             controller: 'shanthiBlogController'
         })
@@ -1083,6 +1083,13 @@ app1.controller('shanthiBlogController', function ($scope, $location, $http, eve
                     $scope.shanthi.fullTags = $scope.shanthi.fullTags.concat($scope.shanthi.blogs[i].tags).unique();
                 }
             }
+            $timeout(function(){
+                if($routeParams.tag){
+                    var index= $scope.shanthi.fullTags.indexOf($routeParams.tag);
+                    var eventHandle = {currentTarget: angular.element(".tags-filter")[index]}
+                    $scope.filterByTags($routeParams.tag, eventHandle)
+                }
+            },100);  
         });
     }
     $scope.filterByTags = function (tag, event) {
@@ -1129,7 +1136,8 @@ app1.controller('shanthiBlogController', function ($scope, $location, $http, eve
     }
 });
 
-app1.controller('yogaBlogHomeController', function ($scope, $location, $http, eventsService, $timeout) {
+app1.controller('yogaBlogHomeController', function ($routeParams, $scope, $location, $http, eventsService, $timeout) {
+    
     $scope.yoga = {};
     $scope.yoga.blogs = [];
     /*pagination*/
@@ -1241,6 +1249,13 @@ app1.controller('yogaBlogHomeController', function ($scope, $location, $http, ev
                     $scope.yoga.fullTags = $scope.yoga.fullTags.concat($scope.yoga.blogs[i].tags).unique();
                 }
             }
+            $timeout(function(){
+                if($routeParams.tag){
+                    var index= $scope.yoga.fullTags.indexOf($routeParams.tag);
+                    var eventHandle = {currentTarget: angular.element(".tags-filter")[index]}
+                    $scope.filterByTags($routeParams.tag, eventHandle)
+                }
+            },100);            
         });
     }
 

@@ -15,6 +15,9 @@ body {
 img.preview-banner {
     height: 330px;
 }
+a.logo-link, a.logo-link {
+    color: black;
+}
 .alert-herader {
     color: blue;
 }
