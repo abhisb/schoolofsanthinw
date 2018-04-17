@@ -752,7 +752,7 @@ Service.prototype.updateKnowYogaBlog = function (event) {
     if (event.thumbnailImage && event.thumbnailImage != "") {
         if (new RegExp(/^data:image\/png;base64,/).test(event.thumbnailImage)) {
             var tbase64Data = event.thumbnailImage.replace(/^data:image\/png;base64,/, "");
-            //event.imageSrc = '../bin/yoga/' + event.id + ".png";
+            event.thumbnailSrc = '../bin/yoga/' + event.id + "-thumbnail.png";
             var thumbnailFilePath = './public/bin/yoga/' + event.id + "-thumbnail.png";
             fs.unlink('./public/bin/yoga/' + event.id + '-thumbnail.png', function (err) {
                 if (err) {
@@ -768,7 +768,7 @@ Service.prototype.updateKnowYogaBlog = function (event) {
             });
         } else {
             var tbase64Data = event.thumbnailImage.replace(/^data:image\/jpeg;base64,/, "");
-            //event.imageSrc = '../bin/yoga/' + event.id + ".jpg";
+            event.thumbnailSrc = '../bin/yoga/' + event.id + "-thumbnail.jpg";
             var thumbnailFilePath = './public/bin/yoga/' + event.id + "-thumbnail.jpg";
             fs.unlink('./public/bin/yoga/' + event.id + '-thumbnail.jpg', function (err) {
                 if (err) {
@@ -784,6 +784,9 @@ Service.prototype.updateKnowYogaBlog = function (event) {
             });
         }
     }
+
+    delete event.thumbnailImage;
+    delete event.image;
     jsonfile.writeFile(file, event, function (err) {
         console.error(err)
     })
