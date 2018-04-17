@@ -1,6 +1,6 @@
 <section class="container-fluid">
     <img src="{{shanthi.banner}}" class="banner" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
-    <section class="col-md-9">
+    <section class="col-md-9" ng-if="!shanthi.blogs.length">
         <div class="paginationclass card row homecard" ng-repeat="blog in shanthi.blogs | filter:search | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
             <div class="card-body">
                 
@@ -39,6 +39,7 @@
            </div>
 
     </section>
+    <section class="no-data col-md-9" ng-if="!shanthi.blogs.length"><p>No yoga blogs to show</p></section>
     <section class="col-md-3 side-panel">
         <aside class="searchbx">
             <form class="search">

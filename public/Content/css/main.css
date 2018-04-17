@@ -1242,7 +1242,13 @@ aside.youtube {
     text-transform: lowercase;
     padding: 3px 10px;
 }
-
+section.no-data {
+    text-align: center;
+    height: 200px;
+    font-size: 20px;
+    color: #3c587d;
+    padding-top: 100px;
+}
 .search button {
     position: absolute;
     right: 20px;
