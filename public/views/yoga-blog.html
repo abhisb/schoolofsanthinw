@@ -1,6 +1,8 @@
 <section class="container-fluid">
-	<img src="{{yoga.banner}}" class="banner" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
-  <section class="col-md-9" ng-if="yoga.blogs.length">
+        <section class="col-md-12">
+	<img src="{{yoga.banner}}" class="img img-responsive" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
+  </section>
+    <section class="col-md-9" ng-if="yoga.blogs.length">
       <div class="card row homecard" ng-repeat="blog in yoga.blogs | filter:search | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
           <div class="card-body">
           <image ng-src="{{blog.thumbnailSrc  || blog.imageSrc || blog.image}}" alt="Yoga" onerror="this.onerror=null;this.src='../Content/img/trending/santhi.png'">

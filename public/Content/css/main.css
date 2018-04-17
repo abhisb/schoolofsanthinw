@@ -196,7 +196,7 @@ a {
 .sticky {
     z-index: 2;
     position: fixed;
-    left: 900px;
+    left: 873px!important;
     background-color: white;
     border-radius: 6px;
     font-size: 14px;
@@ -940,7 +940,7 @@ aside.youtube {
 .banner {
     margin-bottom: 40px;
     height: 465px;
-    width: 1175px;
+    width: 1145px;
 }
 .modal .btn-danger{
     background: #fff;
