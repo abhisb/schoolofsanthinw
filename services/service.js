@@ -727,8 +727,19 @@ Service.prototype.updateKnowYogaBlog = function (event) {
                                 console.log(err);
                             });
                         }
+                        else {
+                             require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
                     });
                 }
+                else {
+                     require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+                        console.log(err);
+                    });
+                }
+
             });
         } else {
             var base64Data = event.image.replace(/^data:image\/jpeg;base64,/, "");
@@ -743,6 +754,16 @@ Service.prototype.updateKnowYogaBlog = function (event) {
                                 console.log(err);
                             });
                         }
+                        else {
+                            require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+                }
+                else {
+                    require("fs").writeFile(filePath, base64Data, 'base64', function (err) {
+                        console.log(err);
                     });
                 }
             });
@@ -763,6 +784,16 @@ Service.prototype.updateKnowYogaBlog = function (event) {
                                 console.log(err);
                             });
                         }
+                        else {
+                            require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+                }
+                else {
+                    require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+                        console.log(err);
                     });
                 }
             });
@@ -779,6 +810,16 @@ Service.prototype.updateKnowYogaBlog = function (event) {
                                 console.log(err);
                             });
                         }
+                        else {
+                            require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+                                console.log(err);
+                            });
+                        }
+                    });
+                }
+                else {
+                    require("fs").writeFile(thumbnailFilePath, tbase64Data, 'base64', function (err) {
+                        console.log(err);
                     });
                 }
             });
