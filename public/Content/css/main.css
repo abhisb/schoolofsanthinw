@@ -939,6 +939,8 @@ aside.youtube {
 
 .banner {
     margin-bottom: 40px;
+    height: 465px;
+    width: 1175px;
 }
 .modal .btn-danger{
     background: #fff;
