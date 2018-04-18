@@ -2,7 +2,7 @@
     <section class="col-md-12">
         <img src="{{shanthi.banner || ''}}" class="img img-responsives" onerror="this.onerror=null;this.src='../Content/img/trending/home3.png'">
     </section>
-    <section class="col-md-9" ng-if="!shanthi.blogs.length">
+    <section class="col-md-9" ng-if="shanthi.blogs.length">
         <div class="paginationclass card row homecard" ng-repeat="blog in shanthi.blogs | filter:search | pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
             <div class="card-body">
 
