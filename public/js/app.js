@@ -969,7 +969,7 @@ app1.filter('pagination', function () {
     };
 });
 
-app1.controller('shanthiBlogController', function ($scope, $location, $http, eventsService, $timeout) {
+app1.controller('shanthiBlogController', function ($routeParams, $scope, $location, $http, eventsService, $timeout) {
 
     /*pagination*/
     $scope.itemsPerPage = 5;
@@ -1076,40 +1076,60 @@ app1.controller('shanthiBlogController', function ($scope, $location, $http, eve
     $scope.getAllShanthiBlogs = function () {
         $http.get('/api/santhiblog/getAllBlogs').then(function (res) {
             $scope.shanthi.blogs = res.data.sort($scope.compare).reverse();
-            $scope.shanthi.blogsCopy = angular.copy($scope.shanthi.blogs);
+            //$scope.shanthi.blogsCopy = angular.copy($scope.shanthi.blogs);
             $scope.shanthi.fullTags = ["All"];
+            $scope.filteredBlogs = [];
+            var tag = $routeParams.tag ? $routeParams.tag : "All", index, eventHandle;
             for (var i = 0; i < $scope.shanthi.blogs.length; i++) {
                 if ($scope.shanthi.blogs[i].tags && $scope.shanthi.blogs[i].tags.length) {
                     $scope.shanthi.fullTags = $scope.shanthi.fullTags.concat($scope.shanthi.blogs[i].tags).unique();
                 }
+                if(tag){
+                    if ($scope.shanthi.blogs[i].tags.indexOf(tag) > -1 || $scope.shanthi.blogs[i].tags.indexOf(tag.toLowerCase()) > -1 || tag == "All") {
+                        $scope.filteredBlogs.push($scope.shanthi.blogs[i]);
+                    }
+                }
             }
+            $scope.shanthi.blogs = $scope.filteredBlogs;
             $timeout(function(){
-                if($routeParams.tag){
-                    var index= $scope.shanthi.fullTags.indexOf($routeParams.tag);
-                    var eventHandle = {currentTarget: angular.element(".tags-filter")[index]}
-                    $scope.filterByTags($routeParams.tag, eventHandle)
+                if(tag){
+                    index= $scope.shanthi.fullTags.indexOf(tag);
+                    angular.element(".tags-filter").removeClass("selected-filter");
+                    angular.element(angular.element(".tags-filter")[index]).addClass("selected-filter");
                 }
             },100);  
         });
     }
-    $scope.filterByTags = function (tag, event) {
-        angular.element(".tags-filter").removeClass("selected-filter");
-        angular.element(event.currentTarget).addClass("selected-filter");
-        $scope.filteredBlogs = [];
-        $scope.shanthi.blogs = angular.copy($scope.shanthi.blogsCopy);
-        for (var i = 0; i < $scope.shanthi.blogs.length; i++) {
-            if ($scope.shanthi.blogs[i].tags.indexOf(tag) > -1 || $scope.shanthi.blogs[i].tags.indexOf(tag.toLowerCase()) > -1) {
-                $scope.filteredBlogs.push($scope.shanthi.blogs[i]);
-            }
-        }
-        if (tag.toLowerCase() == "all") {
-            $scope.shanthi.blogs = angular.copy($scope.shanthi.blogsCopy);
-        }
-        else {
-            $scope.shanthi.blogs = $scope.filteredBlogs;
-        }
 
+    $scope.getAllYogaBlogs = function () {
+        $http.get('/api/yogaBlog/getAllBlogs').then(function (res) {
+            $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
+            //$scope.yoga.blogsCopy = angular.copy($scope.yoga.blogs);
+            $scope.yoga.fullTags = ["All"];
+            $scope.filteredBlogs = [];
+            var tag = $routeParams.tag ? $routeParams.tag : "All" ,index, eventHandle;
+            for (var i = 0; i < $scope.yoga.blogs.length; i++) {
+                if ($scope.yoga.blogs[i].tags && $scope.yoga.blogs[i].tags.length) {
+                    $scope.yoga.fullTags = $scope.yoga.fullTags.concat($scope.yoga.blogs[i].tags).unique();
+                }
+                if(tag){
+                    if ($scope.yoga.blogs[i].tags.indexOf(tag) > -1 || $scope.yoga.blogs[i].tags.indexOf(tag.toLowerCase()) > -1 || tag == "All") {
+                        $scope.filteredBlogs.push($scope.yoga.blogs[i]);
+                    }
+                }
+            }
+            $scope.yoga.blogs = $scope.filteredBlogs;
+            
+            $timeout(function(){
+                if(tag){
+                    index= $scope.yoga.fullTags.indexOf(tag);
+                    angular.element(".tags-filter").removeClass("selected-filter");
+                    angular.element(angular.element(".tags-filter")[index]).addClass("selected-filter");
+                }
+            },100);            
+        });
     }
+
     $scope.convertDate = function (date) {
         var objDate = new Date(date);
         return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();
@@ -1242,41 +1262,32 @@ app1.controller('yogaBlogHomeController', function ($routeParams, $scope, $locat
     $scope.getAllYogaBlogs = function () {
         $http.get('/api/yogaBlog/getAllBlogs').then(function (res) {
             $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
-            $scope.yoga.blogsCopy = angular.copy($scope.yoga.blogs);
-            $scope.yoga.fullTags = ["all"];
+            //$scope.yoga.blogsCopy = angular.copy($scope.yoga.blogs);
+            $scope.yoga.fullTags = ["All"];
+            $scope.filteredBlogs = [];
+            var tag = $routeParams.tag ? $routeParams.tag : "All" ,index, eventHandle;
             for (var i = 0; i < $scope.yoga.blogs.length; i++) {
                 if ($scope.yoga.blogs[i].tags && $scope.yoga.blogs[i].tags.length) {
                     $scope.yoga.fullTags = $scope.yoga.fullTags.concat($scope.yoga.blogs[i].tags).unique();
                 }
+                if(tag){
+                    if ($scope.yoga.blogs[i].tags.indexOf(tag) > -1 || $scope.yoga.blogs[i].tags.indexOf(tag.toLowerCase()) > -1 || tag == "All") {
+                        $scope.filteredBlogs.push($scope.yoga.blogs[i]);
+                    }
+                }
             }
+            $scope.yoga.blogs = $scope.filteredBlogs;
+            
             $timeout(function(){
-                if($routeParams.tag){
-                    var index= $scope.yoga.fullTags.indexOf($routeParams.tag);
-                    var eventHandle = {currentTarget: angular.element(".tags-filter")[index]}
-                    $scope.filterByTags($routeParams.tag, eventHandle)
+                if(tag){
+                    index= $scope.yoga.fullTags.indexOf(tag);
+                    angular.element(".tags-filter").removeClass("selected-filter");
+                    angular.element(angular.element(".tags-filter")[index]).addClass("selected-filter");
                 }
             },100);            
         });
     }
 
-    $scope.filterByTags = function (tag, event) {
-        angular.element(".tags-filter").removeClass("selected-filter");
-        angular.element(event.currentTarget).addClass("selected-filter");
-        $scope.filteredBlogs = [];
-        $scope.yoga.blogs = angular.copy($scope.yoga.blogsCopy);
-        for (var i = 0; i < $scope.yoga.blogs.length; i++) {
-            if ($scope.yoga.blogs[i].tags.indexOf(tag) > -1 || $scope.yoga.blogs[i].tags.indexOf(tag.toLowerCase()) > -1) {
-                $scope.filteredBlogs.push($scope.yoga.blogs[i]);
-            }
-        }
-        if (tag.toLowerCase() == "all") {
-            $scope.yoga.blogs = angular.copy($scope.yoga.blogsCopy);
-        }
-        else {
-            $scope.yoga.blogs = $scope.filteredBlogs;
-        }
-
-    }
     $scope.convertDate = function (date) {
         var objDate = new Date(date);
         return objDate.toLocaleString('en-us', { month: "long" }) + " " + objDate.getDate() + " " + objDate.getFullYear();

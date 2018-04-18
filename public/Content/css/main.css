@@ -196,7 +196,7 @@ a {
 .sticky {
     z-index: 2;
     position: fixed;
-    left: 900px;
+    left: 873px!important;
     background-color: white;
     border-radius: 6px;
     font-size: 14px;
@@ -939,6 +939,8 @@ aside.youtube {
 
 .banner {
     margin-bottom: 40px;
+    height: 465px;
+    width: 1145px;
 }
 .modal .btn-danger{
     background: #fff;
@@ -1242,7 +1244,13 @@ aside.youtube {
     text-transform: lowercase;
     padding: 3px 10px;
 }
-
+section.no-data {
+    text-align: center;
+    height: 200px;
+    font-size: 20px;
+    color: #3c587d;
+    padding-top: 100px;
+}
 .search button {
     position: absolute;
     right: 20px;
