@@ -1097,36 +1097,7 @@ app1.controller('shanthiBlogController', function ($routeParams, $scope, $locati
                     angular.element(".tags-filter").removeClass("selected-filter");
                     angular.element(angular.element(".tags-filter")[index]).addClass("selected-filter");
                 }
-            },100);  
-        });
-    }
-
-    $scope.getAllYogaBlogs = function () {
-        $http.get('/api/yogaBlog/getAllBlogs').then(function (res) {
-            $scope.yoga.blogs = res.data.sort($scope.compare).reverse();
-            //$scope.yoga.blogsCopy = angular.copy($scope.yoga.blogs);
-            $scope.yoga.fullTags = ["All"];
-            $scope.filteredBlogs = [];
-            var tag = $routeParams.tag ? $routeParams.tag : "All" ,index, eventHandle;
-            for (var i = 0; i < $scope.yoga.blogs.length; i++) {
-                if ($scope.yoga.blogs[i].tags && $scope.yoga.blogs[i].tags.length) {
-                    $scope.yoga.fullTags = $scope.yoga.fullTags.concat($scope.yoga.blogs[i].tags).unique();
-                }
-                if(tag){
-                    if ($scope.yoga.blogs[i].tags.indexOf(tag) > -1 || $scope.yoga.blogs[i].tags.indexOf(tag.toLowerCase()) > -1 || tag == "All") {
-                        $scope.filteredBlogs.push($scope.yoga.blogs[i]);
-                    }
-                }
-            }
-            $scope.yoga.blogs = $scope.filteredBlogs;
-            
-            $timeout(function(){
-                if(tag){
-                    index= $scope.yoga.fullTags.indexOf(tag);
-                    angular.element(".tags-filter").removeClass("selected-filter");
-                    angular.element(angular.element(".tags-filter")[index]).addClass("selected-filter");
-                }
-            },100);            
+            },1000);  
         });
     }
 
@@ -1284,7 +1255,7 @@ app1.controller('yogaBlogHomeController', function ($routeParams, $scope, $locat
                     angular.element(".tags-filter").removeClass("selected-filter");
                     angular.element(angular.element(".tags-filter")[index]).addClass("selected-filter");
                 }
-            },100);            
+            },1000);            
         });
     }
 
