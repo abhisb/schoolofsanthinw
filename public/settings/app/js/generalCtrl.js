@@ -39,7 +39,7 @@
         $scope.getSavedImages = function () {
             $(".gridLloader").show();
 
-            setInterval(function() {
+           var interval =  setInterval(function() {
                  $http.get("/api/getGeneralSettings")
                 .then(function (response, error) {
                     $(".gridLloader").hide();
@@ -55,6 +55,7 @@
                         $scope.yogaBannerSrc = null;
                         $scope.shanthiBannerSrc = null;
                     }
+                    clearInterval(interval);
 
                 }, function (error) {
                     $(".gridLloader").hide();
@@ -62,6 +63,7 @@
                     $scope.shanthiBanner = null;
                     $scope.yogaBannerSrc = null;
                     $scope.shanthiBannerSrc = null;
+                    clearInterval(interval);
                 });
             }, 500)
            
